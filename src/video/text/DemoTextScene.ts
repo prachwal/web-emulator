@@ -56,16 +56,20 @@ function createC64Demo(cols: number, rows: number): AttributeTextScreen {
   w(2, 5, '20 GOTO 10', 13, 6);
   w(2, 6, 'RUN', 5, 6);
   if (rows > 8) {
-    w(2, 8, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 14, 6);
-    w(2, 9, '0123456789', 14, 6);
-    w(2, 10, 'POKE 53280,0 : POKE 53281,0', 3, 6);
-    w(2, 11, 'SYS 49152', 3, 6);
-    w(2, 12, 'LOAD "*",8,1', 3, 6);
+    w(2, 8, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 1, 14);
+    w(2, 9, '0123456789', 1, 14);
+    if (cols > 16) {
+      for (let i = 0; i < 8; i++) w(16 + i, 8, '' + i, i + 2, 14);
+    }
+    w(2, 10, 'POKE 53280,0 : POKE 53281,0', 3, 14);
+    w(2, 11, 'SYS 49152', 3, 14);
+    w(2, 12, 'COLOR RAM $D800 nybble', 7, 6);
   }
   if (rows > 14) {
     w(2, 14, 'VIC-II: $D000-$D02F', 7, 6);
     w(2, 15, 'SID:    $D400-$D418', 7, 6);
-    w(2, 16, 'COLOR:  $D800-$DBFF', 7, 6);
+    w(2, 16, '16 COLORS  8 SPRITES', 7, 6);
+    w(2, 17, '320x200 / 160x200 MC', 7, 6);
   }
   w(0, rows - 1, top, 7, 12);
   return s;
@@ -205,10 +209,18 @@ function createVic20Demo(cols: number, rows: number): AttributeTextScreen {
     for (let c = 0; c < 8 && c + 11 < cols; c++) {
       w(11 + c, 11, `${c}`, c + 1, 6);
     }
+    for (let c = 0; c < 8 && c + 11 < cols; c++) {
+      w(11 + c, 12, `${c + 8}`, c + 9, 6);
+    }
   }
-  if (rows > 15) {
-    w(0, 15, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 7, 6);
-    w(0, 16, '0123456789', 7, 6);
+  if (rows > 14) {
+    w(0, 14, '4-BIT COLOR RAM', 1, 6);
+    w(0, 15, '176x184 BITMAP', 1, 6);
+    w(0, 16, 'NO SPRITES (VIC-I)', 1, 6);
+  }
+  if (rows > 18) {
+    w(0, 18, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 7, 6);
+    w(0, 19, '0123456789', 7, 6);
   }
   return s;
 }
