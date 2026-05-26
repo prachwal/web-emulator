@@ -21,7 +21,8 @@ export type VideoMode =
   | 'attribute-bitmap'
   | 'tilemap'
   | 'c64-text'
-  | 'cga-160x100';
+  | 'cga-160x100'
+  | 'semi-graphics';
 
 export interface VideoState {
   mode: VideoMode;
