@@ -12,6 +12,7 @@
 | Rozdzielczość tekstowa | 80 × 25 |
 | Font | 8 × 16 (256 glyphs, 4 KB ROM) |
 | Rozdzielczość efektywna | 640 × 400 |
+| Emulowane skalowanie | Square-pixel 640 × 400 (PAR 1:1), bez ściskania fontu |
 | Kolory | Monochromatyczny (zielony P1 fosfor) |
 | Ekran | 9" CRT (wbudowany) |
 | System | CP/M 2.2 / 3.0 |
@@ -64,6 +65,7 @@ W praktyce bardzo wolne: ~300 pikseli/s przez BIOS, do ~25 fps przez bezpośredn
 - [x] Preset `kaypro2-text-80x25` (Kaypro II, tryb tekstowy 80×25)
 - [x] Preset `kaypro4-text-80x25` (Kaypro 4/84, tryb tekstowy 80×25)
 - [x] Font 8×16 z `kaypro4.u9`
+- [x] Skalowanie square-pixel dla czytelnego fontu 8×16
 - [x] Paleta monochromatyczna (zielona)
 - [x] Demo z BASIC listingiem i CP/M READY prompt
 - [x] Specyfikacje w toolbar
