@@ -64,10 +64,10 @@
 - [x] **Color RAM (4-bit nybble)** — `TextModeDecoder.colorModel: 'c64'` czyta `colorRam` jako 4-bit nybble (tylko foreground, background z `backgroundColorIndex`). Zarejestrowane w `VideoSystem`.
 - [x] **Bitmap2BppDecoder** — dekoder dla `'bitmap-2bpp'` z obsługą Color RAM per komórkę 8×8 (kolor 1 z nybbla, kolor 2 z foregroundColorIndex). Zarejestrowany w `VideoSystem`.
 - [x] Demo C64 pokazuje informacje o VIC-II, SID, Color RAM, sprite'ach, trybach 320×200/160×200
+- [x] **Multicolor 160×200 4c** — preset `c64-160x200`, `C64MulticolorDecoder` (2bpp, 4 kolory na komórkę 4×8)
 
 ## Czego brakuje
 
 - [ ] **Rejestry tła $D021–$D024** — w trybie bitmapowym kolor tła pochodzi z rejestru, nie z Color RAM.
-- [ ] **Multicolor modes** — brak (160×200, 4 kolory na komórkę).
 - [ ] **Sprite'y** — brak (8 sprite'ów, 24×21).
 - [ ] **Raster interrupt** — brak symulacji zmian w trakcie skanowania.

@@ -51,4 +51,4 @@ Glify descendentów (g, j, p, q, y) w foncie TRS-80 Model III mieszczą się w 8
 
 ## Czego brakuje
 
-- [ ] **Semi-graphics mode** — brak (128×48, 2 kolory).
+- [x] Semi-graphics 128×48 — preset `trs80-semi-128x48`, `SemiGraphicsDecoder` (2×3 bloki z kodów znaków)

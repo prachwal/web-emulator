@@ -72,9 +72,9 @@ Każda komórka znaku: 8 × 8 pikseli, atrybut bajt = [blink:1][bg:3][fg:4].
 - [x] Font CGA (thick i thin)
 - [x] Paleta CGA 16 kolorów inline
 - [x] Blink attribute — `colorModel:'cga'` w `TextModeDecoder` (bit 7 zamienia fg↔bg co 16 klatek)
+- [x] **160×100 16c** — preset `cga-160x100`, `Cga160x100Decoder`, pokazuje tukan.jpg w 16 kolorach
 
 ## Czego brakuje
 
 - [ ] **Palety CGA mode 4** — obecnie nie ma przełączania 4-kolorowych palet dla trybu 320×200.
 - [ ] **Composite artifact colors** — symulacja kolorów artifact NTSC.
-- [ ] **160×100 16c** — tryb niskiej rozdzielczości z pełną paletą (wymaga emulacji CRTC).

@@ -39,8 +39,8 @@ Emulacyjnie można użyć zielonej skali.
 - [x] Font MDA 8×14 (mda-8x14.bin)
 - [x] Paleta monochromatyczna (zielony)
 - [x] Blink attribute — `colorModel:'mda'` w `TextModeDecoder` (bit 7 = blink)
+- [x] Underline attribute — gdy `fgIdx === 1`, dolne 2 wiersze komórki rysowane jako linia
 
 ## Czego brakuje
 
-- [ ] **Atrybut underline w fontach** — oryginalny MDA renderuje underline sprzętowo, obecnie nie ma obsługi.
 - [ ] **Tryb HGC** (Hercules, 720×348 bitmap) — brak.
