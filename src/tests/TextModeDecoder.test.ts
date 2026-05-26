@@ -52,4 +52,34 @@ describe('TextModeDecoder', () => {
 
     expect(target[0]).toBe(0); // bg from colorRam high nibble
   });
+
+  it('mda underline renders bottom 2 rows when fg=1', () => {
+    const decoder = new TextModeDecoder(40, 25, 8, 14);
+    const font = createDefaultFont(8, 14);
+    const screenRam = new Uint8Array(40 * 25);
+    const colorRam = new Uint8Array(40 * 25);
+
+    screenRam.fill(0x20);
+    colorRam.fill(0x01); // fg=1 (underline), bg=0
+
+    const memory = {
+      columns: 40,
+      rows: 25,
+      charWidth: 8,
+      charHeight: 14,
+      screenRam,
+      colorRam,
+      font,
+      backgroundColorIndex: 0,
+      colorModel: 'mda' as const,
+    };
+
+    const target = new Uint8Array(decoder.sourceWidth * decoder.sourceHeight);
+    decoder.decode(memory, target, 0);
+
+    // Row 12 (0-indexed) of first char cell = underline → should be fg=1
+    expect(target[12 * decoder.sourceWidth]).toBe(1);
+    // Row 0 of first char cell = blank space → should be bg=0
+    expect(target[0]).toBe(0);
+  });
 });

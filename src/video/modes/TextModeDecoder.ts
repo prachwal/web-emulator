@@ -63,9 +63,10 @@ export class TextModeDecoder implements IVideoModeDecoder<TextModeMemory> {
 
         for (let row = 0; row < charHeight; row++) {
           for (let col = 0; col < charWidth; col++) {
-            const bit = getGlyphBit(font, charCode, col, row);
             const px = cellCol * charWidth + col;
             const py = cellRow * charHeight + row;
+            const isUnderline = colorModel === 'mda' && fgIdx === 1 && row >= charHeight - 2;
+            const bit = isUnderline ? 1 : getGlyphBit(font, charCode, col, row);
             target[py * rowStride + px] = bit ? fgIdx : bgIdx;
           }
         }
