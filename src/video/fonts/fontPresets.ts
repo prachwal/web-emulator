@@ -193,6 +193,7 @@ export const fontPresets: FontPreset[] = [
     description: 'Kaypro 4/84 font (4096B)',
     glyphCount: 256,
     charWidth: 8, charHeight: 16, bytesPerGlyph: 16,
+    cellWidth: 8, cellHeight: 16,
     bitOrder: 'msb-left', offset: 0,
     xBits: msb8,
     mapperId: 'ascii',
