@@ -1,10 +1,7 @@
 import { useRef, useEffect } from 'preact/hooks';
 import type { CrtSettings } from '../core/types';
 import { EmulatorRuntime } from '../core/EmulatorRuntime';
-import { Framebuffer } from '../video/Framebuffer';
 import { paletteToRgbaBytes } from '../video/Palette';
-import { TextModeDecoder } from '../video/modes/TextModeDecoder';
-import { AttributeBitmapDecoder } from '../video/modes/AttributeBitmapDecoder';
 import { createDefaultFont } from '../video/BitmapFont';
 import { loadBitmapFont } from '../video/fonts/FontLoader';
 import { globalFontRegistry } from '../video/fonts/FontRegistry';
@@ -13,6 +10,7 @@ import type { Preset } from '../video/presets';
 import { createDemoForMachine } from '../video/text/DemoTextScene';
 import { renderAttributeTextToFramebuffer } from '../video/text/TextModeRenderer';
 import { getMapper } from '../video/text/CharMapper';
+import { loadImage, imageToIndexedFramebuffer } from '../video/image/ImageLoader';
 
 export interface EmulatorViewportProps {
   crt: CrtSettings;
@@ -95,48 +93,14 @@ export function EmulatorViewport({ crt, preset, paused, activeFontId }: Emulator
 
         loop();
       } else {
-        const fb = new Framebuffer(fw, fh);
-
-        if (preset.videoMode === 'attribute-bitmap' || !preset.videoMode) {
-          const decoder = new AttributeBitmapDecoder(fw, fh);
-          const attrCols = 32;
-          const attrRows = 24;
-          const bitmapSize = fw * fh / 8;
-          const bitmap = new Uint8Array(bitmapSize);
-
-          for (let y = 0; y < fh; y++) {
-            for (let x = 0; x < fw; x++) {
-              const byteIdx = Math.floor(y * Math.ceil(fw / 8) + x / 8);
-              const bit = (x + y) % 3 !== 0 ? 1 : 0;
-              if (bit) bitmap[byteIdx] |= 1 << (7 - (x % 8));
-            }
-          }
-
-          const attrs = new Uint8Array(attrCols * attrRows);
-          for (let i = 0; i < attrs.length; i++) {
-            attrs[i] = ((i + 1) % 15) + ((i % 2) << 3);
-          }
-
-          decoder.decode(
-            { bitmap, attributes: attrs, width: fw, height: fh, attrCols, attrRows, borderColorIndex: 0, frameNumber: 0 },
-            fb.data, 0,
-          );
-        } else {
-          const decoder = new TextModeDecoder(40, 25, 8, 8);
-          const screenRam = new Uint8Array(40 * 25);
-          const colorRam = new Uint8Array(40 * 25);
-          const text = 'HELLO CRT EMULATOR! 0123456789';
-          for (let i = 0; i < screenRam.length; i++) {
-            screenRam[i] = text.charCodeAt(i % text.length);
-            colorRam[i] = (i % 15) + 1;
-          }
-          decoder.decode(
-            { columns: 40, rows: 25, charWidth: 8, charHeight: 8, screenRam, colorRam, font: createDefaultFont(8, 8), backgroundColorIndex: 0 },
-            fb.data, 0,
-          );
+        try {
+          const img = await loadImage('/tukan-wielki.jpg');
+          const indexed = imageToIndexedFramebuffer(img, fw, fh, preset.palette);
+          runtime.video.state.framebuffer.set(indexed);
+        } catch {
+          runtime.video.state.framebuffer.fill(0);
         }
 
-        runtime.video.state.framebuffer.set(fb.data);
         runtime.start();
 
         const loop = () => {
