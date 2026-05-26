@@ -205,6 +205,14 @@ export const PRESETS: Preset[] = [
     ['#000000','#00ffff','#ff00ff','#ffffff','#00ffff','#ff00ff','#ffffff','#ffffff',
      '#000000','#00ffff','#ff00ff','#ffffff','#00ffff','#ff00ff','#ffffff','#ffffff'],
     'cga:320×200 4c', 'tilemap'),
+
+  G('cga-640x200', 'cga', 'IBM CGA', 'CGA 640×200 2c',
+    80, 25, 640, 200, 1,
+    'cga-thick.bin', 'cga-thick', 256, f8(8, 7),
+    m(6, 5, 6, 5), '#ffffff', '#000000', '#000000', '#e8e0d0', '#a09880',
+    ['#000000','#ffffff','#ffffff','#ffffff','#ffffff','#ffffff','#ffffff','#ffffff',
+     '#000000','#ffffff','#ffffff','#ffffff','#ffffff','#ffffff','#ffffff','#ffffff'],
+    'mono', 'bitmap-1bpp'),
 ];
 
 export function presetKey(p: Preset): string {
