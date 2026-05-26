@@ -165,7 +165,7 @@ export const PRESETS: Preset[] = [
     ]),
 
   T('mda-text-80x25', 'mda', 'IBM MDA', 80, 25, 8, 14, 640, 350, 5 / 6,
-    'mda-8x14.bin', 'mda-8x14', 256, f8(14, 7),
+    'cga-thick.bin', 'mda-cga', 256, f8hl(8, 7, 14),
     m(6, 5, 6, 5), '#33ff33', '#000000', '#000000', '#e8e0d0', '#a09880', [
       '#000000','#ffffff','#ffffff','#ffffff','#ffffff','#ffffff','#ffffff','#ffffff',
       '#ffffff','#ffffff','#ffffff','#ffffff','#ffffff','#ffffff','#ffffff','#ffffff',
