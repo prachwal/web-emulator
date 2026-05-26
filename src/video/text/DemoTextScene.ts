@@ -51,6 +51,9 @@ function createC64Demo(cols: number, rows: number): AttributeTextScreen {
   const s = new AttributeTextScreen(cols, rows);
   s.clear(32, 1, 14);
   const w = (x: number, y: number, t: string, f = 1, b = 14) => s.writeText(x, y, t, f, b);
+  const pg = (x: number, y: number, codes: number[], f = 1, b = 14) => {
+    for (let i = 0; i < codes.length; i++) s.putChar(x + i, y, codes[i], f, b);
+  };
   const top = bar(cols, '*');
   w(0, 0, top, 7, 12);
   w(0, 1, spacer(cols, '**** COMMODORE 64 BASIC ****'), 7, 12);
@@ -60,18 +63,21 @@ function createC64Demo(cols: number, rows: number): AttributeTextScreen {
   w(2, 6, 'RUN', 5, 6);
   if (rows > 8) {
     w(2, 8, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 1, 14);
-    w(2, 9, '0123456789', 1, 14);
+    w(2, 9, '0123456789  16 COLORS', 1, 14);
     if (cols > 28) {
-      colorRow(s, 28, 8, 2, 8, 14);
-      w(2, 10, 'COLOR RAM $D800: 4-bit nybble', 3, 14);
-      w(2, 11, '16 COLORS  8 SPRITES  VIC-II', 7, 6);
+      colorRow(s, 22, 9, 2, 8, 14);
     }
+    if (cols > 10) {
+      pg(2, 10, [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15], 1, 14);
+      w(2, 11, 'PETSCII graphics codes 0-15', 3, 14);
+    }
+    w(2, 12, 'COLOR RAM $D800 nybble', 7, 6);
   }
-  if (rows > 13) {
-    w(2, 13, 'VIC-II: 320x200 16c BM', 7, 6);
-    w(2, 14, 'VIC-II: 160x200 4c MC', 7, 6);
-    w(2, 15, 'SID:    3xOSC + FILTER', 7, 6);
-    w(2, 16, 'CIA:    $DC00 $DD00', 7, 6);
+  if (rows > 14) {
+    w(2, 14, 'VIC-II: 320x200 16c BM', 7, 6);
+    w(2, 15, 'VIC-II: 160x200 4c MC', 7, 6);
+    w(2, 16, 'SID:    3xOSC + FILTER', 7, 6);
+    w(2, 17, 'CIA:    $DC00 $DD00', 7, 6);
   }
   w(0, rows - 1, top, 7, 12);
   return s;
@@ -109,6 +115,9 @@ function createPetDemo(cols: number, rows: number): AttributeTextScreen {
   const wg = (x: number, y: number, t: string, f = 1, b = 0) => {
     for (let i = 0; i < t.length; i++) s.putChar(x + i, y, t.charCodeAt(i) | 0x80, f, b);
   };
+  const pg = (x: number, y: number, codes: number[], f = 1, b = 0) => {
+    for (let i = 0; i < codes.length; i++) s.putChar(x + i, y, codes[i], f, b);
+  };
   const model = cols >= 80 ? '4032 (80 COL)' : '2001 (40 COL)';
   wg(0, 0, bar(cols, '*'), 1, 1);
   wg(0, 1, '*** COMMODORE PET ' + model + ' ***'.padEnd(cols - 2, ' ') + ' ', 1, 1);
@@ -121,16 +130,19 @@ function createPetDemo(cols: number, rows: number): AttributeTextScreen {
     w(2, 9, 'PET ' + (cols >= 80 ? '4032' : '2001'), 1, 0);
     w(2, 10, cols >= 80 ? '80x25  32K  BASIC 4.0' : '40x25  16K  BASIC 1.0', 1, 0);
     w(2, 11, 'IEEE-488  PETSCII  CRTC', 1, 0);
+    if (cols > 18) {
+      pg(2, 12, [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15], 1, 0);
+      w(2, 13, 'PETSCII graphics 0-15', 1, 0);
+    }
   }
-  if (rows > 13) {
-    w(2, 13, 'UPPER+GRAPHIC  SET', 1, 0);
-    w(2, 14, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 1, 0);
-    w(2, 15, '0123456789', 1, 0);
+  if (rows > 15) {
+    w(2, 15, 'UPPER+GRAPHIC  SET', 1, 0);
+    w(2, 16, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 1, 0);
+    w(2, 17, '0123456789', 1, 0);
   }
-  if (rows > 16) {
-    w(2, 16, 'LOWER+UPPER  SET', 1, 0);
-    s.writeText(2, 17, 'abcdefghijklmnopqrstuvwxyz', 1, 0);
-    s.writeText(2, 18, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 1, 0);
+  if (rows > 19) {
+    w(2, 19, 'LOWER+UPPER  SET (shifted)', 1, 0);
+    s.writeText(2, 20, 'abcdefghijklmnopqrstuvwxyz', 1, 0);
   }
   return s;
 }
@@ -219,6 +231,9 @@ function createVic20Demo(cols: number, rows: number): AttributeTextScreen {
   const s = new AttributeTextScreen(cols, rows);
   s.clear(32, 1, 0);
   const w = (x: number, y: number, t: string, f = 1, b = 0) => s.writeText(x, y, t, f, b);
+  const pg = (x: number, y: number, codes: number[], f = 1, b = 0) => {
+    for (let i = 0; i < codes.length; i++) s.putChar(x + i, y, codes[i], f, b);
+  };
   w(0, 0, 'VIC-20  BASIC', 7, 6);
   w(0, 1, ' 3583 BYTES FREE', 7, 6);
   w(0, 3, 'READY.', 7, 6);
@@ -235,10 +250,15 @@ function createVic20Demo(cols: number, rows: number): AttributeTextScreen {
       w(18 + c, 11, '' + (c + 8), c + 9, 6);
     }
     w(1, 12, '4-BIT NYBBLE COLOR RAM', 1, 6);
+    if (cols > 10) {
+      pg(1, 13, [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15], 1, 6);
+      w(1, 14, 'PETSCII graphics 0-15', 1, 6);
+    }
   }
-  if (rows > 14) {
-    w(1, 14, 'ABC XYZ  abc xyz  0123', 7, 6);
-    w(1, 15, 'PETSCII 2 SETS CHARGEN', 7, 6);
+  if (rows > 16) {
+    w(1, 16, 'ABC XYZ  abc xyz  0123', 7, 6);
+    w(1, 17, 'PETSCII 2 SETS CHARGEN', 7, 6);
+    w(1, 18, '176x184 BITMAP 1bpp', 7, 6);
   }
   return s;
 }
