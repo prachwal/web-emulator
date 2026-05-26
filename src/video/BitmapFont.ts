@@ -1,16 +1,18 @@
+export type BitOrder = 'msb-left' | 'lsb-left';
+
 export interface BitmapFont {
+  id: string;
   name: string;
   glyphCount: number;
   charWidth: number;
   charHeight: number;
   bytesPerGlyph: number;
   data: Uint8Array;
+  bitOrder: BitOrder;
+  sourcePath?: string;
 }
 
-export function getGlyphData(
-  font: BitmapFont,
-  charCode: number,
-): Uint8Array {
+export function getGlyphData(font: BitmapFont, charCode: number): Uint8Array {
   const idx = charCode * font.bytesPerGlyph;
   if (idx + font.bytesPerGlyph > font.data.length) {
     return new Uint8Array(font.bytesPerGlyph);
@@ -25,40 +27,38 @@ export function getGlyphBit(
   y: number,
 ): number {
   const glyphData = getGlyphData(font, charCode);
-  const byteIndex = y * font.bytesPerGlyph;
-  if (byteIndex >= glyphData.length) return 0;
-  const bit = (font.charWidth - 1 - x);
-  return (glyphData[byteIndex] >> bit) & 1;
-}
-
-export function getGlyphBitLsb(
-  font: BitmapFont,
-  charCode: number,
-  x: number,
-  y: number,
-): number {
-  const glyphData = getGlyphData(font, charCode);
   const byteIndex = y;
   if (byteIndex >= glyphData.length) return 0;
-  const bit = x % 8;
-  return (glyphData[byteIndex] >> (7 - bit)) & 1;
+
+  const bits = glyphData[byteIndex];
+  if (font.bitOrder === 'msb-left') {
+    return (bits >> (7 - x)) & 1;
+  } else {
+    return (bits >> x) & 1;
+  }
 }
 
 export function loadFontFromBin(
+  id: string,
   name: string,
   data: Uint8Array,
   glyphCount: number,
   charWidth: number,
   charHeight: number,
+  bitOrder: BitOrder = 'msb-left',
+  sourcePath?: string,
 ): BitmapFont {
   const bytesPerGlyph = charHeight * Math.ceil(charWidth / 8);
   return {
+    id,
     name,
     glyphCount,
     charWidth,
     charHeight,
     bytesPerGlyph,
     data,
+    bitOrder,
+    sourcePath,
   };
 }
 
@@ -81,7 +81,10 @@ export function createDefaultFont(
     }
   }
 
-  return { name: 'default', glyphCount, charWidth, charHeight, bytesPerGlyph, data };
+  return {
+    id: 'default', name: 'Default', glyphCount, charWidth, charHeight,
+    bytesPerGlyph, data, bitOrder: 'msb-left',
+  };
 }
 
 export function renderGlyphToBuffer(
@@ -96,7 +99,7 @@ export function renderGlyphToBuffer(
 ): void {
   for (let row = 0; row < font.charHeight; row++) {
     for (let col = 0; col < font.charWidth; col++) {
-      const bit = getGlyphBitLsb(font, charCode, col, row);
+      const bit = getGlyphBit(font, charCode, col, row);
       const px = posX + col;
       const py = posY + row;
       if (px >= 0 && px < bufferWidth && py >= 0) {

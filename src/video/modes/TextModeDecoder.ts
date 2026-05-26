@@ -1,6 +1,6 @@
 import type { IVideoModeDecoder } from './IVideoModeDecoder';
 import type { BitmapFont } from '../BitmapFont';
-import { getGlyphBitLsb } from '../BitmapFont';
+import { getGlyphBit } from '../BitmapFont';
 
 export interface TextModeMemory {
   columns: number;
@@ -37,7 +37,7 @@ export class TextModeDecoder implements IVideoModeDecoder<TextModeMemory> {
 
         for (let row = 0; row < charHeight; row++) {
           for (let col = 0; col < charWidth; col++) {
-            const bit = getGlyphBitLsb(font, charCode, col, row);
+            const bit = getGlyphBit(font, charCode, col, row);
             const px = cellCol * charWidth + col;
             const py = cellRow * charHeight + row;
             target[py * rowStride + px] = bit ? color : bgColor;

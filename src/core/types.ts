@@ -15,6 +15,7 @@ export interface DirtyRect {
 
 export type VideoMode =
   | 'text'
+  | 'attribute-text'
   | 'bitmap-1bpp'
   | 'bitmap-2bpp'
   | 'attribute-bitmap'

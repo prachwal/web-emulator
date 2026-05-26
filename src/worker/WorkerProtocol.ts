@@ -1,13 +1,15 @@
 import type { CrtSettings, MachineProfile } from '../core/types';
-import type { BitmapFont } from '../video/BitmapFont';
+import type { BitmapFont, BitOrder } from '../video/BitmapFont';
 
 export interface SerializedFont {
+  id: string;
   name: string;
   glyphCount: number;
   charWidth: number;
   charHeight: number;
   bytesPerGlyph: number;
   data: number[];
+  bitOrder: BitOrder;
 }
 
 export interface EmulatorConfig {
@@ -39,22 +41,26 @@ export type WorkerToMainMessage =
 
 export function serializeFont(font: BitmapFont): SerializedFont {
   return {
+    id: font.id,
     name: font.name,
     glyphCount: font.glyphCount,
     charWidth: font.charWidth,
     charHeight: font.charHeight,
     bytesPerGlyph: font.bytesPerGlyph,
     data: Array.from(font.data),
+    bitOrder: font.bitOrder,
   };
 }
 
 export function deserializeFont(data: SerializedFont): BitmapFont {
   return {
+    id: data.id,
     name: data.name,
     glyphCount: data.glyphCount,
     charWidth: data.charWidth,
     charHeight: data.charHeight,
     bytesPerGlyph: data.bytesPerGlyph,
     data: new Uint8Array(data.data),
+    bitOrder: data.bitOrder,
   };
 }

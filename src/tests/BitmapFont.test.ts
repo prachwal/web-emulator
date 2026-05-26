@@ -1,9 +1,8 @@
 import { describe, it, expect } from 'vitest';
+import type { BitmapFont } from '../video/BitmapFont';
 import {
-  BitmapFont,
   getGlyphData,
   getGlyphBit,
-  getGlyphBitLsb,
   loadFontFromBin,
   createDefaultFont,
   renderGlyphToBuffer,
@@ -18,7 +17,10 @@ function makeTestFont(charWidth: number = 8, charHeight: number = 8): BitmapFont
       data[i * bytesPerGlyph + row] = 0xFF;
     }
   }
-  return { name: 'test', glyphCount, charWidth, charHeight, bytesPerGlyph, data };
+  return {
+    id: 'test', name: 'Test', glyphCount, charWidth, charHeight,
+    bytesPerGlyph, data, bitOrder: 'msb-left',
+  };
 }
 
 describe('getGlyphData', () => {
@@ -43,22 +45,27 @@ describe('getGlyphBit', () => {
     expect(getGlyphBit(font, 0x41, 0, 0)).toBe(1);
     expect(getGlyphBit(font, 0x41, 7, 0)).toBe(1);
   });
-});
 
-describe('getGlyphBitLsb', () => {
-  it('reads bit from glyph (bitmap-first)', () => {
-    const font = makeTestFont();
-    expect(getGlyphBitLsb(font, 0x41, 0, 0)).toBe(1);
+  it('reads bit from glyph (LSB-first)', () => {
+    const data = new Uint8Array(8);
+    data[0] = 0x01;
+    const font = {
+      id: 'test', name: 'Test', glyphCount: 1, charWidth: 8, charHeight: 8,
+      bytesPerGlyph: 8, data, bitOrder: 'lsb-left' as const,
+    };
+    expect(getGlyphBit(font, 0, 0, 0)).toBe(1);
   });
 });
 
 describe('loadFontFromBin', () => {
   it('creates font from binary data', () => {
     const data = new Uint8Array(256 * 8);
-    const font = loadFontFromBin('test', data, 256, 8, 8);
-    expect(font.name).toBe('test');
+    const font = loadFontFromBin('test-id', 'Test', data, 256, 8, 8);
+    expect(font.id).toBe('test-id');
+    expect(font.name).toBe('Test');
     expect(font.glyphCount).toBe(256);
     expect(font.bytesPerGlyph).toBe(8);
+    expect(font.bitOrder).toBe('msb-left');
   });
 });
 
@@ -69,6 +76,7 @@ describe('createDefaultFont', () => {
     expect(font.charWidth).toBe(8);
     expect(font.charHeight).toBe(8);
     expect(font.bytesPerGlyph).toBe(8);
+    expect(font.bitOrder).toBe('msb-left');
   });
 });
 
