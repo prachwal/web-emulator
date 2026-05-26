@@ -7,7 +7,7 @@ import { defaultCrtSettings } from '../core/types';
 import {
   PRESETS, machineIds, machineName, presetsForMachine,
   type Preset,
-} from '../video/presets';
+} from '../video/presets/index';
 
 const crt = signal<CrtSettings>(defaultCrtSettings());
 const showDebug = signal(false);

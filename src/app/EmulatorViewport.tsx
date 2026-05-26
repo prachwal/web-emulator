@@ -6,7 +6,7 @@ import { createDefaultFont } from '../video/BitmapFont';
 import { loadBitmapFont } from '../video/fonts/FontLoader';
 import { globalFontRegistry } from '../video/fonts/FontRegistry';
 import { getFontPreset, getMapperIdForFont } from '../video/fonts/fontPresets';
-import type { Preset } from '../video/presets';
+import type { Preset } from '../video/presets/index';
 import { createDemoForMachine } from '../video/text/DemoTextScene';
 import { renderAttributeTextToFramebuffer } from '../video/text/TextModeRenderer';
 import { getMapper } from '../video/text/CharMapper';
