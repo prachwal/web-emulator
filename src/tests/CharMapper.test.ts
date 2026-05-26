@@ -18,6 +18,17 @@ describe('petsciiCharMapper', () => {
   it('maps 0 to PETSCII 32', () => {
     expect(petsciiCharMapper.mapCharCode(0x30)).toBe(0x20);
   });
+  it('passes through PETSCII graphics codes 0-31', () => {
+    expect(petsciiCharMapper.mapCharCode(0)).toBe(0);
+    expect(petsciiCharMapper.mapCharCode(1)).toBe(1);
+    expect(petsciiCharMapper.mapCharCode(15)).toBe(15);
+    expect(petsciiCharMapper.mapCharCode(31)).toBe(31);
+  });
+  it('does not map graphics to dot', () => {
+    for (let c = 0; c < 32; c++) {
+      expect(petsciiCharMapper.mapCharCode(c)).not.toBe(0x2e);
+    }
+  });
 });
 
 describe('getMapper', () => {
