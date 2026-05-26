@@ -10,7 +10,7 @@ import { loadBitmapFont } from '../video/fonts/FontLoader';
 import { globalFontRegistry } from '../video/fonts/FontRegistry';
 import { getFontPreset, getMapperIdForFont } from '../video/fonts/fontPresets';
 import type { Preset } from '../video/presets';
-import { createDemoTextScreen } from '../video/text/DemoTextScene';
+import { createDemoForMachine } from '../video/text/DemoTextScene';
 import { renderAttributeTextToFramebuffer } from '../video/text/TextModeRenderer';
 import { getMapper } from '../video/text/CharMapper';
 
@@ -26,7 +26,7 @@ export function EmulatorViewport({ crt, preset, paused, activeFontId }: Emulator
   const runtimeRef = useRef<EmulatorRuntime | null>(null);
   const rafRef = useRef<number>(0);
   const fontRef = useRef(createDefaultFont(8, 8));
-  const screenRef = useRef(createDemoTextScreen(40, 25));
+  const screenRef = useRef(createDemoForMachine('zx', 40, 25));
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -73,7 +73,7 @@ export function EmulatorViewport({ crt, preset, paused, activeFontId }: Emulator
         const mapperId = activeFontId ? getMapperIdForFont(activeFontId) : 'ascii';
         const mapper = getMapper(mapperId);
 
-        const screen = createDemoTextScreen(preset.cols, preset.rows);
+        const screen = createDemoForMachine(preset.machineId, preset.cols, preset.rows);
         screenRef.current = screen;
 
         renderAttributeTextToFramebuffer(screen, font, runtime.video.state.framebuffer, {}, mapper);

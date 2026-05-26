@@ -6,6 +6,8 @@ export interface BitmapFont {
   glyphCount: number;
   charWidth: number;
   charHeight: number;
+  cellWidth?: number;
+  cellHeight?: number;
   bytesPerGlyph: number;
   data: Uint8Array;
   bitOrder: BitOrder;
@@ -52,6 +54,8 @@ export function loadFontFromBin(
   sourcePath?: string,
   xBits?: number[],
   invertBits?: boolean,
+  cellWidth?: number,
+  cellHeight?: number,
 ): BitmapFont {
   const bytesPerGlyph = charHeight * Math.ceil(charWidth / 8);
   return {
@@ -60,6 +64,8 @@ export function loadFontFromBin(
     glyphCount,
     charWidth,
     charHeight,
+    cellWidth,
+    cellHeight,
     bytesPerGlyph,
     data,
     bitOrder,

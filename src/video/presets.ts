@@ -70,6 +70,14 @@ function f6m1(): FontGeometry {
   };
 }
 
+function f8hl(h: number, left: number, cellH: number): FontGeometry {
+  return {
+    glyphWidth: 8, glyphHeight: h, cellWidth: 8, cellHeight: cellH,
+    bytesPerGlyph: h, leftBit: left,
+    xBits: [0, 1, 2, 3, 4, 5, 6, 7],
+  };
+}
+
 const A43 = 4 / 3;
 
 const T = (
@@ -156,8 +164,8 @@ export const PRESETS: Preset[] = [
       '#ffffff','#ffffff','#ffffff','#ffffff','#ffffff','#ffffff','#ffffff','#ffffff',
     ]),
 
-  T('trs80-text-64x16', 'trs80', 'TRS-80 Model III', 64, 16, 8, 8, 512, 128, 1,
-    'trs80-m3-chargen.bin', 'trs80-m3', 256, f8(8, 7),
+  T('trs80-text-64x16', 'trs80', 'TRS-80 Model III', 64, 16, 8, 12, 512, 192, 1,
+    'trs80-m3-chargen.bin', 'trs80-m3', 256, f8hl(8, 7, 12),
     m(10, 8, 10, 8), '#cccccc', '#000000', '#000000', '#707070', '#555', [
       '#000000','#ffffff','#ffffff','#ffffff','#ffffff','#ffffff','#ffffff','#ffffff',
       '#ffffff','#ffffff','#ffffff','#ffffff','#ffffff','#ffffff','#ffffff','#ffffff',

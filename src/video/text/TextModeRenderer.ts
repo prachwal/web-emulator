@@ -17,8 +17,10 @@ export function renderAttributeTextToFramebuffer(
   options: TextRenderOptions = {},
   mapper: CharMapper = asciiCharMapper,
 ): void {
-  const outputWidth = screen.columns * font.charWidth;
-  const outputHeight = screen.rows * font.charHeight;
+  const cellW = font.cellWidth ?? font.charWidth;
+  const cellH = font.cellHeight ?? font.charHeight;
+  const outputWidth = screen.columns * cellW;
+  const outputHeight = screen.rows * cellH;
 
   for (let row = 0; row < screen.rows; row++) {
     for (let col = 0; col < screen.columns; col++) {
@@ -31,7 +33,7 @@ export function renderAttributeTextToFramebuffer(
       renderGlyphToFramebuffer(
         font, charCode, framebuffer,
         outputWidth, outputHeight,
-        col * font.charWidth, row * font.charHeight,
+        col * cellW, row * cellH,
         fgColor, bgColor,
       );
     }
@@ -46,8 +48,10 @@ export function renderTextToFramebuffer(
   bgColor: number = 0,
   mapper: CharMapper = asciiCharMapper,
 ): void {
-  const outputWidth = screen.columns * font.charWidth;
-  const outputHeight = screen.rows * font.charHeight;
+  const cellW = font.cellWidth ?? font.charWidth;
+  const cellH = font.cellHeight ?? font.charHeight;
+  const outputWidth = screen.columns * cellW;
+  const outputHeight = screen.rows * cellH;
 
   for (let row = 0; row < screen.rows; row++) {
     for (let col = 0; col < screen.columns; col++) {
@@ -57,7 +61,7 @@ export function renderTextToFramebuffer(
       renderGlyphToFramebuffer(
         font, charCode, framebuffer,
         outputWidth, outputHeight,
-        col * font.charWidth, row * font.charHeight,
+        col * cellW, row * cellH,
         fgColor, bgColor,
       );
     }
@@ -75,15 +79,22 @@ export function renderGlyphToFramebuffer(
   fgColor: number,
   bgColor: number,
 ): void {
-  for (let gy = 0; gy < font.charHeight; gy++) {
-    for (let gx = 0; gx < font.charWidth; gx++) {
-      const bit = getGlyphBit(font, charCode, gx, gy);
+  const cellW = font.cellWidth ?? font.charWidth;
+  const cellH = font.cellHeight ?? font.charHeight;
+
+  for (let gy = 0; gy < cellH; gy++) {
+    for (let gx = 0; gx < cellW; gx++) {
       const px = posX + gx;
       const py = posY + gy;
 
       if (px < 0 || px >= outputWidth || py < 0 || py >= outputHeight) continue;
 
-      framebuffer[py * outputWidth + px] = bit ? fgColor : bgColor;
+      if (gy < font.charHeight && gx < font.charWidth) {
+        const bit = getGlyphBit(font, charCode, gx, gy);
+        framebuffer[py * outputWidth + px] = bit ? fgColor : bgColor;
+      } else {
+        framebuffer[py * outputWidth + px] = bgColor;
+      }
     }
   }
 }

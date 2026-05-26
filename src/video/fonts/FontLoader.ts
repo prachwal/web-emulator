@@ -7,6 +7,8 @@ export type LoadBitmapFontOptions = {
   url: string;
   charWidth?: number;
   charHeight?: number;
+  cellWidth?: number;
+  cellHeight?: number;
   glyphCount?: number;
   bitOrder?: BitOrder;
   offset?: number;
@@ -23,6 +25,8 @@ export async function loadBitmapFont(
     id, name, url,
     charWidth = 8,
     charHeight = 8,
+    cellWidth,
+    cellHeight,
     glyphCount = 256,
     bitOrder = 'msb-left',
     offset = 0,
@@ -53,7 +57,7 @@ export async function loadBitmapFont(
 
   return loadFontFromBin(
     id, name, fontData, glyphCount, charWidth, charHeight,
-    bitOrder, sourcePath ?? url, xBits, invertBits,
+    bitOrder, sourcePath ?? url, xBits, invertBits, cellWidth, cellHeight,
   );
 }
 

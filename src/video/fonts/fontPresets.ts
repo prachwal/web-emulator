@@ -166,6 +166,7 @@ export const fontPresets: FontPreset[] = [
     description: 'TRS-80 Model III char gen (256 glyphs, 2048B)',
     glyphCount: 256,
     charWidth: 8, charHeight: 8, bytesPerGlyph: 8,
+    cellWidth: 8, cellHeight: 12,
     bitOrder: 'msb-left', offset: 0,
     xBits: lsb8,
     mapperId: 'ascii',
