@@ -13,6 +13,8 @@
 | Font | Kaypro II: ROM 7 × 8 skalowany do komórki 7 × 16; Kaypro 4/84: 8 × 16 z ROM-u 81-235 |
 | Rozdzielczość efektywna | Kaypro II: 560 × 384; Kaypro 4/84: 640 × 400 |
 | Emulowane skalowanie | Square-pixel (PAR 1:1), bez ściskania fontu |
+
+Zmienione w v2: PAR Kaypro II = 32/35, Kaypro 4/84 = 5/6, Graphics 160×100 = 5/6 (wszystkie 4:3).
 | Kolory | Monochromatyczny (zielony P1 fosfor) |
 | Ekran | 9" CRT (wbudowany) |
 | System | CP/M 2.2 / 3.0 |

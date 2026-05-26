@@ -1,7 +1,7 @@
 import { T, f8, m } from './types';
 
 export const apple1Presets = [
-  T('apple1-text-40x24', 'apple1', 'Apple 1', 40, 24, 8, 8, 320, 192, 5 / 6,
+  T('apple1-text-40x24', 'apple1', 'Apple 1', 40, 24, 8, 8, 320, 192, 4 / 5,
     'apple1.vid', 'apple1', 128, f8(8, 0),
     m(12, 10, 12, 10), '#33ff33', '#000000', '#000000', '#2a2018', '#5a4a3a', [
       '#000000','#33ff33','#33ff33','#33ff33','#33ff33','#33ff33','#33ff33','#33ff33',

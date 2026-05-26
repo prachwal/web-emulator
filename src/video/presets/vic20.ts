@@ -6,7 +6,7 @@ const vic20Palette = [
 ];
 
 export const vic20Presets = [
-  T('vic20-text-22x23', 'vic20', 'VIC-20', 22, 23, 8, 8, 176, 184, 1,
+  T('vic20-text-22x23', 'vic20', 'VIC-20', 22, 23, 8, 8, 176, 184, 46 / 33,
     'vic20.bin', 'vic20-chargen', 256, f8(8, 7),
     m(10, 8, 10, 8), '#66ccff', '#000000', '#000000', '#c4b89a', '#8a7d60', vic20Palette),
 
