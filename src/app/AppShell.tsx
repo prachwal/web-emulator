@@ -46,7 +46,12 @@ export function AppShell() {
               />
             </div>
           </div>
-          <div class="crt-nameplate">{currentPreset.value.machineName} {currentPreset.value.label}</div>
+          <div class="crt-nameplate">
+            {currentPreset.value.machineName}
+            {' '}{specInfo(currentPreset.value)}
+            {' | '}{currentPreset.value.type.toUpperCase()}
+            {currentPreset.value.videoMode ? ' \u00b7 ' + currentPreset.value.videoMode : ''}
+          </div>
         </div>
       </div>
       <SettingsPanel
@@ -56,6 +61,29 @@ export function AppShell() {
       {showDebug.value && <DebugOverlay />}
     </div>
   );
+}
+
+function specInfo(p: Preset): string {
+  const cols = p.cols + '\u00d7' + p.rows;
+  const res = ' ' + p.framebufferWidth + '\u00d7' + p.framebufferHeight;
+  const cell = p.font ? ' ' + p.font.cellWidth + '\u00d7' + p.font.cellHeight : '';
+  const par = p.pixelAspectRatio !== 1 ? ' PAR:' + p.pixelAspectRatio.toFixed(2) : '';
+  return cols + res + cell + par;
+}
+
+function machineFeatures(machineId: string): string[] {
+  const features: Record<string, string[]> = {
+    zx: ['ATTR INK/PAPER', 'BRIGHT +8', 'FLASH', 'BORDER'],
+    c64: ['COLOR RAM 4-bit', 'PETSCII', 'VIC-II BM', 'SPRITES 8'],
+    cga: ['RGBI 16c', '320x200 4c', '640x200 2c', '160x100 16c'],
+    pet: ['PETSCII', 'REV MSB=1', 'IEEE-488', '40/80 COL'],
+    mda: ['720x350', '9x14 FONT', 'UNDERLINE', 'BLINK'],
+    trs80: ['64x16', '8x12 CELL', 'DESCENDER', '512x192'],
+    apple1: ['40x24', 'LSB-FIRST', 'INVERT MSB=1', 'WOZ MON'],
+    vic20: ['22x23', '176x184 BM', '4-bit COL RAM', 'PETSCII'],
+  };
+  const feat = features[machineId] ?? ['TEXT MODE', 'DEMO'];
+  return feat.filter((_, i) => i < 4);
 }
 
 function Toolbar() {
@@ -120,6 +148,18 @@ function Toolbar() {
           <option key={v.id} value={i}>{v.label}</option>
         ))}
       </select>
+
+      {/* Specs display */}
+      <span class="toolbar-spec">{specInfo(p)}</span>
+
+      {/* Feature badges */}
+      <div class="toolbar-features">
+        {machineFeatures(p.machineId).map(f => (
+          <span key={f} class="toolbar-badge">{f}</span>
+        ))}
+      </div>
+
+      <div class="toolbar-divider" />
 
       <button class="toolbar-btn" onClick={() => paused.value = !paused.value}>
         {paused.value ? '>' : '||'}
