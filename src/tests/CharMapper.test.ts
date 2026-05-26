@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { asciiCharMapper, petsciiCharMapper, petsciiShiftedCharMapper, getMapper } from '../video/text/CharMapper';
+import { asciiCharMapper, petsciiCharMapper, petsciiShiftedCharMapper, getMapper, rawScreenCode } from '../video/text/CharMapper';
 
 describe('asciiCharMapper', () => {
   it('passes through ASCII characters', () => {
@@ -37,6 +37,17 @@ describe('petsciiCharMapper', () => {
     for (let c = 128; c < 160; c++) {
       expect(petsciiCharMapper.mapCharCode(c)).not.toBe(0x2e);
     }
+  });
+  it('passes explicit Commodore screen codes through unchanged', () => {
+    expect(petsciiCharMapper.mapCharCode(rawScreenCode(64))).toBe(64);
+    expect(petsciiCharMapper.mapCharCode(rawScreenCode(79))).toBe(79);
+    expect(petsciiCharMapper.mapCharCode(rawScreenCode(0xff))).toBe(0xff);
+  });
+  it('maps C64 PETSCII graphics to chargen screen codes', () => {
+    expect(petsciiCharMapper.mapCharCode(192)).toBe(64);
+    expect(petsciiCharMapper.mapCharCode(205)).toBe(77);
+    expect(petsciiCharMapper.mapCharCode(206)).toBe(78);
+    expect(petsciiCharMapper.mapCharCode(223)).toBe(95);
   });
 });
 

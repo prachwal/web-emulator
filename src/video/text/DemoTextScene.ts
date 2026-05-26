@@ -16,6 +16,10 @@ function colorRow(s: AttributeTextScreen, x: number, y: number, start: number, c
   }
 }
 
+const commodoreGraphics = [
+  192,193,194,195,196,197,198,199,200,201,202,203,204,205,206,207,
+];
+
 function createZxDemo(cols: number, rows: number): AttributeTextScreen {
   const s = new AttributeTextScreen(cols, rows);
   s.clear(32, 7, 0);
@@ -68,8 +72,8 @@ function createC64Demo(cols: number, rows: number): AttributeTextScreen {
       colorRow(s, 22, 9, 2, 8, 14);
     }
     if (cols > 10) {
-      pg(2, 10, [128,129,130,131,132,133,134,135,136,137,138,139,140,141,142,143], 1, 14);
-      w(2, 11, 'PETSCII CHR$(128-143)', 3, 14);
+      pg(2, 10, commodoreGraphics, 1, 14);
+      w(2, 11, 'PETSCII CHR$(192-207)', 3, 14);
     }
     w(2, 12, 'COLOR RAM $D800 nybble', 7, 6);
   }
@@ -131,8 +135,8 @@ function createPetDemo(cols: number, rows: number): AttributeTextScreen {
     w(2, 10, cols >= 80 ? '80x25  32K  BASIC 4.0' : '40x25  16K  BASIC 1.0', 1, 0);
     w(2, 11, 'IEEE-488  PETSCII  CRTC', 1, 0);
     if (cols > 18) {
-      pg(2, 12, [128,129,130,131,132,133,134,135,136,137,138,139,140,141,142,143], 1, 0);
-      w(2, 13, 'PETSCII CHR$(128-143)', 1, 0);
+      pg(2, 12, commodoreGraphics, 1, 0);
+      w(2, 13, 'PETSCII CHR$(192-207)', 1, 0);
     }
   }
   if (rows > 15) {
@@ -251,8 +255,8 @@ function createVic20Demo(cols: number, rows: number): AttributeTextScreen {
     }
     w(1, 12, '4-BIT NYBBLE COLOR RAM', 1, 6);
     if (cols > 10) {
-      pg(1, 13, [128,129,130,131,132,133,134,135,136,137,138,139,140,141,142,143], 1, 6);
-      w(1, 14, 'PETSCII CHR$(128-143)', 1, 6);
+      pg(1, 13, commodoreGraphics, 1, 6);
+      w(1, 14, 'PETSCII CHR$(192-207)', 1, 6);
     }
   }
   if (rows > 16) {
