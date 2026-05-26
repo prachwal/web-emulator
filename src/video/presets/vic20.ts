@@ -11,7 +11,7 @@ export const vic20Presets = [
     m(10, 8, 10, 8), '#66ccff', '#000000', '#000000', '#c4b89a', '#8a7d60', vic20Palette),
 
   G('vic20-176x184', 'vic20', 'VIC-20', 'Bitmap 176×184',
-    22, 23, 176, 184, 1,
+    22, 23, 176, 184, 46 / 33,
     'vic20.bin', 'vic20-chargen', 256, f8(8, 7),
     m(10, 8, 10, 8), '#66ccff', '#000000', '#000000', '#c4b89a', '#8a7d60', vic20Palette,
     'vic20-bm', 'bitmap-1bpp'),

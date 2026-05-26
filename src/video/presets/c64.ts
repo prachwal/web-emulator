@@ -19,7 +19,7 @@ export const c64Presets = [
     'c64', 'bitmap-2bpp'),
 
   G('c64-160x200', 'c64', 'Commodore 64', 'Multi 160×200',
-    40, 25, 160, 200, 5 / 12,
+    40, 25, 160, 200, 5 / 3,
     'c64-chargen', 'c64-chargen-first', 256, f8(8, 7),
     m(8, 6, 8, 6), '#ffffff', '#1010a0', '#2020d0', '#c4b89a', '#8a7d60', c64Pal,
     'c64-mc', 'c64-multicolor'),

@@ -16,7 +16,7 @@ export const trs80Presets = [
     ]),
 
   G('trs80-semi-128x48', 'trs80', 'TRS-80 Model III', 'Semi 128×48',
-    64, 16, 128, 48, 1,
+    64, 16, 128, 48, 1 / 2,
     'trs80-m3-chargen.bin', 'trs80-m3', 256, f8hl(8, 7, 12),
     m(10, 8, 10, 8), '#cccccc', '#000000', '#000000', '#707070', '#555', [
       '#000000','#ffffff','#ffffff','#ffffff','#ffffff','#ffffff','#ffffff','#ffffff',
