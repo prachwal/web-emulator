@@ -74,6 +74,12 @@ export function f8hl(h: number, left: number, cellH: number): FontGeometry {
 
 export const A43 = 4 / 3;
 
+function screenBorder(screen: string, borderColor?: string): string {
+  if (borderColor) return borderColor;
+  if (!screen || screen === '#000000' || screen === '#000') return '#151515';
+  return screen;
+}
+
 export const T = (
   id: string, machineId: string, machineName: string,
   cols: number, rows: number, cw: number, ch: number,
@@ -93,7 +99,7 @@ export const T = (
   margins, fgColor: fg, bgColor: bg, screenBg: screen,
   bezelColor: bezel, labelColor: labelClr, palette,
   videoMode: vmode,
-  borderColor: borderColor ?? screen,
+  borderColor: screenBorder(screen, borderColor),
 });
 
 export const G = (
@@ -115,7 +121,7 @@ export const G = (
   margins, fgColor: fg, bgColor: bg, screenBg: screen,
   bezelColor: bezel, labelColor: labelClr, palette,
   graphicsRenderer: renderer, videoMode: vmode,
-  borderColor: borderColor ?? screen,
+  borderColor: screenBorder(screen, borderColor),
 });
 
 export const m = (t: number, r: number, b: number, l: number): Margins =>
