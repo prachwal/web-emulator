@@ -11,7 +11,7 @@ export interface TextModeMemory {
   colorRam: Uint8Array;
   font: BitmapFont;
   backgroundColorIndex: number;
-  colorModel?: 'mda' | 'c64' | 'zx' | 'cga';
+  colorModel?: 'mda' | 'c64' | 'zx' | 'cga' | 'vic20';
 }
 
 export class TextModeDecoder implements IVideoModeDecoder<TextModeMemory> {
@@ -39,7 +39,7 @@ export class TextModeDecoder implements IVideoModeDecoder<TextModeMemory> {
 
         if (cellIndex < colorRam.length) {
           const cr = colorRam[cellIndex];
-          if (colorModel === 'c64') {
+          if (colorModel === 'c64' || colorModel === 'vic20') {
             fgIdx = cr & 0x0f;
             bgIdx = backgroundColorIndex;
           } else if (colorModel === 'zx') {
