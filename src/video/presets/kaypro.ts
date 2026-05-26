@@ -1,10 +1,14 @@
-import { T, f8, m } from './types';
+import { T, G, f8, m } from './types';
 
 const kayproPal = [
   '#000000', '#33ff33', '#33ff33', '#33ff33',
   '#33ff33', '#33ff33', '#33ff33', '#33ff33',
   '#33ff33', '#33ff33', '#33ff33', '#33ff33',
   '#33ff33', '#33ff33', '#33ff33', '#33ff33',
+];
+
+const kayproGraphicsPal = [
+  '#000000', '#33ff33',
 ];
 
 export const kayproPresets = [
@@ -19,4 +23,10 @@ export const kayproPresets = [
   T('kaypro4-text-80x25', 'kaypro', 'Kaypro 4/84', 80, 25, 8, 16, 640, 400, 1,
     'kaypro4.u9', 'kaypro-4', 256, f8(16, 7),
     m(6, 5, 6, 5), '#33ff33', '#000000', '#000000', '#e0d8c8', '#b0a890', kayproPal),
+
+  G('kaypro-160x100', 'kaypro', 'Kaypro 4/84', 'Graphics 160×100',
+    80, 25, 160, 100, 1,
+    'kaypro4.u9', 'kaypro-4', 256, f8(16, 7),
+    m(6, 5, 6, 5), '#33ff33', '#000000', '#000000', '#e0d8c8', '#b0a890', kayproGraphicsPal,
+    'kaypro-gfx'),
 ];

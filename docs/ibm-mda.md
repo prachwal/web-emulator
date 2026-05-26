@@ -41,6 +41,10 @@ Emulacyjnie można użyć zielonej skali.
 - [x] Blink attribute — `colorModel:'mda'` w `TextModeDecoder` (bit 7 = blink)
 - [x] Underline attribute — gdy `fgIdx === 1`, dolne 2 wiersze komórki rysowane jako linia
 
+## Co już mamy — HGC
+
+- [x] Preset `mda-herc-720x348` (HGC bitmap 720×348, monochromatyczny zielony)
+
 ## Czego brakuje
 
-- [ ] **Tryb HGC** (Hercules, 720×348 bitmap) — brak.
+- [ ] **Tryb HGC** (Hercules, 720×348 bitmap) — brak dedykowanego dekodera (obraz z pliku JPEG).

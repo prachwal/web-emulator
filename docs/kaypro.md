@@ -68,12 +68,12 @@ W praktyce bardzo wolne: ~300 pikseli/s przez BIOS, do ~25 fps przez bezpośredn
 - [x] Font Kaypro 4/84 8×16 z `kaypro4.u9` / 81-235
 - [x] Skalowanie square-pixel dla czytelnego fontu 8×16
 - [x] Paleta monochromatyczna (zielona)
+- [x] Tryb graficzny 160×100 (medium-resolution graphics)
 - [x] Demo z BASIC listingiem i CP/M READY prompt
 - [x] Specyfikacje w toolbar
 
 ## Czego brakuje
 
-- [ ] **Tryb 160×100 "medium-resolution" graphics** — wymaga decoderów znakowo-atrybutowych
 - [ ] **Obsługa ADM-3A escape sekwencji** — czyszczenie ekranu, pozycjonowanie kursora
 - [ ] **Dwa zestawy znaków** (górny/dolny 256 glyphów) — Kaypro 4/84 ma 2 zestawy
 - [ ] **Attribute RAM** (inverse video, cursor) — oddzielna pamięć atrybutów

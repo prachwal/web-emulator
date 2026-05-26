@@ -23,7 +23,9 @@ export type VideoMode =
   | 'c64-text'
   | 'cga-160x100'
   | 'semi-graphics'
-  | 'c64-multicolor';
+  | 'c64-multicolor'
+  | 'kaypro-graphics'
+  | 'herc-bitmap';
 
 export interface VideoState {
   mode: VideoMode;
