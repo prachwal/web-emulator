@@ -24,8 +24,17 @@ describe('petsciiCharMapper', () => {
     expect(petsciiCharMapper.mapCharCode(15)).toBe(15);
     expect(petsciiCharMapper.mapCharCode(31)).toBe(31);
   });
+  it('maps PETSCII graphics 128-159 to screen codes 0-31', () => {
+    expect(petsciiCharMapper.mapCharCode(128)).toBe(0);
+    expect(petsciiCharMapper.mapCharCode(129)).toBe(1);
+    expect(petsciiCharMapper.mapCharCode(143)).toBe(15);
+    expect(petsciiCharMapper.mapCharCode(159)).toBe(31);
+  });
   it('does not map graphics to dot', () => {
     for (let c = 0; c < 32; c++) {
+      expect(petsciiCharMapper.mapCharCode(c)).not.toBe(0x2e);
+    }
+    for (let c = 128; c < 160; c++) {
       expect(petsciiCharMapper.mapCharCode(c)).not.toBe(0x2e);
     }
   });
