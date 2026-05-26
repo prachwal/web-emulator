@@ -8,23 +8,25 @@ import {
   PRESETS, machineIds, machineName, presetsForMachine,
   type Preset,
 } from '../video/presets';
-import { fontPresets } from '../video/fonts/fontPresets';
-import { textVideoModes } from '../video/text/textModes';
 
-// ── Signal-based state ──────────────────────────────
 const crt = signal<CrtSettings>(defaultCrtSettings());
 const showDebug = signal(false);
 const paused = signal(false);
 
-const presetIndex = signal(0);
-const currentPreset = computed(() => PRESETS[presetIndex.value]);
+// Three-level selection state
+const selectedMachineId = signal(machineIds()[0] ?? 'zx');
+const selectedType = signal<'text' | 'bitmap'>('text');
+const selectedVariantIdx = signal(0);
 
-const isTextMode = computed(() => currentPreset.value.type === 'text');
+const currentVariants = computed(() =>
+  presetsForMachine(selectedMachineId.value, selectedType.value),
+);
 
-const activeFontId = signal(fontPresets[0]?.id ?? '');
-const currentMode = computed(() => currentPreset.value.id);
-const modeLabel = computed(() => currentPreset.value.label);
-const machineLabel = computed(() => currentPreset.value.machineName);
+const currentPreset = computed<Preset>(() => {
+  const variants = currentVariants.value;
+  const idx = Math.min(selectedVariantIdx.value, variants.length - 1);
+  return variants[idx] ?? PRESETS[0];
+});
 
 export function AppShell() {
   return (
@@ -35,7 +37,7 @@ export function AppShell() {
           crt={crt.value}
           preset={currentPreset.value}
           paused={paused.value}
-          activeFontId={isTextMode.value ? activeFontId.value : undefined}
+          activeFontId={undefined}
         />
       </div>
       <SettingsPanel
@@ -49,88 +51,61 @@ export function AppShell() {
 
 function Toolbar() {
   const p = currentPreset.value;
+  const variants = currentVariants.value;
   const mIds = machineIds();
-  const variants = presetsForMachine(p.machineId, p.type);
 
   return (
     <header class="toolbar">
       <h1 class="toolbar-title">CRT</h1>
-
       <div class="toolbar-divider" />
 
+      {/* Level 1: Machine */}
       <select class="toolbar-select"
-        value={`${p.machineId}:${p.type}`}
+        value={selectedMachineId.value}
         onChange={e => {
-          const val = (e.target as HTMLSelectElement).value;
-          const [mid, type] = val.split(':');
-          const variants = presetsForMachine(mid, type as 'text' | 'bitmap');
-          if (variants.length > 0) {
-            const idx = PRESETS.indexOf(variants[0]);
-            if (idx >= 0) presetIndex.value = idx;
-          }
+          selectedMachineId.value = (e.target as HTMLSelectElement).value;
+          selectedVariantIdx.value = 0;
         }}>
         {mIds.map(mid => (
-          <option key={mid} value={`${mid}:text`}>
-            {machineName(mid)}
-          </option>
-        ))}
-      </select>
-
-      <select class="toolbar-select"
-        value={currentMode.value}
-        onChange={e => {
-          const id = (e.target as HTMLSelectElement).value;
-          const idx = PRESETS.findIndex(pr => pr.id === id);
-          if (idx >= 0) presetIndex.value = idx;
-        }}>
-        {variants.map(v => (
-          <option key={v.id} value={v.id}>{v.label}</option>
+          <option key={mid} value={mid}>{machineName(mid)}</option>
         ))}
       </select>
 
       <div class="toolbar-divider" />
 
-      {isTextMode.value && (
-        <>
-          <select class="toolbar-select"
-            value={currentMode.value}
-            onChange={e => {
-              const id = (e.target as HTMLSelectElement).value;
-              const idx = PRESETS.findIndex(pr => pr.id === id);
-              if (idx >= 0) presetIndex.value = idx;
-            }}>
-            {PRESETS.filter(pr => pr.type === 'text').map(v => (
-              <option key={v.id} value={v.id}>{v.machineName} {v.label}</option>
-            ))}
-          </select>
-
-          <select class="toolbar-select"
-            value={activeFontId.value}
-            onChange={e => activeFontId.value = (e.target as HTMLSelectElement).value}>
-            {fontPresets.map(f => (
-              <option key={f.id} value={f.id}>{f.name}</option>
-            ))}
-          </select>
-        </>
-      )}
-
+      {/* Level 2: Text / Bitmap toggle */}
       <button class="toolbar-btn"
+        style={selectedType.value !== 'text' ? undefined : { background: '#2a4', color: '#000', borderColor: '#2a4' }}
         onClick={() => {
-          const cur = isTextMode.value ? 'text' : 'bitmap';
-          const target = cur === 'text' ? 'bitmap' : 'text';
-          const variants = presetsForMachine(p.machineId, target);
-          if (variants.length > 0) {
-            const idx = PRESETS.indexOf(variants[0]);
-            if (idx >= 0) presetIndex.value = idx;
-          }
+          selectedType.value = 'text';
+          selectedVariantIdx.value = 0;
         }}>
-        {isTextMode.value ? 'Bitmap' : 'Text'}
+        Text
+      </button>
+      <button class="toolbar-btn"
+        style={selectedType.value !== 'bitmap' ? undefined : { background: '#2a4', color: '#000', borderColor: '#2a4' }}
+        onClick={() => {
+          selectedType.value = 'bitmap';
+          selectedVariantIdx.value = 0;
+        }}>
+        Bitmap
       </button>
 
       <div class="toolbar-divider" />
 
+      {/* Level 3: Variant / Resolution */}
+      <select class="toolbar-select"
+        value={selectedVariantIdx.value}
+        onChange={e => {
+          selectedVariantIdx.value = Number((e.target as HTMLSelectElement).value);
+        }}>
+        {variants.map((v, i) => (
+          <option key={v.id} value={i}>{v.label}</option>
+        ))}
+      </select>
+
       <button class="toolbar-btn" onClick={() => paused.value = !paused.value}>
-        {paused.value ? '▶' : '⏸'}
+        {paused.value ? '>' : '||'}
       </button>
       <button class="toolbar-btn" onClick={() => showDebug.value = !showDebug.value}>
         {showDebug.value ? 'Dbg' : 'Debug'}

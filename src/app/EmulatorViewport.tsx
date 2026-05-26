@@ -8,11 +8,11 @@ import { AttributeBitmapDecoder } from '../video/modes/AttributeBitmapDecoder';
 import { createDefaultFont } from '../video/BitmapFont';
 import { loadBitmapFont } from '../video/fonts/FontLoader';
 import { globalFontRegistry } from '../video/fonts/FontRegistry';
-import { fontPresets, getFontPreset } from '../video/fonts/fontPresets';
+import { fontPresets, getFontPreset, getMapperIdForFont } from '../video/fonts/fontPresets';
 import type { Preset } from '../video/presets';
 import { createDemoTextScreen } from '../video/text/DemoTextScene';
 import { renderAttributeTextToFramebuffer } from '../video/text/TextModeRenderer';
-import { asciiCharMapper } from '../video/text/CharMapper';
+import { getMapper } from '../video/text/CharMapper';
 
 export interface EmulatorViewportProps {
   crt: CrtSettings;
@@ -65,10 +65,13 @@ export function EmulatorViewport({ crt, preset, paused, activeFontId }: Emulator
         }
         fontRef.current = font;
 
+        const mapperId = activeFontId ? getMapperIdForFont(activeFontId) : 'ascii';
+        const mapper = getMapper(mapperId);
+
         const screen = createDemoTextScreen(preset.cols, preset.rows);
         screenRef.current = screen;
 
-        renderAttributeTextToFramebuffer(screen, font, runtime.video.state.framebuffer, {}, asciiCharMapper);
+        renderAttributeTextToFramebuffer(screen, font, runtime.video.state.framebuffer, {}, mapper);
 
         const pal = loadPalette('zx-spectrum');
         if (pal && runtime.renderer) {
@@ -82,7 +85,8 @@ export function EmulatorViewport({ crt, preset, paused, activeFontId }: Emulator
           if (!runtimeRef.current) return;
           const r = runtimeRef.current;
           if (!r.renderer) { rafRef.current = requestAnimationFrame(loop); return; }
-          renderAttributeTextToFramebuffer(screenRef.current, fontRef.current, r.video.state.framebuffer, {}, asciiCharMapper);
+          const mid = activeFontId ? getMapperIdForFont(activeFontId) : 'ascii';
+          renderAttributeTextToFramebuffer(screenRef.current, fontRef.current, r.video.state.framebuffer, {}, getMapper(mid));
           r.video.state.frameNumber++;
           r.renderer.uploadFrame(r.video.state.framebuffer);
           r.renderer.render(r.video.state.frameNumber);
