@@ -179,19 +179,14 @@ export class WebGL2Renderer implements IRenderer {
     const { viewportWidth: vw, viewportHeight: vh, offsetX: ox, offsetY: oy, logicalWidth, logicalHeight } = vp;
 
     // Pass 1: palette mapping
-    const w = this.crt.enabled ? this.sourceWidth : Math.round(logicalWidth);
-    const h = this.crt.enabled ? this.sourceHeight : Math.round(logicalHeight);
-    const xOff = this.crt.enabled ? 0 : ox;
-    const yOff = this.crt.enabled ? 0 : oy;
-
     gl.bindFramebuffer(gl.FRAMEBUFFER, this.crt.enabled ? this.crtFbo : null);
     if (!this.crt.enabled) {
       gl.viewport(0, 0, cw, ch);
       gl.clearColor(0, 0, 0, 1);
       gl.clear(gl.COLOR_BUFFER_BIT);
-    }
-    gl.viewport(0, 0, w, h);
-    if (this.crt.enabled) {
+      gl.viewport(ox, oy, vw, vh);
+    } else {
+      gl.viewport(0, 0, this.sourceWidth, this.sourceHeight);
       gl.clearColor(0, 0, 0, 1);
       gl.clear(gl.COLOR_BUFFER_BIT);
     }
@@ -212,13 +207,13 @@ export class WebGL2Renderer implements IRenderer {
       gl.viewport(0, 0, cw, ch);
       gl.clearColor(0, 0, 0, 1);
       gl.clear(gl.COLOR_BUFFER_BIT);
-      gl.viewport(xOff, yOff, vw, vh);
+      gl.viewport(ox, oy, vw, vh);
       const cp = this.crtProgram!;
       gl.useProgram(cp);
       gl.activeTexture(gl.TEXTURE0);
       gl.bindTexture(gl.TEXTURE_2D, this.crtTex);
       gl.uniform1i(gl.getUniformLocation(cp, 'uTexture'), 0);
-      gl.uniform2f(gl.getUniformLocation(cp, 'uResolution'), w, h);
+      gl.uniform2f(gl.getUniformLocation(cp, 'uResolution'), this.sourceWidth, this.sourceHeight);
       gl.uniform2f(gl.getUniformLocation(cp, 'uOutputSize'), vw, vh);
       gl.uniform1f(gl.getUniformLocation(cp, 'uCurvature'), this.crt.curvature);
       gl.uniform1f(gl.getUniformLocation(cp, 'uScanlineStrength'), this.crt.scanlineStrength);
