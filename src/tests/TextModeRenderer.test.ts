@@ -2,6 +2,7 @@ import { describe, it, expect } from 'vitest';
 import { renderGlyphToFramebuffer, renderAttributeTextToFramebuffer, renderCharsetTable } from '../video/text/TextModeRenderer';
 import { AttributeTextScreen } from '../video/text/AttributeTextScreen';
 import { loadFontFromBin, createDefaultFont } from '../video/BitmapFont';
+import { asciiCharMapper } from '../video/text/CharMapper';
 
 describe('renderGlyphToFramebuffer', () => {
   it('renders glyph with MSB-first bit order', () => {
@@ -47,6 +48,23 @@ describe('renderAttributeTextToFramebuffer', () => {
     const fb = new Uint8Array(32 * 32);
     renderAttributeTextToFramebuffer(screen, font, fb);
     expect(fb[0]).toBe(7);
+  });
+
+  it('invertMsb swaps fg/bg when charCode >= 128', () => {
+    const font = createDefaultFont(8, 8);
+    const screen = new AttributeTextScreen(4, 4);
+    screen.clear(32, 3, 9);
+    screen.writeText(0, 0, 'A', 7, 0);
+    const fb = new Uint8Array(32 * 32);
+    const fb2 = new Uint8Array(32 * 32);
+    renderAttributeTextToFramebuffer(screen, font, fb, {}, asciiCharMapper);
+    renderAttributeTextToFramebuffer(screen, font, fb2, { invertMsb: true }, asciiCharMapper);
+    expect(fb[0]).toBe(7);
+    expect(fb2[0]).toBe(7);
+    screen.putChar(0, 0, 'A'.charCodeAt(0) | 0x80, 7, 0);
+    const fb3 = new Uint8Array(32 * 32);
+    renderAttributeTextToFramebuffer(screen, font, fb3, { invertMsb: true }, asciiCharMapper);
+    expect(fb3[0]).toBe(0);
   });
 });
 

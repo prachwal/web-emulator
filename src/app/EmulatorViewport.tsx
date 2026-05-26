@@ -74,7 +74,8 @@ export function EmulatorViewport({ crt, preset, paused, activeFontId }: Emulator
         const screen = createDemoForMachine(preset.machineId, preset.cols, preset.rows);
         screenRef.current = screen;
 
-        renderAttributeTextToFramebuffer(screen, font, runtime.video.state.framebuffer, {}, mapper);
+        const textOpts = { invertMsb: preset.machineId === 'apple1' };
+        renderAttributeTextToFramebuffer(screen, font, runtime.video.state.framebuffer, textOpts, mapper);
 
         runtime.start();
 
@@ -84,7 +85,7 @@ export function EmulatorViewport({ crt, preset, paused, activeFontId }: Emulator
           if (!r.renderer) { rafRef.current = requestAnimationFrame(loop); return; }
           const mid = activeFontId ? getMapperIdForFont(activeFontId) : 'ascii';
           const fb = r.video.state.framebuffer;
-          renderAttributeTextToFramebuffer(screenRef.current, fontRef.current, fb, {}, getMapper(mid));
+          renderAttributeTextToFramebuffer(screenRef.current, fontRef.current, fb, textOpts, getMapper(mid));
           r.video.state.frameNumber++;
           r.renderer.uploadFrame(fb);
           r.renderer.render(r.video.state.frameNumber);

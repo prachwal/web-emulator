@@ -8,6 +8,7 @@ import { asciiCharMapper } from './CharMapper';
 export interface TextRenderOptions {
   invert?: boolean;
   flashPhase?: boolean;
+  invertMsb?: boolean;
 }
 
 export function renderAttributeTextToFramebuffer(
@@ -26,9 +27,13 @@ export function renderAttributeTextToFramebuffer(
     for (let col = 0; col < screen.columns; col++) {
       const cellIndex = row * screen.columns + col;
 
-      const charCode = mapper.mapCharCode(screen.chars[cellIndex]);
-      const fgColor = options.invert ? screen.background[cellIndex] : screen.foreground[cellIndex];
-      const bgColor = options.invert ? screen.foreground[cellIndex] : screen.background[cellIndex];
+      let charCode = mapper.mapCharCode(screen.chars[cellIndex]);
+      const invertGlobal = !!options.invert;
+      const invertCell = !!(options.invertMsb && charCode >= 128);
+      if (invertCell) charCode &= 0x7f;
+      const swap = invertGlobal !== invertCell;
+      const fgColor = swap ? screen.background[cellIndex] : screen.foreground[cellIndex];
+      const bgColor = swap ? screen.foreground[cellIndex] : screen.background[cellIndex];
 
       renderGlyphToFramebuffer(
         font, charCode, framebuffer,

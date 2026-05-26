@@ -163,22 +163,27 @@ function createApple1Demo(cols: number, rows: number): AttributeTextScreen {
   const s = new AttributeTextScreen(cols, rows);
   s.clear(32, 1, 0);
   const w = (x: number, y: number, t: string, f = 1, b = 0) => s.writeText(x, y, t, f, b);
+  const wi = (x: number, y: number, t: string, f = 1, b = 0) => {
+    for (let i = 0; i < t.length; i++) s.putChar(x + i, y, t.charCodeAt(i) | 0x80, f, b);
+  };
   w(0, 0, 'APPLE 1  |  WOZ MONITOR', 2, 0);
   w(0, 1, bar(cols, '\\'), 2, 0);
-  w(1, 3, '\\]10 PRINT "HELLO"', 1, 0);
-  w(1, 4, '\\]20 GOTO 10', 1, 0);
-  w(1, 5, '\\]RUN', 10, 0);
-  if (rows > 7) {
-    w(4, 7, 'HELLO', 1, 0);
-    w(4, 8, 'HELLO', 1, 0);
-  }
+  wi(0, 2, bar(cols, '='), 0, 1);
+  wi(0, 3, ' APPLE 1 DEMO ', 0, 1);
+  wi(0, 4, bar(cols, '='), 0, 1);
+  w(1, 6, '\\]10 PRINT "HELLO"', 1, 0);
+  w(1, 7, '\\]20 GOTO 10', 1, 0);
+  w(1, 8, '\\]RUN', 10, 0);
   if (rows > 10) {
-    w(1, 10, '\\].R', 6, 0);
-    w(1, 11, 'A=0.A0: 00 00 00 00 ...', 6, 0);
+    w(4, 10, 'HELLO', 1, 0);
   }
-  if (rows > 13) {
-    w(1, 13, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 1, 0);
-    w(1, 14, '0123456789', 1, 0);
+  if (rows > 12) {
+    w(1, 12, '\\].R', 6, 0);
+    w(1, 13, 'A=0.A0: 00 00 00 00', 6, 0);
+  }
+  if (rows > 15) {
+    w(1, 15, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 1, 0);
+    w(1, 16, '0123456789', 1, 0);
   }
   return s;
 }
