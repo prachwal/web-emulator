@@ -252,3 +252,40 @@ body {
   pointer-events: none;
   z-index: 100;
 }
+
+/* ── Display Settings Panel ───────────── */
+.settings-panel {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 6px 12px;
+  background: #1e1e1e;
+  border-top: 1px solid #333;
+  font-size: 11px;
+  align-items: center;
+}
+
+.settings-section {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.settings-select {
+  font-size: 10px;
+  padding: 2px 4px;
+}
+
+.settings-slider {
+  width: 64px;
+  vertical-align: middle;
+}
+
+.settings-value {
+  width: 30px;
+  display: inline-block;
+  text-align: right;
+  font-family: monospace;
+  font-size: 10px;
+  color: #aaa;
+}

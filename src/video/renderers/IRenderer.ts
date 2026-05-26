@@ -17,5 +17,7 @@ export interface IRenderer {
   uploadFrame(framebuffer: Uint8Array): void;
   render(frameNumber: number): void;
   updateCrt(settings: CrtSettings): void;
+  setBorderColor(color: [number, number, number]): void;
+  setScaling(parMultiplier: number, integerScale: boolean): void;
   dispose(): void;
 }

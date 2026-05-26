@@ -23,6 +23,8 @@ export class Canvas2DRenderer implements IRenderer {
     chromaticAberration: 0, noiseStrength: 0,
     phosphorPersistence: 0, interlace: false, vignette: 0,
   };
+  private borderColor: [number, number, number] = [0, 0, 0];
+  private integerScale: boolean = true;
 
   initialize(options: RendererOptions): void {
     this.canvas = options.canvas;
@@ -57,6 +59,14 @@ export class Canvas2DRenderer implements IRenderer {
     this.crt = settings;
   }
 
+  setBorderColor(color: [number, number, number]): void {
+    this.borderColor = color;
+  }
+
+  setScaling(parMultiplier: number, integerScale: boolean): void {
+    this.integerScale = integerScale;
+  }
+
   render(_frameNumber: number): void {
     if (!this.ctx || !this.canvas) return;
     const ctx = this.ctx;
@@ -64,14 +74,15 @@ export class Canvas2DRenderer implements IRenderer {
     const ch = this.canvas.height;
 
     ctx.imageSmoothingEnabled = false;
-    ctx.fillStyle = '#000';
+    const br = this.borderColor;
+    ctx.fillStyle = `rgb(${Math.round(br[0]*255)},${Math.round(br[1]*255)},${Math.round(br[2]*255)})`;
     ctx.fillRect(0, 0, cw, ch);
 
     const geo: DisplayGeometry = {
       sourceWidth: this.sourceWidth,
       sourceHeight: this.sourceHeight,
       pixelAspectRatio: this.pixelAspectRatio,
-      integerScale: true,
+      integerScale: this.integerScale,
       overscanX: 0,
       overscanY: 0,
     };

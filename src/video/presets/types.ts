@@ -42,6 +42,7 @@ export interface Preset {
   screenBg: string;
   bezelColor: string;
   labelColor: string;
+  borderColor?: string;
   palette: string[];
   videoMode?: VideoMode;
   graphicsRenderer?: string;
@@ -82,6 +83,7 @@ export const T = (
   margins: Margins, fg: string, bg: string, screen: string, bezel: string, labelClr: string,
   palette: string[],
   vmode?: VideoMode,
+  borderColor?: string,
 ): Preset => ({
   id, machineId, machineName, type: 'text', label: `${cols}×${rows}`,
   cols, rows, charWidth: cw, charHeight: ch,
@@ -91,6 +93,7 @@ export const T = (
   margins, fgColor: fg, bgColor: bg, screenBg: screen,
   bezelColor: bezel, labelColor: labelClr, palette,
   videoMode: vmode,
+  borderColor: borderColor ?? screen,
 });
 
 export const G = (
@@ -102,6 +105,7 @@ export const G = (
   margins: Margins, fg: string, bg: string, screen: string, bezel: string, labelClr: string,
   palette: string[], renderer: string,
   vmode?: VideoMode,
+  borderColor?: string,
 ): Preset => ({
   id, machineId, machineName, type: 'bitmap', label,
   cols, rows, charWidth: geom.glyphWidth, charHeight: geom.glyphHeight,
@@ -111,6 +115,7 @@ export const G = (
   margins, fgColor: fg, bgColor: bg, screenBg: screen,
   bezelColor: bezel, labelColor: labelClr, palette,
   graphicsRenderer: renderer, videoMode: vmode,
+  borderColor: borderColor ?? screen,
 });
 
 export const m = (t: number, r: number, b: number, l: number): Margins =>

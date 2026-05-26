@@ -11,6 +11,7 @@ import { createDemoForMachine } from '../video/text/DemoTextScene';
 import { renderAttributeTextToFramebuffer } from '../video/text/TextModeRenderer';
 import { getMapper } from '../video/text/CharMapper';
 import { loadImage, imageToIndexedFramebuffer } from '../video/image/ImageLoader';
+import { displaySettings, parseHexColor } from './DisplaySettings';
 
 export interface EmulatorViewportProps {
   crt: CrtSettings;
@@ -39,6 +40,13 @@ export function EmulatorViewport({ crt, preset, paused, activeFontId }: Emulator
         sourceHeight: preset.framebufferHeight,
         pixelAspectRatio: preset.pixelAspectRatio,
       });
+      if (runtime.renderer && preset.borderColor) {
+        runtime.renderer.setBorderColor(parseHexColor(preset.borderColor));
+      }
+      const ds = displaySettings.value;
+      if (!ds.showBorder && runtime.renderer) {
+        runtime.renderer.setBorderColor([0, 0, 0]);
+      }
       runtime.renderer?.uploadPalette(paletteToRgbaBytes(preset.palette));
       const isText = preset.type === 'text';
       const fw = preset.framebufferWidth;
@@ -128,6 +136,17 @@ export function EmulatorViewport({ crt, preset, paused, activeFontId }: Emulator
       runtimeRef.current = null;
     };
   }, [preset, activeFontId]);
+
+  useEffect(() => {
+    const r = runtimeRef.current;
+    if (!r?.renderer) return;
+    const ds = displaySettings.value;
+    r.renderer.setScaling(ds.parMultiplier, ds.scaleMode === 'integer');
+    const borderClr = ds.showBorder && preset.borderColor
+      ? parseHexColor(preset.borderColor)
+      : [0, 0, 0] as [number, number, number];
+    r.renderer.setBorderColor(borderClr);
+  }, [displaySettings.value, preset]);
 
   useEffect(() => {
     runtimeRef.current?.setCrt(crt);

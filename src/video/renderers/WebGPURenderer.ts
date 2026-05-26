@@ -24,6 +24,14 @@ export class WebGPURenderer implements IRenderer {
     // noop
   }
 
+  setBorderColor(_color: [number, number, number]): void {
+    // noop
+  }
+
+  setScaling(_parMultiplier: number, _integerScale: boolean): void {
+    // noop
+  }
+
   render(_frameNumber: number): void {
     // noop
   }

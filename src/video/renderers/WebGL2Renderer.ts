@@ -65,11 +65,16 @@ export class WebGL2Renderer implements IRenderer {
     phosphorPersistence: 0, interlace: false, vignette: 0,
   };
 
+  private borderColor: [number, number, number] = [0, 0, 0];
+  private integerScale: boolean = true;
+  private basePixelAspectRatio: number = 1;
+
   initialize(options: RendererOptions): void {
     this.canvas = options.canvas;
     this.sourceWidth = options.sourceWidth;
     this.sourceHeight = options.sourceHeight;
     this.pixelAspectRatio = options.pixelAspectRatio;
+    this.basePixelAspectRatio = options.pixelAspectRatio;
     this.crt = options.crt;
 
     const gl = this.canvas.getContext('webgl2', {
@@ -171,7 +176,7 @@ export class WebGL2Renderer implements IRenderer {
       sourceWidth: this.sourceWidth,
       sourceHeight: this.sourceHeight,
       pixelAspectRatio: this.pixelAspectRatio,
-      integerScale: true,
+      integerScale: this.integerScale,
       overscanX: 0,
       overscanY: 0,
     };
@@ -182,12 +187,12 @@ export class WebGL2Renderer implements IRenderer {
     gl.bindFramebuffer(gl.FRAMEBUFFER, this.crt.enabled ? this.crtFbo : null);
     if (!this.crt.enabled) {
       gl.viewport(0, 0, cw, ch);
-      gl.clearColor(0, 0, 0, 1);
+      gl.clearColor(this.borderColor[0], this.borderColor[1], this.borderColor[2], 1);
       gl.clear(gl.COLOR_BUFFER_BIT);
       gl.viewport(ox, oy, vw, vh);
     } else {
       gl.viewport(0, 0, this.sourceWidth, this.sourceHeight);
-      gl.clearColor(0, 0, 0, 1);
+      gl.clearColor(this.borderColor[0], this.borderColor[1], this.borderColor[2], 1);
       gl.clear(gl.COLOR_BUFFER_BIT);
     }
     gl.useProgram(this.paletteProgram);
@@ -205,7 +210,7 @@ export class WebGL2Renderer implements IRenderer {
       // Pass 2: CRT composite
       gl.bindFramebuffer(gl.FRAMEBUFFER, null);
       gl.viewport(0, 0, cw, ch);
-      gl.clearColor(0, 0, 0, 1);
+      gl.clearColor(this.borderColor[0], this.borderColor[1], this.borderColor[2], 1);
       gl.clear(gl.COLOR_BUFFER_BIT);
       gl.viewport(ox, oy, vw, vh);
       const cp = this.crtProgram!;
@@ -225,6 +230,15 @@ export class WebGL2Renderer implements IRenderer {
       gl.bindVertexArray(this.vao);
       gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
     }
+  }
+
+  setBorderColor(color: [number, number, number]): void {
+    this.borderColor = color;
+  }
+
+  setScaling(parMultiplier: number, integerScale: boolean): void {
+    this.pixelAspectRatio = this.basePixelAspectRatio * parMultiplier;
+    this.integerScale = integerScale;
   }
 
   dispose(): void {

@@ -2,6 +2,7 @@ import { signal, computed } from '@preact/signals';
 import { EmulatorViewport } from './EmulatorViewport';
 import { SettingsPanel } from './SettingsPanel';
 import { DebugOverlay } from './DebugOverlay';
+import { DisplaySettingsPanel } from './DisplaySettingsPanel';
 import type { CrtSettings } from '../core/types';
 import { defaultCrtSettings } from '../core/types';
 import {
@@ -11,6 +12,7 @@ import {
 
 const crt = signal<CrtSettings>(defaultCrtSettings());
 const showDebug = signal(false);
+const showDisplay = signal(false);
 const paused = signal(false);
 
 // Three-level selection state
@@ -54,6 +56,7 @@ export function AppShell() {
           </div>
         </div>
       </div>
+      {showDisplay.value && <DisplaySettingsPanel />}
       <SettingsPanel
         crt={crt.value}
         onCrtChange={u => crt.value = { ...crt.value, ...u }}
@@ -167,6 +170,10 @@ function Toolbar() {
       </button>
       <button class="toolbar-btn" onClick={() => showDebug.value = !showDebug.value}>
         {showDebug.value ? 'Dbg' : 'Debug'}
+      </button>
+      <button class="toolbar-btn" onClick={() => showDisplay.value = !showDisplay.value}
+        style={showDisplay.value ? { background: '#2a4', color: '#000', borderColor: '#2a4' } : undefined}>
+        Disp
       </button>
     </header>
   );
