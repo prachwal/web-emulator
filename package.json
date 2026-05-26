@@ -1,0 +1,27 @@
+{
+  "name": "crt-webapp",
+  "private": true,
+  "version": "0.0.1",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "preview": "vite preview",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:ui": "vitest --ui",
+    "test:e2e": "playwright test",
+    "wasm:build": "cd go-core && GOOS=js GOARCH=wasm go build -o ../public/wasm/emulator.wasm ./cmd/wasm",
+    "lint": "tsc --noEmit"
+  },
+  "dependencies": {
+    "preact": "^10.26.4"
+  },
+  "devDependencies": {
+    "@preact/preset-vite": "^2.10.1",
+    "typescript": "~5.7.3",
+    "vite": "^6.3.0",
+    "vitest": "^3.1.0",
+    "jsdom": "^26.0.0"
+  }
+}
