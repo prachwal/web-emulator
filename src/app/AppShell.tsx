@@ -32,13 +32,22 @@ export function AppShell() {
   return (
     <div class="app-layout">
       <Toolbar />
-      <div class="viewport">
-        <EmulatorViewport
-          crt={crt.value}
-          preset={currentPreset.value}
-          paused={paused.value}
-          activeFontId={undefined}
-        />
+      <div class="viewport-stage">
+        <div class="crt-bezel">
+          <div class="crt-power-led" />
+          <div class="crt-screen">
+            <div class="crt-screen-glow" />
+            <div class="crt-tube">
+              <EmulatorViewport
+                crt={crt.value}
+                preset={currentPreset.value}
+                paused={paused.value}
+                activeFontId={currentPreset.value.fontId}
+              />
+            </div>
+          </div>
+          <div class="crt-nameplate">{currentPreset.value.machineName} {currentPreset.value.label}</div>
+        </div>
       </div>
       <SettingsPanel
         crt={crt.value}
@@ -63,7 +72,11 @@ function Toolbar() {
       <select class="toolbar-select"
         value={selectedMachineId.value}
         onChange={e => {
-          selectedMachineId.value = (e.target as HTMLSelectElement).value;
+          const nextMachineId = (e.target as HTMLSelectElement).value;
+          selectedMachineId.value = nextMachineId;
+          if (presetsForMachine(nextMachineId, selectedType.value).length === 0) {
+            selectedType.value = presetsForMachine(nextMachineId, 'text').length > 0 ? 'text' : 'bitmap';
+          }
           selectedVariantIdx.value = 0;
         }}>
         {mIds.map(mid => (
@@ -75,16 +88,20 @@ function Toolbar() {
 
       {/* Level 2: Text / Bitmap toggle */}
       <button class="toolbar-btn"
+        disabled={presetsForMachine(selectedMachineId.value, 'text').length === 0}
         style={selectedType.value !== 'text' ? undefined : { background: '#2a4', color: '#000', borderColor: '#2a4' }}
         onClick={() => {
+          if (presetsForMachine(selectedMachineId.value, 'text').length === 0) return;
           selectedType.value = 'text';
           selectedVariantIdx.value = 0;
         }}>
         Text
       </button>
       <button class="toolbar-btn"
+        disabled={presetsForMachine(selectedMachineId.value, 'bitmap').length === 0}
         style={selectedType.value !== 'bitmap' ? undefined : { background: '#2a4', color: '#000', borderColor: '#2a4' }}
         onClick={() => {
+          if (presetsForMachine(selectedMachineId.value, 'bitmap').length === 0) return;
           selectedType.value = 'bitmap';
           selectedVariantIdx.value = 0;
         }}>

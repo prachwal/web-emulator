@@ -61,6 +61,23 @@ export function createBasicDemoScene(columns: number, rows: number): TextScreen 
   return screen;
 }
 
+export function createDiagnosticScreen(columns: number, rows: number): AttributeTextScreen {
+  const screen = new AttributeTextScreen(columns, rows);
+  screen.clear(32, 15, 0);
+
+  screen.writeText(0, 0, 'TL ABC123', 15, 0);
+  screen.writeText(columns - 2, 0, 'TR', 14, 0);
+
+  screen.writeText(0, 3, 'AAA', 10, 0);
+  screen.writeText(0, 4, 'BBB', 11, 0);
+  screen.writeText(0, 5, 'CCC', 12, 0);
+
+  screen.writeText(0, rows - 1, 'BL', 13, 0);
+  screen.writeText(columns - 2, rows - 1, 'BR', 9, 0);
+
+  return screen;
+}
+
 export function createColorTestScreen(columns: number, rows: number): AttributeTextScreen {
   const screen = new AttributeTextScreen(columns, rows);
   screen.clear(32, 15, 0);

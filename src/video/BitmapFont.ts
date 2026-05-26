@@ -9,10 +9,15 @@ export interface BitmapFont {
   bytesPerGlyph: number;
   data: Uint8Array;
   bitOrder: BitOrder;
+  xBits?: number[];
+  invertBits?: boolean;
   sourcePath?: string;
 }
 
 export function getGlyphData(font: BitmapFont, charCode: number): Uint8Array {
+  if (charCode < 0 || charCode >= font.glyphCount) {
+    return new Uint8Array(font.bytesPerGlyph);
+  }
   const idx = charCode * font.bytesPerGlyph;
   if (idx + font.bytesPerGlyph > font.data.length) {
     return new Uint8Array(font.bytesPerGlyph);
@@ -30,12 +35,10 @@ export function getGlyphBit(
   const byteIndex = y;
   if (byteIndex >= glyphData.length) return 0;
 
-  const bits = glyphData[byteIndex];
-  if (font.bitOrder === 'msb-left') {
-    return (bits >> (7 - x)) & 1;
-  } else {
-    return (bits >> x) & 1;
-  }
+  const bits = font.invertBits ? glyphData[byteIndex] ^ 0xff : glyphData[byteIndex];
+  const bit = font.xBits?.[x] ?? (font.bitOrder === 'msb-left' ? 7 - x : x);
+  if (bit < 0 || bit > 7) return 0;
+  return (bits >> bit) & 1;
 }
 
 export function loadFontFromBin(
@@ -47,6 +50,8 @@ export function loadFontFromBin(
   charHeight: number,
   bitOrder: BitOrder = 'msb-left',
   sourcePath?: string,
+  xBits?: number[],
+  invertBits?: boolean,
 ): BitmapFont {
   const bytesPerGlyph = charHeight * Math.ceil(charWidth / 8);
   return {
@@ -59,6 +64,8 @@ export function loadFontFromBin(
     data,
     bitOrder,
     sourcePath,
+    xBits,
+    invertBits,
   };
 }
 

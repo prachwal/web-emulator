@@ -30,13 +30,19 @@ export class EmulatorRuntime {
     };
   }
 
-  async initCanvas(canvas: HTMLCanvasElement | OffscreenCanvas): Promise<void> {
+  async initCanvas(
+    canvas: HTMLCanvasElement | OffscreenCanvas,
+    options?: { sourceWidth: number; sourceHeight: number; pixelAspectRatio: number },
+  ): Promise<void> {
     const profile = this.config.profile;
+    const sourceWidth = options?.sourceWidth ?? profile.sourceWidth;
+    const sourceHeight = options?.sourceHeight ?? profile.sourceHeight;
+    const pixelAspectRatio = options?.pixelAspectRatio ?? profile.pixelAspectRatio;
     this.renderer = await createRenderer({
       canvas,
-      sourceWidth: profile.sourceWidth,
-      sourceHeight: profile.sourceHeight,
-      pixelAspectRatio: profile.pixelAspectRatio,
+      sourceWidth,
+      sourceHeight,
+      pixelAspectRatio,
       crt: this.config.crt,
       preferred: 'auto',
     });

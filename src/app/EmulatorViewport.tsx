@@ -2,13 +2,13 @@ import { useRef, useEffect } from 'preact/hooks';
 import type { CrtSettings } from '../core/types';
 import { EmulatorRuntime } from '../core/EmulatorRuntime';
 import { Framebuffer } from '../video/Framebuffer';
-import { loadPalette, paletteToRgba } from '../video/Palette';
+import { paletteToRgbaBytes } from '../video/Palette';
 import { TextModeDecoder } from '../video/modes/TextModeDecoder';
 import { AttributeBitmapDecoder } from '../video/modes/AttributeBitmapDecoder';
 import { createDefaultFont } from '../video/BitmapFont';
 import { loadBitmapFont } from '../video/fonts/FontLoader';
 import { globalFontRegistry } from '../video/fonts/FontRegistry';
-import { fontPresets, getFontPreset, getMapperIdForFont } from '../video/fonts/fontPresets';
+import { getFontPreset, getMapperIdForFont } from '../video/fonts/fontPresets';
 import type { Preset } from '../video/presets';
 import { createDemoTextScreen } from '../video/text/DemoTextScene';
 import { renderAttributeTextToFramebuffer } from '../video/text/TextModeRenderer';
@@ -36,7 +36,12 @@ export function EmulatorViewport({ crt, preset, paused, activeFontId }: Emulator
     runtimeRef.current = runtime;
 
     (async () => {
-      await runtime.initCanvas(canvas);
+      await runtime.initCanvas(canvas, {
+        sourceWidth: preset.framebufferWidth,
+        sourceHeight: preset.framebufferHeight,
+        pixelAspectRatio: preset.pixelAspectRatio,
+      });
+      runtime.renderer?.uploadPalette(paletteToRgbaBytes(preset.palette));
       const isText = preset.type === 'text';
       const fw = preset.framebufferWidth;
       const fh = preset.framebufferHeight;
@@ -73,12 +78,6 @@ export function EmulatorViewport({ crt, preset, paused, activeFontId }: Emulator
 
         renderAttributeTextToFramebuffer(screen, font, runtime.video.state.framebuffer, {}, mapper);
 
-        const pal = loadPalette('zx-spectrum');
-        if (pal && runtime.renderer) {
-          runtime.video.state.palette = pal.colors;
-          runtime.renderer.uploadPalette(paletteToRgba(pal));
-        }
-
         runtime.start();
 
         const loop = () => {
@@ -86,9 +85,10 @@ export function EmulatorViewport({ crt, preset, paused, activeFontId }: Emulator
           const r = runtimeRef.current;
           if (!r.renderer) { rafRef.current = requestAnimationFrame(loop); return; }
           const mid = activeFontId ? getMapperIdForFont(activeFontId) : 'ascii';
-          renderAttributeTextToFramebuffer(screenRef.current, fontRef.current, r.video.state.framebuffer, {}, getMapper(mid));
+          const fb = r.video.state.framebuffer;
+          renderAttributeTextToFramebuffer(screenRef.current, fontRef.current, fb, {}, getMapper(mid));
           r.video.state.frameNumber++;
-          r.renderer.uploadFrame(r.video.state.framebuffer);
+          r.renderer.uploadFrame(fb);
           r.renderer.render(r.video.state.frameNumber);
           rafRef.current = requestAnimationFrame(loop);
         };

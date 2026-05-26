@@ -108,7 +108,7 @@ export function renderCharsetTable(
 
     renderGlyphToFramebuffer(
       tableFont, i, framebuffer,
-      outputWidth, outputWidth,
+      outputWidth, rows * font.charHeight,
       px, py, fgColor, bgColor,
     );
   }

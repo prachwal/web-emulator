@@ -95,6 +95,8 @@ export class WebGL2Renderer implements IRenderer {
     gl.enableVertexAttribArray(1);
     gl.vertexAttribPointer(1, 2, gl.FLOAT, false, 16, 8);
 
+    gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, 1);
+
     this.indexTexture = gl.createTexture()!;
     gl.bindTexture(gl.TEXTURE_2D, this.indexTexture);
     gl.texImage2D(gl.TEXTURE_2D, 0, gl.R8, this.sourceWidth, this.sourceHeight, 0, gl.RED, gl.UNSIGNED_BYTE, null);
@@ -183,7 +185,16 @@ export class WebGL2Renderer implements IRenderer {
     const yOff = this.crt.enabled ? 0 : oy;
 
     gl.bindFramebuffer(gl.FRAMEBUFFER, this.crt.enabled ? this.crtFbo : null);
+    if (!this.crt.enabled) {
+      gl.viewport(0, 0, cw, ch);
+      gl.clearColor(0, 0, 0, 1);
+      gl.clear(gl.COLOR_BUFFER_BIT);
+    }
     gl.viewport(0, 0, w, h);
+    if (this.crt.enabled) {
+      gl.clearColor(0, 0, 0, 1);
+      gl.clear(gl.COLOR_BUFFER_BIT);
+    }
     gl.useProgram(this.paletteProgram);
     gl.activeTexture(gl.TEXTURE0);
     gl.bindTexture(gl.TEXTURE_2D, this.indexTexture);
@@ -198,6 +209,9 @@ export class WebGL2Renderer implements IRenderer {
     if (this.crt.enabled) {
       // Pass 2: CRT composite
       gl.bindFramebuffer(gl.FRAMEBUFFER, null);
+      gl.viewport(0, 0, cw, ch);
+      gl.clearColor(0, 0, 0, 1);
+      gl.clear(gl.COLOR_BUFFER_BIT);
       gl.viewport(xOff, yOff, vw, vh);
       const cp = this.crtProgram!;
       gl.useProgram(cp);

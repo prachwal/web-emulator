@@ -10,6 +10,9 @@ export interface FontPreset extends LoadBitmapFontOptions {
   mapperId: 'ascii' | 'petscii';
 }
 
+const msb8 = [7, 6, 5, 4, 3, 2, 1, 0];
+const lsb8 = [0, 1, 2, 3, 4, 5, 6, 7];
+
 export const fontPresets: FontPreset[] = [
   {
     id: 'zx-spectrum',
@@ -20,6 +23,7 @@ export const fontPresets: FontPreset[] = [
     glyphCount: 128,
     charWidth: 8, charHeight: 8, bytesPerGlyph: 8,
     bitOrder: 'msb-left', offset: 0,
+    xBits: msb8,
     mapperId: 'ascii',
   },
   {
@@ -31,6 +35,7 @@ export const fontPresets: FontPreset[] = [
     glyphCount: 512,
     charWidth: 8, charHeight: 8, bytesPerGlyph: 8,
     bitOrder: 'msb-left', offset: 0,
+    xBits: msb8,
     mapperId: 'petscii',
   },
   {
@@ -42,6 +47,7 @@ export const fontPresets: FontPreset[] = [
     glyphCount: 256,
     charWidth: 8, charHeight: 8, bytesPerGlyph: 8,
     bitOrder: 'msb-left', offset: 0,
+    xBits: msb8,
     mapperId: 'petscii',
   },
   {
@@ -53,6 +59,7 @@ export const fontPresets: FontPreset[] = [
     glyphCount: 256,
     charWidth: 8, charHeight: 8, bytesPerGlyph: 8,
     bitOrder: 'msb-left', offset: 2048,
+    xBits: msb8,
     mapperId: 'petscii',
   },
   {
@@ -64,6 +71,7 @@ export const fontPresets: FontPreset[] = [
     glyphCount: 512,
     charWidth: 8, charHeight: 8, bytesPerGlyph: 8,
     bitOrder: 'msb-left', offset: 0,
+    xBits: msb8,
     mapperId: 'petscii',
   },
   {
@@ -75,6 +83,7 @@ export const fontPresets: FontPreset[] = [
     glyphCount: 256,
     charWidth: 8, charHeight: 8, bytesPerGlyph: 8,
     bitOrder: 'msb-left', offset: 0,
+    xBits: msb8,
     mapperId: 'petscii',
   },
   {
@@ -86,6 +95,7 @@ export const fontPresets: FontPreset[] = [
     glyphCount: 512,
     charWidth: 8, charHeight: 8, bytesPerGlyph: 8,
     bitOrder: 'msb-left', offset: 0,
+    xBits: msb8,
     mapperId: 'petscii',
   },
   {
@@ -97,6 +107,7 @@ export const fontPresets: FontPreset[] = [
     glyphCount: 128,
     charWidth: 8, charHeight: 8, bytesPerGlyph: 8,
     bitOrder: 'lsb-left', offset: 0,
+    xBits: lsb8,
     mapperId: 'ascii',
   },
   {
@@ -108,6 +119,7 @@ export const fontPresets: FontPreset[] = [
     glyphCount: 256,
     charWidth: 8, charHeight: 8, bytesPerGlyph: 8,
     bitOrder: 'msb-left', offset: 0,
+    xBits: msb8,
     mapperId: 'ascii',
   },
   {
@@ -119,6 +131,7 @@ export const fontPresets: FontPreset[] = [
     glyphCount: 256,
     charWidth: 8, charHeight: 8, bytesPerGlyph: 8,
     bitOrder: 'msb-left', offset: 0,
+    xBits: msb8,
     mapperId: 'ascii',
   },
   {
@@ -130,6 +143,7 @@ export const fontPresets: FontPreset[] = [
     glyphCount: 256,
     charWidth: 8, charHeight: 14, bytesPerGlyph: 14,
     bitOrder: 'msb-left', offset: 0,
+    xBits: msb8,
     mapperId: 'ascii',
   },
   {
@@ -141,6 +155,7 @@ export const fontPresets: FontPreset[] = [
     glyphCount: 128,
     charWidth: 6, charHeight: 8, bytesPerGlyph: 8,
     bitOrder: 'msb-left', offset: 0,
+    xBits: [0, 1, 2, 3, 4, 5],
     mapperId: 'ascii',
   },
   {
@@ -152,6 +167,7 @@ export const fontPresets: FontPreset[] = [
     glyphCount: 256,
     charWidth: 8, charHeight: 8, bytesPerGlyph: 8,
     bitOrder: 'msb-left', offset: 0,
+    xBits: lsb8,
     mapperId: 'ascii',
   },
   {
@@ -163,6 +179,8 @@ export const fontPresets: FontPreset[] = [
     glyphCount: 256,
     charWidth: 7, charHeight: 8, bytesPerGlyph: 8,
     bitOrder: 'msb-left', offset: 0,
+    xBits: [-1, 4, 3, 2, 1, 0, -1],
+    invertBits: true,
     mapperId: 'ascii',
   },
   {
@@ -174,6 +192,7 @@ export const fontPresets: FontPreset[] = [
     glyphCount: 256,
     charWidth: 8, charHeight: 16, bytesPerGlyph: 16,
     bitOrder: 'msb-left', offset: 0,
+    xBits: msb8,
     mapperId: 'ascii',
   },
 ];

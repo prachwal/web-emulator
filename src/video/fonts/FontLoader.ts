@@ -10,6 +10,9 @@ export type LoadBitmapFontOptions = {
   glyphCount?: number;
   bitOrder?: BitOrder;
   offset?: number;
+  bytesPerGlyph?: number;
+  xBits?: number[];
+  invertBits?: boolean;
   sourcePath?: string;
 };
 
@@ -23,6 +26,9 @@ export async function loadBitmapFont(
     glyphCount = 256,
     bitOrder = 'msb-left',
     offset = 0,
+    bytesPerGlyph = charHeight * Math.ceil(charWidth / 8),
+    xBits,
+    invertBits,
     sourcePath,
   } = options;
 
@@ -34,7 +40,7 @@ export async function loadBitmapFont(
   const buf = await response.arrayBuffer();
   const data = new Uint8Array(buf);
 
-  const expectedSize = glyphCount * charHeight;
+  const expectedSize = glyphCount * bytesPerGlyph;
 
   if (data.length < offset + expectedSize) {
     throw new Error(
@@ -45,7 +51,10 @@ export async function loadBitmapFont(
 
   const fontData = offset > 0 ? data.slice(offset, offset + expectedSize) : data;
 
-  return loadFontFromBin(id, name, fontData, glyphCount, charWidth, charHeight, bitOrder, sourcePath ?? url);
+  return loadFontFromBin(
+    id, name, fontData, glyphCount, charWidth, charHeight,
+    bitOrder, sourcePath ?? url, xBits, invertBits,
+  );
 }
 
 export async function loadBitmapFontWithFallback(
