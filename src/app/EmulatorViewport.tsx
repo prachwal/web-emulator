@@ -27,50 +27,61 @@ export function EmulatorViewport({ crt, profileId, mode, paused, activeFontId }:
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const runtimeRef = useRef<EmulatorRuntime | null>(null);
   const rafRef = useRef<number>(0);
+  const modeRef = useRef(mode);
+
+  // Track active text font across re-renders
+  const fontRef = useRef(createDefaultFont(8, 8));
+  const screenRef = useRef(createDemoTextScreen(40, 25));
+
+  const isTextMode = mode.startsWith('text-') || mode === 'attribute-text';
 
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
+    modeRef.current = mode;
+    const textMode = isTextMode;
+    const currentMode = mode;
+
     const runtime = new EmulatorRuntime(profileId);
     runtimeRef.current = runtime;
 
-    const isTextMode = mode === 'attribute-text' || mode.startsWith('text-');
+    (async () => {
+      await runtime.initCanvas(canvas);
 
-    runtime.initCanvas(canvas).then(async () => {
-      if (isTextMode) {
-        const textModeDef = getTextMode(mode) ?? textVideoModes[1];
-        const profile = runtime.config.profile;
-
-        runtime.setMode('attribute-text');
-        runtime.setCrt(crt);
-        runtime.start();
-
-        let font = globalFontRegistry.get(activeFontId ?? '');
-        if (!font) {
-          const preset = getFontPreset(activeFontId ?? 'c64-chargen-first');
-          if (preset) {
-            try {
-              font = await loadBitmapFont(preset);
-              globalFontRegistry.register(font);
-            } catch {
-              font = createDefaultFont(8, 8);
-            }
-          } else {
-            font = createDefaultFont(8, 8);
-          }
-        }
-
-        const screen = createDemoTextScreen(textModeDef.columns, textModeDef.rows);
-        const fb = runtime.video.state.framebuffer;
+      if (textMode) {
+        const textModeDef = getTextMode(currentMode) ?? textVideoModes[1];
+        const profile = machineProfiles[profileId] || machineProfiles['zx-spectrum-like'];
         const fbWidth = textModeDef.framebufferWidth;
         const fbHeight = textModeDef.framebufferHeight;
 
-        if (fb.length !== fbWidth * fbHeight) {
+        if (runtime.video.state.framebuffer.length !== fbWidth * fbHeight) {
           runtime.video.state.framebuffer = new Uint8Array(fbWidth * fbHeight);
         }
         runtime.video.state.sourceWidth = fbWidth;
         runtime.video.state.sourceHeight = fbHeight;
+
+        let font = createDefaultFont(8, 8);
+        if (activeFontId) {
+          const cached = globalFontRegistry.get(activeFontId);
+          if (cached) {
+            font = cached;
+          } else {
+            const preset = getFontPreset(activeFontId);
+            if (preset) {
+              try {
+                font = await loadBitmapFont(preset);
+                globalFontRegistry.register(font);
+              } catch {
+                font = createDefaultFont(8, 8);
+              }
+            }
+          }
+        }
+        fontRef.current = font;
+
+        const screen = createDemoTextScreen(textModeDef.columns, textModeDef.rows);
+        screenRef.current = screen;
 
         renderAttributeTextToFramebuffer(screen, font, runtime.video.state.framebuffer, {}, asciiCharMapper);
 
@@ -80,14 +91,13 @@ export function EmulatorViewport({ crt, profileId, mode, paused, activeFontId }:
           runtime.renderer.uploadPalette(paletteToRgba(pal));
         }
 
+        runtime.start();
+
         const loop = () => {
           if (!runtimeRef.current) return;
           const r = runtimeRef.current;
-          if (!r.renderer) {
-            rafRef.current = requestAnimationFrame(loop);
-            return;
-          }
-          renderAttributeTextToFramebuffer(screen, font!, r.video.state.framebuffer, {}, asciiCharMapper);
+          if (!r.renderer) { rafRef.current = requestAnimationFrame(loop); return; }
+          renderAttributeTextToFramebuffer(screenRef.current, fontRef.current, r.video.state.framebuffer, {}, asciiCharMapper);
           r.video.state.frameNumber++;
           r.renderer.uploadFrame(r.video.state.framebuffer);
           r.renderer.render(r.video.state.frameNumber);
@@ -96,15 +106,15 @@ export function EmulatorViewport({ crt, profileId, mode, paused, activeFontId }:
 
         loop();
       } else {
-        runtime.setMode(mode);
+        runtime.setMode(currentMode);
         runtime.setCrt(crt);
         runtime.start();
 
-        const profile = runtime.config.profile;
+        const profile = machineProfiles[profileId] || machineProfiles['zx-spectrum-like'];
         const font = createDefaultFont(8, 8);
         const fb = new Framebuffer(profile.sourceWidth, profile.sourceHeight);
 
-        if (mode === 'text') {
+        if (currentMode === 'text') {
           const decoder = new TextModeDecoder(40, 25, 8, 8);
           const screenRam = new Uint8Array(40 * 25);
           const colorRam = new Uint8Array(40 * 25);
@@ -148,10 +158,7 @@ export function EmulatorViewport({ crt, profileId, mode, paused, activeFontId }:
         const loop = () => {
           if (!runtimeRef.current) return;
           const r = runtimeRef.current;
-          if (!r.renderer) {
-            rafRef.current = requestAnimationFrame(loop);
-            return;
-          }
+          if (!r.renderer) { rafRef.current = requestAnimationFrame(loop); return; }
           r.renderer.uploadFrame(r.video.state.framebuffer);
           r.renderer.render(r.video.state.frameNumber);
           r.video.state.frameNumber++;
@@ -160,11 +167,9 @@ export function EmulatorViewport({ crt, profileId, mode, paused, activeFontId }:
 
         loop();
       }
-    });
+    })();
 
-    const observer = new ResizeObserver(() => {
-      runtime.resizeCanvas(canvas);
-    });
+    const observer = new ResizeObserver(() => runtime.resizeCanvas(canvas));
     observer.observe(canvas);
 
     return () => {
@@ -173,36 +178,24 @@ export function EmulatorViewport({ crt, profileId, mode, paused, activeFontId }:
       runtime.dispose();
       runtimeRef.current = null;
     };
-  }, [profileId]);
+  }, [profileId, mode]);
 
+  // Update CRT settings independently
   useEffect(() => {
-    if (runtimeRef.current) {
-      runtimeRef.current.setCrt(crt);
-    }
+    runtimeRef.current?.setCrt(crt);
   }, [crt]);
 
-  useEffect(() => {
-    if (runtimeRef.current) {
-      runtimeRef.current.setMode(mode);
-    }
-  }, [mode]);
-
+  // Pause/resume independently
   useEffect(() => {
     if (!runtimeRef.current) return;
-    if (paused) {
-      runtimeRef.current.pause();
-    } else {
-      runtimeRef.current.resume();
-    }
+    paused ? runtimeRef.current.pause() : runtimeRef.current.resume();
   }, [paused]);
 
   return (
     <canvas
       ref={canvasRef}
       style={{
-        display: 'block',
-        width: '100%',
-        height: '100%',
+        display: 'block', width: '100%', height: '100%',
         imageRendering: 'pixelated',
       }}
     />
