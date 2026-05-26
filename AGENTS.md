@@ -128,3 +128,7 @@ Bitmap mode: `imageToIndexedFramebuffer()` loads tukan.jpg, quantizes to palette
 - Tests in `src/tests/` using Vitest with jsdom
 - Prefer editing existing files over creating new ones
 - Commit messages: `feat(machine): description` or `fix(area): description`
+- **After implementing features for a machine:**
+  1. Update the corresponding `docs/<machine>.md` — move features from "Czego brakuje" to "Co już mamy" with [x]
+  2. Update `src/video/text/DemoTextScene.ts` — add demo content showcasing the new features
+  3. Run `npm test && npm run build` to verify

@@ -47,10 +47,10 @@ Kolejność GRB: numer koloru = bit G/R/B (a nie R/G/B).
 - [x] Preset `zx-attr-256x192` (tryb bitmapowy z atrybutami)
 - [x] Ładowanie fontu ZX Spectrum (128 glifów, 8×8)
 - [x] Mapper ASCII (ZX Spectrum używa zwykłego ASCII dla tekstu)
+- [x] **Atrybuty INK/PAPER/BRIGHT/FLASH w `TextModeDecoder`** — `colorModel:'zx'` dekoduje attr byte z BRIGHT (+8) i FLASH (swap fg↔bg co 16f)
+- [x] Demo ZX pokazuje attr cells: INK na PAPER tle, BRIGHT kolory, FLASH
 
 ## Czego brakuje
 
-- [ ] **Atrybuty w trybie tekstowym** — obecnie `zx-text-32x24` używa generycznego `TextModeDecoder`, który nie obsługuje ZX-atrybutów (INK/PAPER/BRIGHT/FLASH). Tekst powinien być renderowany przez ten sam mechanizm atrybutów co bitmapa.
 - [ ] **Widoczny border** — ZX Spectrum ma 24+192+24 = 240 linii PAL, z czego 192 to obszar obrazu. Obramowanie (border) na razie nie jest renderowane (możliwe przez `borderColorIndex` w `AttributeBitmapMemory`).
 - [ ] **Dithering CRT** — ZX Spectrum na CRT ma naturalne rozmycie kolorów. Obecnie nie ma symulacji PAL blur.
-- [ ] **Atrybut `FLASH` w trybie tekstowym** — zależy od `frameNumber` (co 16 klatek), na razie nie zaimplementowane poza `AttributeBitmapDecoder`.

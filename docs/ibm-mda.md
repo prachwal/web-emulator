@@ -38,10 +38,7 @@ Emulacyjnie można użyć zielonej skali.
 - [x] Preset `mda-text-80x25` (tryb tekstowy 80×25)
 - [x] Font MDA 8×14 (mda-8x14.bin)
 - [x] Paleta monochromatyczna (zielony)
-
-## Czego brakuje
-
-- [x] Blink attribute — wspólny z CGA `colorModel:'mda'` w `TextModeDecoder` (bit 7 = blink)
+- [x] Blink attribute — `colorModel:'mda'` w `TextModeDecoder` (bit 7 = blink)
 
 ## Czego brakuje
 

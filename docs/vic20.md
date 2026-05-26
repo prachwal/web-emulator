@@ -60,16 +60,11 @@
 ## Co już mamy
 
 - [x] Preset `vic20-text-22x23` (tryb tekstowy 22×23)
+- [x] Preset `vic20-176x184` (tryb bitmapowy 176×184, `Bitmap1BppDecoder`)
 - [x] Font VIC-20 (2 zestawy, 512 glifów)
 - [x] Mapper PETSCII
 - [x] Paleta VIC-20 16 kolorów
 - [x] Demo VIC-20 pokazuje pełną paletę 16 kolorów, informacje o 4-bit Color RAM, 176×184 bitmap
-
-## Czego brakuje
-
-- [ ] **Color RAM (nybble)** — podobnie jak w C64, VIC-20 ma 4-bitową pamięć kolorów (wymaga osobnego dekodera lub `colorModel`).
-- [ ] **Multicolor** — brak.
-- [x] Tryb bitmapowy 176×184 — preset `vic20-176x184`, używa `Bitmap1BppDecoder`
 
 ## Czego brakuje
 

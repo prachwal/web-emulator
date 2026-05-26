@@ -40,6 +40,7 @@
 ## Co już mamy
 
 - [x] Preset `trs80-text-64x16` (tryb tekstowy 64×16)
+- [x] Preset `trs80-text-32x16` (tryb tekstowy 32×16, podwójna szerokość)
 - [x] Font TRS-80 Model III (256 glifów, 8×8)
 - [x] CellHeight = 12 dla lepszego wypełnienia pionowego
 - [x] Paleta monochromatyczna
@@ -47,11 +48,6 @@
 ## Uwaga o descendentach
 
 Glify descendentów (g, j, p, q, y) w foncie TRS-80 Model III mieszczą się w 8×8 pikselach — ogon descendentu znajduje się w dolnych wierszach glifu (rows 6-7). CellHeight=12 dodaje odstęp pod glifem, ale descendent jest już w glifie. Dodatkowe przesunięcie nie jest potrzebne.
-
-## Czego brakuje
-
-- [ ] **Semi-graphics mode** — brak (128×48, 2 kolory).
-- [x] Tryb 32×16 (podwójna szerokość) — preset `trs80-text-32x16`
 
 ## Czego brakuje
 

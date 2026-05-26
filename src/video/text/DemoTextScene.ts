@@ -154,7 +154,8 @@ function createTrs80Demo(cols: number, rows: number): AttributeTextScreen {
   const s = new AttributeTextScreen(cols, rows);
   s.clear(32, 7, 0);
   const w = (x: number, y: number, t: string, f = 7, b = 0) => s.writeText(x, y, t, f, b);
-  w(0, 0, 'TRS-80 MODEL III  MEMORY SIZE?', 7, 0);
+  const doubleW = cols <= 32;
+  w(0, 0, doubleW ? 'TRS-80 MODEL III  32x16' : 'TRS-80 MODEL III  MEMORY SIZE?', 7, 0);
   w(0, 1, '  64K  RADIO SHACK  BASIC', 7, 0);
   w(0, 2, 'READY', 7, 0);
   w(2, 3, '>10 PRINT "HELLO WORLD"', 10, 0);
@@ -171,7 +172,7 @@ function createTrs80Demo(cols: number, rows: number): AttributeTextScreen {
     w(0, 13, 'descender: g j p q y', 7, 0);
   }
   if (rows > 15) {
-    w(0, 15, '64x16  CELL 8x12  512x192', 7, 0);
+    w(0, 15, (doubleW ? '32x16' : '64x16') + '  CELL 8x12  512x192', 7, 0);
   }
   return s;
 }
