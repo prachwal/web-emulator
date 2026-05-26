@@ -12,50 +12,23 @@ export const asciiCharMapper: CharMapper = {
   },
 };
 
-const zxSpectrumTable: Record<number, number> = {
-  0x41: 0x26, 0x42: 0x27, 0x43: 0x28, 0x44: 0x29,
-  0x45: 0x2a, 0x46: 0x2b, 0x47: 0x2c, 0x48: 0x2d,
-  0x49: 0x2e, 0x4a: 0x2f, 0x4b: 0x30, 0x4c: 0x31,
-  0x4d: 0x32, 0x4e: 0x33, 0x4f: 0x34, 0x50: 0x35,
-  0x51: 0x36, 0x52: 0x37, 0x53: 0x38, 0x54: 0x39,
-  0x55: 0x3a, 0x56: 0x3b, 0x57: 0x3c, 0x58: 0x3d,
-  0x59: 0x3e, 0x5a: 0x3f,
-  0x61: 0x26, 0x62: 0x27, 0x63: 0x28,
-  0x30: 0x17, 0x31: 0x18, 0x32: 0x19, 0x33: 0x1a,
-  0x34: 0x1b, 0x35: 0x1c, 0x36: 0x1d, 0x37: 0x1e,
-  0x38: 0x1f, 0x39: 0x20,
-};
-
-export const zxSpectrumCharMapper: CharMapper = {
-  id: 'zx-spectrum',
-  name: 'ZX Spectrum',
-  mapCharCode(input: number): number {
-    if (input >= 0x20 && input <= 0x7e) {
-      return zxSpectrumTable[input] ?? input - 0x20;
-    }
-    return 0;
-  },
-};
-
 export const petsciiCharMapper: CharMapper = {
   id: 'petscii',
   name: 'PETSCII',
   mapCharCode(input: number): number {
-    if (input >= 0x41 && input <= 0x5a) return input - 0x40;
-    if (input >= 0x61 && input <= 0x7a) return input - 0x20;
-    if (input >= 0x21 && input <= 0x3f) return input;
-    if (input >= 0x30 && input <= 0x3a) return input - 0x10;
-    if (input === 0x20) return 0x20;
-    return 0x2e;
+    if (input >= 0x41 && input <= 0x5a) return input - 0x40;   // A-Z → PETSCII 1-26
+    if (input >= 0x61 && input <= 0x7a) return input - 0x60;   // a-z → PETSCII 1-26
+    if (input >= 0x30 && input <= 0x39) return input - 0x10;   // 0-9 → PETSCII 32-41
+    if (input >= 0x21 && input <= 0x2f) return input;           // !"#$%&'()*+,-./
+    if (input >= 0x3a && input <= 0x40) return input;           // :;<=>?@
+    if (input === 0x20) return 0x20;                             // space
+    return 0x2e;                                                 // default '.'
   },
 };
 
-export const charMappers: Record<string, CharMapper> = {
-  'ascii': asciiCharMapper,
-  'zx-spectrum': zxSpectrumCharMapper,
-  'petscii': petsciiCharMapper,
-};
-
-export function getCharMapper(id: string): CharMapper {
-  return charMappers[id] ?? asciiCharMapper;
+export function getMapper(id: string): CharMapper {
+  switch (id) {
+    case 'petscii': return petsciiCharMapper;
+    default: return asciiCharMapper;
+  }
 }
