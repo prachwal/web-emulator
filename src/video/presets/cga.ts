@@ -29,4 +29,10 @@ export const cgaPresets = [
     ['#000000','#ffffff','#ffffff','#ffffff','#ffffff','#ffffff','#ffffff','#ffffff',
      '#000000','#ffffff','#ffffff','#ffffff','#ffffff','#ffffff','#ffffff','#ffffff'],
     'mono', 'bitmap-1bpp'),
+
+  G('cga-160x100', 'cga', 'IBM CGA', 'CGA 160×100 16c',
+    20, 25, 160, 100, 5 / 12,
+    'cga-thick.bin', 'cga-thick', 256, f8(8, 7),
+    m(10, 8, 10, 8), '#cccccc', '#000000', '#000000', '#e8e0d0', '#a09880', cgaPalette,
+    'cga-160x100', 'cga-160x100'),
 ];

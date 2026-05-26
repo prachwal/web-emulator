@@ -6,6 +6,7 @@ import { Bitmap1BppDecoder } from './modes/Bitmap1BppDecoder';
 import { Bitmap2BppDecoder } from './modes/Bitmap2BppDecoder';
 import { AttributeBitmapDecoder } from './modes/AttributeBitmapDecoder';
 import { TilemapDecoder } from './modes/TilemapDecoder';
+import { Cga160x100Decoder } from './modes/Cga160x100Decoder';
 import { loadPalette, paletteToUint32 } from './Palette';
 import type { BitmapFont } from './BitmapFont';
 import { createDefaultFont } from './BitmapFont';
@@ -32,6 +33,7 @@ export class VideoSystem {
     this.registerDecoder(new Bitmap2BppDecoder(profile.sourceWidth, profile.sourceHeight));
     this.registerDecoder(new AttributeBitmapDecoder(profile.sourceWidth, profile.sourceHeight));
     this.registerDecoder(new TilemapDecoder(profile.sourceWidth, profile.sourceHeight));
+    this.registerDecoder(new Cga160x100Decoder());
 
     this.loadProfilePalette(profile);
     this.setMode(profile.supportedModes[0]);
