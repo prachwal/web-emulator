@@ -7,22 +7,10 @@ export interface SettingsPanelProps {
 
 export function SettingsPanel({ crt, onCrtChange }: SettingsPanelProps) {
   return (
-    <div style={{
-      display: 'flex',
-      flexWrap: 'wrap',
-      gap: '6px',
-      padding: '6px 12px',
-      background: '#1a1a1a',
-      borderTop: '1px solid #333',
-      fontSize: '11px',
-      alignItems: 'center',
-    }}>
-      <label style={labelStyle}>
-        <input
-          type="checkbox"
-          checked={crt.enabled}
-          onChange={e => onCrtChange({ enabled: (e.target as HTMLInputElement).checked })}
-        />
+    <div class="crt-controls">
+      <label class="crt-label">
+        <input class="crt-toggle" type="checkbox" checked={crt.enabled}
+          onChange={e => onCrtChange({ enabled: (e.target as HTMLInputElement).checked })} />
         {' CRT'}
       </label>
 
@@ -53,28 +41,11 @@ interface SliderProps {
 
 function Slider({ label, value, min, max, step, onChange }: SliderProps) {
   return (
-    <label style={labelStyle}>
+    <label class="crt-label">
       {label}
-      <input
-        type="range"
-        min={min}
-        max={max}
-        step={step}
-        value={value}
-        onChange={e => onChange(parseFloat((e.target as HTMLInputElement).value))}
-        style={{ width: '60px', verticalAlign: 'middle' }}
-      />
-      <span style={{ width: '28px', display: 'inline-block', textAlign: 'right' }}>
-        {value.toFixed(2)}
-      </span>
+      <input class="crt-slider" type="range" min={min} max={max} step={step} value={value}
+        onChange={e => onChange(parseFloat((e.target as HTMLInputElement).value))} />
+      <span class="crt-value">{value.toFixed(2)}</span>
     </label>
   );
 }
-
-const labelStyle: Record<string, string> = {
-  display: 'inline-flex',
-  alignItems: 'center',
-  gap: '4px',
-  color: '#aaa',
-  cursor: 'pointer',
-};

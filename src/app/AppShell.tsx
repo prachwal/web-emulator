@@ -1,160 +1,140 @@
-import { useState, useCallback } from 'preact/hooks';
+import { signal, computed } from '@preact/signals';
 import { EmulatorViewport } from './EmulatorViewport';
 import { SettingsPanel } from './SettingsPanel';
 import { DebugOverlay } from './DebugOverlay';
-import type { CrtSettings, VideoMode } from '../core/types';
-import { defaultCrtSettings, machineProfiles } from '../core/types';
-import { textVideoModes } from '../video/text/textModes';
+import type { CrtSettings } from '../core/types';
+import { defaultCrtSettings } from '../core/types';
+import {
+  PRESETS, machineIds, machineName, presetsForMachine,
+  type Preset,
+} from '../video/presets';
 import { fontPresets } from '../video/fonts/fontPresets';
+import { textVideoModes } from '../video/text/textModes';
 
-function defaultTextModeForProfile(profileId: string): string {
-  if (profileId.includes('c64') || profileId.includes('cga')) return 'text-40x25';
-  if (profileId.includes('trs80')) return 'text-64x16';
-  if (profileId.includes('vic')) return 'text-22x23';
-  return 'text-32x24';
-}
+// ── Signal-based state ──────────────────────────────
+const crt = signal<CrtSettings>(defaultCrtSettings());
+const showDebug = signal(false);
+const paused = signal(false);
+
+const presetIndex = signal(0);
+const currentPreset = computed(() => PRESETS[presetIndex.value]);
+
+const isTextMode = computed(() => currentPreset.value.type === 'text');
+
+const activeFontId = signal(fontPresets[0]?.id ?? '');
+const currentMode = computed(() => currentPreset.value.id);
+const modeLabel = computed(() => currentPreset.value.label);
+const machineLabel = computed(() => currentPreset.value.machineName);
 
 export function AppShell() {
-  const [crt, setCrt] = useState<CrtSettings>(defaultCrtSettings);
-  const [showDebug, setShowDebug] = useState(false);
-  const [profileId, setProfileId] = useState('zx-spectrum-like');
-  const [mode, setMode] = useState('attribute-bitmap');
-  const [paused, setPaused] = useState(false);
-  const [activeFontId, setActiveFontId] = useState('c64-chargen');
-
-  const profile = machineProfiles[profileId] || machineProfiles['zx-spectrum-like'];
-  const isTextMode = mode.startsWith('text-') || mode === 'attribute-text';
-
-  const handleCrtChange = useCallback((update: Partial<CrtSettings>) => {
-    setCrt(prev => ({ ...prev, ...update }));
-  }, []);
-
-  const handleProfileChange = useCallback((id: string) => {
-    setProfileId(id);
-    if (isTextMode) {
-      const textId = defaultTextModeForProfile(id);
-      setMode(textId);
-    } else {
-      const p = machineProfiles[id] || machineProfiles['zx-spectrum-like'];
-      setMode(p.supportedModes[0]);
-    }
-  }, [isTextMode]);
-
-  const handleModeChange = useCallback((m: string) => {
-    setMode(m);
-  }, []);
-
-  const switchToText = useCallback(() => {
-    setMode(defaultTextModeForProfile(profileId));
-  }, [profileId]);
-
-  const switchToBitmap = useCallback(() => {
-    const p = machineProfiles[profileId] || machineProfiles['zx-spectrum-like'];
-    setMode(p.supportedModes[0]);
-  }, [profileId]);
-
-  const handlePauseToggle = useCallback(() => {
-    setPaused(p => !p);
-  }, []);
-
-  const handleFontChange = useCallback((fontId: string) => {
-    setActiveFontId(fontId);
-  }, []);
-
   return (
-    <div style={{
-      display: 'flex', flexDirection: 'column', height: '100vh',
-      background: '#111', color: '#ccc', fontFamily: 'system-ui, sans-serif', fontSize: '13px',
-    }}>
-      <header style={{
-        display: 'flex', alignItems: 'center', gap: '6px',
-        padding: '4px 10px', background: '#1a1a1a', borderBottom: '1px solid #333', flexWrap: 'wrap',
-      }}>
-        <h1 style={{ fontSize: '13px', fontWeight: 600, margin: 0, color: '#fff', whiteSpace: 'nowrap' }}>
-          CRT
-        </h1>
-
-        <select value={profileId} onChange={e => handleProfileChange((e.target as HTMLSelectElement).value)} style={s}>
-          {Object.entries(machineProfiles).map(([id, p]) => (
-            <option key={id} value={id}>{p.name}</option>
-          ))}
-        </select>
-
-        <div style={{ width: '1px', height: '18px', background: '#444' }} />
-
-        <button onClick={switchToBitmap}
-          style={{ ...b, background: !isTextMode ? '#2a4' : '#333', color: !isTextMode ? '#000' : '#ccc' }}>
-          Bitmap
-        </button>
-        <button onClick={switchToText}
-          style={{ ...b, background: isTextMode ? '#2a4' : '#333', color: isTextMode ? '#000' : '#ccc' }}>
-          Text
-        </button>
-
-        {!isTextMode && (
-          <select value={mode} onChange={e => handleModeChange((e.target as HTMLSelectElement).value)} style={s}>
-            {profile.supportedModes.map(m => (
-              <option key={m} value={m}>{modeLabel(m)}</option>
-            ))}
-          </select>
-        )}
-
-        {isTextMode && (
-          <>
-            <select value={mode} onChange={e => handleModeChange((e.target as HTMLSelectElement).value)} style={s}>
-              {textVideoModes.map(m => (
-                <option key={m.id} value={m.id}>{m.label}</option>
-              ))}
-            </select>
-
-            <select value={activeFontId} onChange={e => handleFontChange((e.target as HTMLSelectElement).value)} style={{ ...s, maxWidth: '130px' }}>
-              {fontPresets.map(f => (
-                <option key={f.id} value={f.id}>{f.name}</option>
-              ))}
-            </select>
-          </>
-        )}
-
-        <div style={{ width: '1px', height: '18px', background: '#444' }} />
-
-        <button onClick={handlePauseToggle} style={b}>{paused ? '▶' : '⏸'}</button>
-        <button onClick={() => setShowDebug(s => !s)} style={b}>{showDebug ? 'Dbg' : 'Debug'}</button>
-      </header>
-
-      <div style={{ flex: 1, position: 'relative', overflow: 'hidden' }}>
+    <div class="app-layout">
+      <Toolbar />
+      <div class="viewport">
         <EmulatorViewport
-          crt={crt}
-          profileId={profileId}
-          mode={mode}
-          paused={paused}
-          activeFontId={isTextMode ? activeFontId : undefined}
+          crt={crt.value}
+          preset={currentPreset.value}
+          paused={paused.value}
+          activeFontId={isTextMode.value ? activeFontId.value : undefined}
         />
       </div>
-
-      <SettingsPanel crt={crt} onCrtChange={handleCrtChange} />
-      {showDebug && <DebugOverlay />}
+      <SettingsPanel
+        crt={crt.value}
+        onCrtChange={u => crt.value = { ...crt.value, ...u }}
+      />
+      {showDebug.value && <DebugOverlay />}
     </div>
   );
 }
 
-function modeLabel(m: VideoMode): string {
-  switch (m) {
-    case 'text': return 'Text (legacy)';
-    case 'attribute-text': return 'Text (attribute)';
-    case 'bitmap-1bpp': return 'Bitmap 1bpp';
-    case 'bitmap-2bpp': return 'Bitmap 2bpp';
-    case 'attribute-bitmap': return 'Attribute Bitmap';
-    case 'tilemap': return 'Tilemap';
-    case 'c64-text': return 'C64 Text';
-  }
+function Toolbar() {
+  const p = currentPreset.value;
+  const mIds = machineIds();
+  const variants = presetsForMachine(p.machineId, p.type);
+
+  return (
+    <header class="toolbar">
+      <h1 class="toolbar-title">CRT</h1>
+
+      <div class="toolbar-divider" />
+
+      <select class="toolbar-select"
+        value={`${p.machineId}:${p.type}`}
+        onChange={e => {
+          const val = (e.target as HTMLSelectElement).value;
+          const [mid, type] = val.split(':');
+          const variants = presetsForMachine(mid, type as 'text' | 'bitmap');
+          if (variants.length > 0) {
+            const idx = PRESETS.indexOf(variants[0]);
+            if (idx >= 0) presetIndex.value = idx;
+          }
+        }}>
+        {mIds.map(mid => (
+          <option key={mid} value={`${mid}:text`}>
+            {machineName(mid)}
+          </option>
+        ))}
+      </select>
+
+      <select class="toolbar-select"
+        value={currentMode.value}
+        onChange={e => {
+          const id = (e.target as HTMLSelectElement).value;
+          const idx = PRESETS.findIndex(pr => pr.id === id);
+          if (idx >= 0) presetIndex.value = idx;
+        }}>
+        {variants.map(v => (
+          <option key={v.id} value={v.id}>{v.label}</option>
+        ))}
+      </select>
+
+      <div class="toolbar-divider" />
+
+      {isTextMode.value && (
+        <>
+          <select class="toolbar-select"
+            value={currentMode.value}
+            onChange={e => {
+              const id = (e.target as HTMLSelectElement).value;
+              const idx = PRESETS.findIndex(pr => pr.id === id);
+              if (idx >= 0) presetIndex.value = idx;
+            }}>
+            {PRESETS.filter(pr => pr.type === 'text').map(v => (
+              <option key={v.id} value={v.id}>{v.machineName} {v.label}</option>
+            ))}
+          </select>
+
+          <select class="toolbar-select"
+            value={activeFontId.value}
+            onChange={e => activeFontId.value = (e.target as HTMLSelectElement).value}>
+            {fontPresets.map(f => (
+              <option key={f.id} value={f.id}>{f.name}</option>
+            ))}
+          </select>
+        </>
+      )}
+
+      <button class="toolbar-btn"
+        onClick={() => {
+          const cur = isTextMode.value ? 'text' : 'bitmap';
+          const target = cur === 'text' ? 'bitmap' : 'text';
+          const variants = presetsForMachine(p.machineId, target);
+          if (variants.length > 0) {
+            const idx = PRESETS.indexOf(variants[0]);
+            if (idx >= 0) presetIndex.value = idx;
+          }
+        }}>
+        {isTextMode.value ? 'Bitmap' : 'Text'}
+      </button>
+
+      <div class="toolbar-divider" />
+
+      <button class="toolbar-btn" onClick={() => paused.value = !paused.value}>
+        {paused.value ? '▶' : '⏸'}
+      </button>
+      <button class="toolbar-btn" onClick={() => showDebug.value = !showDebug.value}>
+        {showDebug.value ? 'Dbg' : 'Debug'}
+      </button>
+    </header>
+  );
 }
-
-const s: Record<string, string> = {
-  background: '#222', color: '#ccc', border: '1px solid #444',
-  borderRadius: '3px', padding: '3px 6px', fontSize: '11px', maxWidth: '150px',
-};
-
-const b: Record<string, string> = {
-  background: '#333', color: '#ccc', border: '1px solid #555',
-  borderRadius: '3px', padding: '3px 8px', fontSize: '11px', cursor: 'pointer',
-};
