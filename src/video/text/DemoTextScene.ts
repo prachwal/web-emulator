@@ -2,7 +2,7 @@ import { AttributeTextScreen } from './AttributeTextScreen';
 import { TextScreen } from './TextScreen';
 
 function bar(cols: number, chr = '-'): string {
-  return '+' + chr.repeat(cols - 2) + '+';
+  return '+' + chr.repeat(Math.max(0, cols - 2)) + '+';
 }
 
 function spacer(cols: number, label: string): string {
@@ -10,37 +10,43 @@ function spacer(cols: number, label: string): string {
   return inner;
 }
 
+function colorRow(s: AttributeTextScreen, x: number, y: number, start: number, count: number, bg: number): void {
+  for (let i = 0; i < count && x + i < s.columns; i++) {
+    s.writeText(x + i, y, `${(start + i) % 16}`, (start + i) % 16, bg);
+  }
+}
+
 function createZxDemo(cols: number, rows: number): AttributeTextScreen {
   const s = new AttributeTextScreen(cols, rows);
-  s.clear(32, 15, 0);
-  const w = (x: number, y: number, t: string, f = 15, b = 0) => s.writeText(x, y, t, f, b);
+  s.clear(32, 7, 0);
+  const w = (x: number, y: number, t: string, f = 7, b = 0) => s.writeText(x, y, t, f, b);
   const top = bar(cols, '=');
-  w(0, 0, top, 6, 0);
-  w(0, 1, spacer(cols, 'ZX SPECTRUM DEMO'), 5, 0);
-  w(0, 2, top, 6, 0);
+  w(0, 0, top, 2, 0);
+  w(0, 1, spacer(cols, 'ZX SPECTRUM  256x192 ATTR'), 6, 0);
+  w(0, 2, top, 2, 0);
   w(1, 4, '10 PRINT "HELLO WORLD"', 7, 0);
   w(1, 5, '20 GOTO 10', 7, 0);
-  w(1, 6, 'RUN', 10, 0);
+  w(4, 7, 'HELLO WORLD', 15, 0);
   w(4, 8, 'HELLO WORLD', 15, 0);
-  w(4, 9, 'HELLO WORLD', 15, 0);
-  if (rows > 11) {
-    w(1, 11, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 12, 0);
-    w(1, 12, '0123456789 .,!?;:', 13, 0);
+  if (rows > 10) {
+    w(1, 10, 'ATTR: INK  PAPER  BRIGHT', 6, 0);
+    for (let i = 0; i < 8 && 8 + i * 3 < cols; i++) {
+      const x = 8 + i * 3;
+      s.putChar(x, 11, 0xdb, i + (i < 2 ? 8 : 0), 0);
+      s.putChar(x, 12, 0xdb, 7, i + 1);
+      s.putChar(x + 1, 11, 48, 7, 0);
+      s.putChar(x + 1, 12, 48, 7, 0);
+    }
   }
   if (rows > 14) {
-    w(1, 14, 'SCREEN$ = CHR$(8*64)', 6, 0);
-    w(1, 15, 'PLOT  128,96', 6, 0);
+    w(1, 14, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 7, 0);
+    w(1, 15, '0123456789 .,!?;:', 7, 0);
   }
   if (rows > 17) {
-    w(1, 17, 'PAPER 1: INK 7: BORDER 0', 5, 0);
-    for (let i = 0; i < 8 && i + 11 < cols; i++) {
-      w(11 + i * 2, 18, `${i}`, i + 1, 0);
-    }
-    for (let i = 0; i < 8 && i + 11 < cols; i++) {
-      w(11 + i * 2, 19, `${i + 8}`, i + 9, 0);
-    }
+    w(1, 17, 'BORDER: PAPER 1 INK 7', 5, 0);
+    w(1, 18, 'BRIGHT: +8 TO COLOR IDX', 5, 0);
   }
-  w(0, rows - 1, bar(cols, '='), 6, 0);
+  w(0, rows - 1, top, 2, 0);
   return s;
 }
 
@@ -58,18 +64,17 @@ function createC64Demo(cols: number, rows: number): AttributeTextScreen {
   if (rows > 8) {
     w(2, 8, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 1, 14);
     w(2, 9, '0123456789', 1, 14);
-    if (cols > 16) {
-      for (let i = 0; i < 8; i++) w(16 + i, 8, '' + i, i + 2, 14);
+    if (cols > 28) {
+      colorRow(s, 28, 8, 2, 8, 14);
+      w(2, 10, 'COLOR RAM $D800: 4-bit nybble', 3, 14);
+      w(2, 11, '16 COLORS  8 SPRITES  VIC-II', 7, 6);
     }
-    w(2, 10, 'POKE 53280,0 : POKE 53281,0', 3, 14);
-    w(2, 11, 'SYS 49152', 3, 14);
-    w(2, 12, 'COLOR RAM $D800 nybble', 7, 6);
   }
-  if (rows > 14) {
-    w(2, 14, 'VIC-II: $D000-$D02F', 7, 6);
-    w(2, 15, 'SID:    $D400-$D418', 7, 6);
-    w(2, 16, '16 COLORS  8 SPRITES', 7, 6);
-    w(2, 17, '320x200 / 160x200 MC', 7, 6);
+  if (rows > 13) {
+    w(2, 13, 'VIC-II: 320x200 16c BM', 7, 6);
+    w(2, 14, 'VIC-II: 160x200 4c MC', 7, 6);
+    w(2, 15, 'SID:    3xOSC + FILTER', 7, 6);
+    w(2, 16, 'CIA:    $DC00 $DD00', 7, 6);
   }
   w(0, rows - 1, top, 7, 12);
   return s;
@@ -79,20 +84,22 @@ function createCgaDemo(cols: number, rows: number): AttributeTextScreen {
   const s = new AttributeTextScreen(cols, rows);
   s.clear(32, 7, 0);
   const w = (x: number, y: number, t: string, f = 7, b = 0) => s.writeText(x, y, t, f, b);
+  const mode40 = cols <= 40;
   w(0, 0, bar(cols), 7, 0);
-  w(0, 1, spacer(cols, 'IBM CGA DEMO'), 7, 0);
+  w(0, 1, spacer(cols, mode40 ? 'IBM CGA 40x25 320x200' : 'IBM CGA 80x25 640x200'), 7, 0);
   w(0, 2, bar(cols), 7, 0);
-  w(2, 4, '10 SCREEN 1', 7, 0);
-  w(2, 5, '20 LINE (0,0)-(319,199)', 7, 0);
-  w(2, 6, '30 CIRCLE (160,100),50', 7, 0);
-  w(2, 7, '40 PAINT (160,100)', 7, 0);
-  if (rows > 9) {
-    w(2, 9, 'MODE 80x25:  COLOR 7,0', 7, 0);
+  w(2, 4, 'MODE 4: 320x200  4 COLORS', 7, 0);
+  w(2, 5, 'MODE 6: 640x200  2 COLORS', 7, 0);
+  w(2, 6, mode40 ? 'PAL 0: G/R/Br  PAL1: C/M/W' : '16-COLOR RGBI PALETTE', 7, 0);
+  if (rows > 8) {
+    w(2, 8, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 15, 0);
+    w(2, 9, 'abcdefghijklmnopqrstuvwxyz', 7, 0);
+    w(2, 10, '0123456789 .,;:!?', 7, 0);
   }
-  if (rows > 11) {
-    w(2, 11, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 15, 0);
-    w(2, 12, 'abcdefghijklmnopqrstuvwxyz', 7, 0);
-    w(2, 13, '0123456789 .,;:!?', 7, 0);
+  if (rows > 12 && cols > 16) {
+    w(2, 12, 'CGA PALETTE:', 7, 0);
+    colorRow(s, 2, 13, 0, 8, 0);
+    colorRow(s, 2, 14, 8, 8, 0);
   }
   w(0, rows - 1, bar(cols), 7, 0);
   return s;
@@ -102,40 +109,47 @@ function createPetDemo(cols: number, rows: number): AttributeTextScreen {
   const s = new AttributeTextScreen(cols, rows);
   s.clear(32, 1, 0);
   const w = (x: number, y: number, t: string, f = 1, b = 0) => s.writeText(x, y, t, f, b);
+  const wg = (x: number, y: number, t: string, f = 1, b = 0) => {
+    for (let i = 0; i < t.length; i++) s.putChar(x + i, y, t.charCodeAt(i) | 0x80, f, b);
+  };
   const model = cols >= 80 ? '4032 (80 COL)' : '2001 (40 COL)';
-  w(0, 0, bar(cols), 2, 0);
-  w(0, 1, spacer(cols, 'COMMODORE PET ' + model), 2, 0);
-  w(0, 2, bar(cols), 2, 0);
+  wg(0, 0, bar(cols, '*'), 1, 1);
+  wg(0, 1, '*** COMMODORE PET ' + model + ' ***'.padEnd(cols - 2, ' ') + ' ', 1, 1);
+  wg(0, 2, bar(cols, '*'), 1, 1);
   w(2, 4, '10 PRINT "HELLO"', 1, 0);
   w(2, 5, '20 INPUT A$', 1, 0);
   w(2, 6, '30 PRINT A$', 1, 0);
   w(2, 7, '40 GOTO 20', 1, 0);
   if (rows > 9) {
-    w(2, 9, 'PET ' + (cols >= 80 ? '4032' : '2001') + ': IEEE-488', 3, 0);
-    w(2, 10, cols >= 80 ? '32K RAM  BASIC 4.0' : '16K RAM  BASIC 1.0', 3, 0);
+    w(2, 9, 'PET ' + (cols >= 80 ? '4032' : '2001'), 1, 0);
+    w(2, 10, cols >= 80 ? '80x25  32K  BASIC 4.0' : '40x25  16K  BASIC 1.0', 1, 0);
+    w(2, 11, 'IEEE-488  PETSCII  CRTC', 1, 0);
   }
-  if (rows > 12) {
-    w(2, 12, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 1, 0);
-    w(2, 13, '0123456789', 1, 0);
+  if (rows > 13) {
+    w(2, 13, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 1, 0);
+    w(2, 14, '0123456789', 1, 0);
   }
-  w(0, rows - 1, bar(cols), 2, 0);
   return s;
 }
 
 function createMdaDemo(cols: number, rows: number): AttributeTextScreen {
   const s = new AttributeTextScreen(cols, rows);
-  s.clear(32, 7, 0);
+  s.clear(32, 2, 0);
   const w = (x: number, y: number, t: string, f = 2, b = 0) => s.writeText(x, y, t, f, b);
-  w(2, 1, 'IBM MONOCHROME DISPLAY ADAPTER', 2, 0);
-  w(2, 2, '720 x 350   80 x 25', 2, 0);
-  w(1, 4, '---', 10, 0);
-  w(1, 5, '9x14 character cell', 10, 0);
-  w(1, 6, '4K video RAM at B000:0000', 10, 0);
-  w(1, 8, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 7, 0);
-  w(1, 9, 'abcdefghijklmnopqrstuvwxyz', 7, 0);
-  w(1, 10, '0123456789', 7, 0);
-  w(1, 12, 'The quick brown fox jumps', 2, 0);
-  w(1, 13, 'over the lazy dog 012345', 2, 0);
+  w(0, 1, 'IBM MONOCHROME DISPLAY ADAPTER', 2, 0);
+  w(0, 2, '720 x 350  80 x 25  9x14 FONT', 2, 0);
+  w(0, 4, '---', 10, 0);
+  w(0, 5, 'TEXT ONLY  NO GRAPHICS MODE', 10, 0);
+  w(0, 6, '4K VRAM AT B000:0000', 10, 0);
+  w(0, 7, 'ATTRIB: FG BG BLINK UNDERLINE', 10, 0);
+  w(0, 9, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 7, 0);
+  w(0, 10, 'abcdefghijklmnopqrstuvwxyz', 7, 0);
+  w(0, 11, '0123456789 .,;:!?()[]{}', 7, 0);
+  w(0, 13, 'The quick brown fox jumps over', 2, 0);
+  w(0, 14, 'the lazy dog 0123456789.', 2, 0);
+  if (rows > 16) {
+    w(0, 16, 'HGC: 720x348 BITMAP', 2, 0);
+  }
   return s;
 }
 
@@ -157,9 +171,10 @@ function createTrs80Demo(cols: number, rows: number): AttributeTextScreen {
   if (rows > 11) {
     w(0, 11, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 7, 0);
     w(0, 12, '0123456789 .,;:', 7, 0);
+    w(0, 13, 'descender: g j p q y', 7, 0);
   }
-  if (rows > 14) {
-    w(0, 14, 'READY.', 7, 0);
+  if (rows > 15) {
+    w(0, 15, '64x16  CELL 8x12  512x192', 7, 0);
   }
   return s;
 }
@@ -173,22 +188,25 @@ function createApple1Demo(cols: number, rows: number): AttributeTextScreen {
   };
   w(0, 0, 'APPLE 1  |  WOZ MONITOR', 2, 0);
   w(0, 1, bar(cols, '\\'), 2, 0);
-  wi(0, 2, bar(cols, '='), 0, 1);
-  wi(0, 3, ' APPLE 1 DEMO ', 0, 1);
-  wi(0, 4, bar(cols, '='), 0, 1);
-  w(1, 6, '\\]10 PRINT "HELLO"', 1, 0);
-  w(1, 7, '\\]20 GOTO 10', 1, 0);
-  w(1, 8, '\\]RUN', 10, 0);
-  if (rows > 10) {
-    w(4, 10, 'HELLO', 1, 0);
+  wi(0, 2, ' INVERTED MSB=1 ', 1, 1);
+  wi(0, 3, ' FG <-> BG SWAP ', 1, 1);
+  w(1, 5, '\\]10 PRINT "HELLO"', 1, 0);
+  w(1, 6, '\\]20 GOTO 10', 1, 0);
+  w(1, 7, '\\]RUN', 10, 0);
+  if (rows > 9) {
+    w(4, 9, 'HELLO', 1, 0);
   }
-  if (rows > 12) {
-    w(1, 12, '\\].R', 6, 0);
-    w(1, 13, 'A=0.A0: 00 00 00 00', 6, 0);
+  if (rows > 11) {
+    w(1, 11, '\\].R', 6, 0);
+    w(1, 12, 'A=0.A0: 00 00 00 00', 6, 0);
   }
-  if (rows > 15) {
-    w(1, 15, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 1, 0);
-    w(1, 16, '0123456789', 1, 0);
+  if (rows > 14) {
+    w(1, 14, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 1, 0);
+    w(1, 15, '0123456789', 1, 0);
+  }
+  if (rows > 17) {
+    w(1, 17, '40x24  8x8 LSB-FIRST', 1, 0);
+    w(1, 18, '6502 @ 1MHz  4KB RAM', 1, 0);
   }
   return s;
 }
@@ -203,24 +221,20 @@ function createVic20Demo(cols: number, rows: number): AttributeTextScreen {
   w(1, 4, '10 PRINT "HELLO"', 7, 6);
   w(1, 5, '20 POKE 36879,27', 7, 6);
   w(1, 7, 'VIC CHIP: 6560/6561', 3, 6);
-  w(1, 8, '22 COLUMNS x 23 ROWS', 3, 6);
+  w(1, 8, '22x23  176x184  NO SPRITES', 3, 6);
   if (rows > 10) {
-    w(1, 10, 'COLOR 0-15:', 7, 6);
-    for (let c = 0; c < 8 && c + 11 < cols; c++) {
-      w(11 + c, 11, `${c}`, c + 1, 6);
+    w(1, 10, '16-COLOR PALETTE:', 7, 6);
+    for (let c = 0; c < 8 && c + 18 < cols; c++) {
+      w(18 + c, 10, '' + c, c + 1, 6);
     }
-    for (let c = 0; c < 8 && c + 11 < cols; c++) {
-      w(11 + c, 12, `${c + 8}`, c + 9, 6);
+    for (let c = 0; c < 8 && c + 18 < cols; c++) {
+      w(18 + c, 11, '' + (c + 8), c + 9, 6);
     }
+    w(1, 12, '4-BIT NYBBLE COLOR RAM', 1, 6);
   }
   if (rows > 14) {
-    w(0, 14, '4-BIT COLOR RAM', 1, 6);
-    w(0, 15, '176x184 BITMAP', 1, 6);
-    w(0, 16, 'NO SPRITES (VIC-I)', 1, 6);
-  }
-  if (rows > 18) {
-    w(0, 18, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 7, 6);
-    w(0, 19, '0123456789', 7, 6);
+    w(1, 14, 'ABC XYZ  abc xyz  0123', 7, 6);
+    w(1, 15, 'PETSCII 2 SETS CHARGEN', 7, 6);
   }
   return s;
 }
