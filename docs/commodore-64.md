@@ -1,0 +1,72 @@
+# Commodore 64 — video modes (VIC-II)
+
+## Chip graficzny: MOS VIC-II (6567/6569)
+
+| Właściwość | Wartość |
+|---|---|
+| Rozdzielczość tekstowa | 40 × 25 (8×8 znaków) |
+| Rozdzielczość bitmapowa | 320 × 200 (hi-res, 1bpp) lub 160 × 200 (multicolor, 2bpp) |
+| Kolory | 16 |
+| Color RAM | 1 KB nybble-addressable ($D800–$DBFF), 4 bitów na komórkę |
+| Sprite'y | 8 sprzętowych, 24×21 px, 1 lub 3 kolorów + przezroczystość |
+| Skanowanie | Raster interrupt — zmiana rejestrów w trakcie wyświetlania |
+
+## Tryby VIC-II
+
+### Standard Character Mode (tryb tekstowy)
+- 40 × 25 znaków, każdy 8 × 8 pikseli
+- Font w RAM (można przełączać zestawy znaków)
+- Foreground: z Color RAM ($D800, 4 bity = jeden z 16 kolorów)
+- Background: rejestry $D021–$D024 (4 kolory tła, per-cell)
+- **Uwaga**: Color RAM używa tylko dolnych 4 bitów. Górne 4 bity bajtu w $D800 są ignorowane.
+
+### Multicolor Character Mode
+- 40 × 25, ale każdy znak ma efektywną rozdzielczość 4 × 8 pikseli w 4 kolorach
+- Kolory pochodzą z Color RAM i rejestrów $D021–$D024
+
+### Hi-Res Bitmap Mode
+- 320 × 200, 1 bit/piksel
+- Kolor piksela = 1 → Color RAM ($D800) dla danej komórki 8×8
+- Kolor piksela = 0 → rejestr $D021 (ekranowe tło)
+
+### Multicolor Bitmap Mode
+- 160 × 200, 2 bity/piksel
+- 4 kolory na komórkę 4 × 8: z Color RAM, $D021, $D022, $D023
+
+## Paleta C64
+
+| Indeks | Kolor | Przykład |
+|---|---|---|
+| 0 | Black | #000000 |
+| 1 | White | #FFFFFF |
+| 2 | Red | #880000 |
+| 3 | Cyan | #A8F8F8 |
+| 4 | Purple / Violet | #F8A800 |
+| 5 | Green | #F8F8A8 |
+| 6 | Blue | #00A800 |
+| 7 | Yellow | #00F800 |
+| 8 | Orange | #A800A8 |
+| 9 | Brown | #F8A8F8 |
+| 10 | Light Red | #A80000 |
+| 11 | Dark Gray | #F8A8A8 |
+| 12 | Medium Gray | #000088 |
+| 13 | Light Green | #0000A8 |
+| 14 | Light Blue | #008888 |
+| 15 | Light Gray | #00A8A8 |
+
+## Co już mamy
+
+- [x] Preset `c64-text-40x25` (tryb tekstowy 40×25)
+- [x] Preset `c64-320x200` (tryb bitmapowy 320×200)
+- [x] Paleta C64 (16 kolorów)
+- [x] Font C64 CHARGEN (2 zestawy, 512 glifów)
+- [x] Mapper PETSCII
+
+## Czego brakuje
+
+- [ ] **Color RAM (4-bit nybble)** — obecnie `TextModeDecoder` traktuje bajt jako [bg:4][fg:4], podczas gdy C64 używa 4-bitowych nybbli w $D800 (tylko foreground, background z rejestrów). To kluczowa różnica.
+- [ ] **Bitmap 2bpp decoder** — `'bitmap-2bpp'` jest zadeklarowany w `VideoMode` ale nie ma implementacji. Preset `c64-320x200` nie może być poprawnie wyświetlony.
+- [ ] **Rejestry tła $D021–$D024** — w trybie bitmapowym kolor tła pochodzi z rejestru, nie z Color RAM.
+- [ ] **Multicolor modes** — brak.
+- [ ] **Sprite'y** — brak (8 sprite'ów, 24×21).
+- [ ] **Raster interrupt** — brak symulacji zmian w trakcie skanowania.

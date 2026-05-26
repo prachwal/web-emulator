@@ -3,6 +3,7 @@ import { createVideoState, markAllDirty } from './VideoState';
 import type { IVideoModeDecoder } from './modes/IVideoModeDecoder';
 import { TextModeDecoder } from './modes/TextModeDecoder';
 import { Bitmap1BppDecoder } from './modes/Bitmap1BppDecoder';
+import { Bitmap2BppDecoder } from './modes/Bitmap2BppDecoder';
 import { AttributeBitmapDecoder } from './modes/AttributeBitmapDecoder';
 import { TilemapDecoder } from './modes/TilemapDecoder';
 import { loadPalette, paletteToUint32 } from './Palette';
@@ -28,6 +29,7 @@ export class VideoSystem {
 
     this.registerDecoder(new TextModeDecoder(40, 25, 8, 8));
     this.registerDecoder(new Bitmap1BppDecoder(profile.sourceWidth, profile.sourceHeight));
+    this.registerDecoder(new Bitmap2BppDecoder(profile.sourceWidth, profile.sourceHeight));
     this.registerDecoder(new AttributeBitmapDecoder(profile.sourceWidth, profile.sourceHeight));
     this.registerDecoder(new TilemapDecoder(profile.sourceWidth, profile.sourceHeight));
 
