@@ -41,5 +41,9 @@ Emulacyjnie można użyć zielonej skali.
 
 ## Czego brakuje
 
+- [x] Blink attribute — wspólny z CGA `colorModel:'mda'` w `TextModeDecoder` (bit 7 = blink)
+
+## Czego brakuje
+
 - [ ] **Atrybut underline w fontach** — oryginalny MDA renderuje underline sprzętowo, obecnie nie ma obsługi.
 - [ ] **Tryb HGC** (Hercules, 720×348 bitmap) — brak.

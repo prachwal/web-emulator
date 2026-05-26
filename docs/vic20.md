@@ -69,4 +69,9 @@
 
 - [ ] **Color RAM (nybble)** — podobnie jak w C64, VIC-20 ma 4-bitową pamięć kolorów (wymaga osobnego dekodera lub `colorModel`).
 - [ ] **Multicolor** — brak.
-- [ ] **Tryb bitmapowy 176×184** — brak.
+- [x] Tryb bitmapowy 176×184 — preset `vic20-176x184`, używa `Bitmap1BppDecoder`
+
+## Czego brakuje
+
+- [ ] **Color RAM (nybble)** — podobnie jak w C64, VIC-20 ma 4-bitową pamięć kolorów (wymaga osobnego dekodera lub `colorModel`).
+- [ ] **Multicolor** — brak.

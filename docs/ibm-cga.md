@@ -77,4 +77,9 @@ Każda komórka znaku: 8 × 8 pikseli, atrybut bajt = [blink:1][bg:3][fg:4].
 - [ ] **Palety CGA mode 4** — obecnie nie ma przełączania 4-kolorowych palet dla trybu 320×200.
 - [ ] **Composite artifact colors** — symulacja kolorów artifact NTSC.
 - [ ] **160×100 16c** — tryb niskiej rozdzielczości z pełną paletą (wymaga emulacji CRTC).
-- [ ] **Blink attribute** — w trybie tekstowym atrybut blink (bit 7 tła).
+- [x] Blink attribute — `colorModel:'cga'` w `TextModeDecoder` (bit 7 zamienia fg↔bg co 16 klatek)
+
+## Czego brakuje
+
+- [ ] **Composite artifact colors** — symulacja kolorów artifact NTSC.
+- [ ] **160×100 16c** — tryb niskiej rozdzielczości z pełną paletą (wymaga emulacji CRTC).
