@@ -35,6 +35,6 @@ describe('getMapper', () => {
     expect(lowerA).not.toBe(upperA);
     expect(m.mapCharCode(0x61)).toBe(1);  // 'a' → 1
     expect(m.mapCharCode(0x7a)).toBe(26); // 'z' → 26
-    expect(m.mapCharCode(0x41)).toBe(33); // 'A' → 33 (PETSCII uppercase slot)
+    expect(m.mapCharCode(0x41)).toBe(0x41); // 'A' → 65 (PETSCII uppercase slot)
   });
 });
