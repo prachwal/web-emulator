@@ -9,68 +9,82 @@ Vite + Preact (TSX) + TypeScript CRT web emulator. Renders retro computer video 
 ```sh
 npm run dev          # Vite dev server
 npm run build        # tsc -b && vite build
-npm test             # vitest run (66 tests, 12 files)
+npm test             # vitest run (67 tests, 12 files)
 npm run lint         # tsc --noEmit
 npm run test:watch   # vitest watch
 ```
+
+After adding/editing presets or machine features, restart the dev server (`npm run dev`) — changes are picked up by Vite HMR.
 
 ## Architecture
 
 ```
 src/
-  app/          — UI components (Preact TSX)
-    AppShell.tsx       — layout + toolbar + CRT bezel + nameplate
+  app/            — UI components (Preact TSX)
+    AppShell.tsx         — layout + toolbar + CRT bezel + nameplate
     EmulatorViewport.tsx — canvas init, render loop, font/palette upload
-    SettingsPanel.tsx  — CRT slider controls
-    DebugOverlay.tsx   — FPS counter
-  core/         — runtime, types
-    EmulatorRuntime.ts  — initCanvas(), resizeCanvas(), stepFrame()
-    types.ts            — CrtSettings, MachineProfile, VideoMode union
-  video/        — graphics pipeline
-    BitmapFont.ts       — getGlyphBit(), loadFontFromBin()
-    Framebuffer.ts      — Uint8Array indexed framebuffer
-    Palette.ts          — ZX Spectrum (16), C64 (16), parseCssHexColor()
-    DisplayGeometry.ts  — computeViewport() with integer scaling
-    presets.ts          — PRESETS array, T()/G() helpers, FontGeometry
-    VideoSystem.ts      — decoder registry, stepFrame(), mode switching
-    VideoState.ts       — createVideoState(), markAllDirty()
+    SettingsPanel.tsx    — CRT slider controls
+    DebugOverlay.tsx     — FPS counter
+  core/           — runtime, types
+    EmulatorRuntime.ts   — initCanvas(), resizeCanvas(), stepFrame()
+    types.ts             — CrtSettings, MachineProfile, VideoMode union
+  video/
+    BitmapFont.ts        — getGlyphBit(), loadFontFromBin()
+    Framebuffer.ts       — Uint8Array indexed framebuffer
+    Palette.ts           — ZX Spectrum (16), C64 (16), parseCssHexColor()
+    DisplayGeometry.ts   — computeViewport() with integer scaling
+    presets/
+      types.ts           — Preset, FontGeometry, Margins, helpers (T, G, f8, f8hl, m)
+      index.ts           — aggregates per-machine presets, exports PRESETS[]
+      zx.ts              — ZX Spectrum presets
+      c64.ts             — Commodore 64 presets
+      cga.ts             — IBM CGA presets
+      pet.ts             — Commodore PET presets
+      mda.ts             — IBM MDA presets
+      trs80.ts           — TRS-80 Model III presets
+      apple1.ts          — Apple 1 presets
+      vic20.ts           — VIC-20 presets
+    VideoSystem.ts       — decoder registry, stepFrame(), mode switching
+    VideoState.ts        — createVideoState(), markAllDirty()
     modes/
-      IVideoModeDecoder.ts  — interface { id, sourceWidth, sourceHeight, decode() }
-      TextModeDecoder.ts    — 'text', with colorModel: 'mda'|'c64'|'zx'
-      Bitmap1BppDecoder.ts  — 'bitmap-1bpp'
-      Bitmap2BppDecoder.ts  — 'bitmap-2bpp' (C64 320x200)
+      IVideoModeDecoder.ts   — interface { id, sourceWidth, sourceHeight, decode() }
+      TextModeDecoder.ts     — 'text', with colorModel: 'mda'|'c64'|'zx'|'cga'
+      Bitmap1BppDecoder.ts   — 'bitmap-1bpp'
+      Bitmap2BppDecoder.ts   — 'bitmap-2bpp' (C64 320x200)
       AttributeBitmapDecoder.ts — 'attribute-bitmap' (ZX INK/PAPER/BRIGHT/FLASH)
-      TilemapDecoder.ts     — 'tilemap' (CGA)
+      TilemapDecoder.ts      — 'tilemap' (CGA)
     renderers/
-      IRenderer.ts         — interface { initialize, resize, uploadFrame, render }
-      WebGL2Renderer.ts    — WebGL2 with UNPACK_FLIP_Y_WEBGL, CRT shader
-      Canvas2DRenderer.ts  — debug/fallback
-      RendererFactory.ts   — createRenderer('auto'|'webgl2'|'canvas2d')
+      IRenderer.ts          — interface { initialize, resize, uploadFrame, render }
+      WebGL2Renderer.ts     — WebGL2 with UNPACK_FLIP_Y_WEBGL, CRT shader
+      Canvas2DRenderer.ts   — debug/fallback
+      RendererFactory.ts    — createRenderer('auto'|'webgl2'|'canvas2d')
     text/
-      TextModeRenderer.ts  — renderGlyphToFramebuffer(), renderAttributeTextToFramebuffer()
+      TextModeRenderer.ts   — renderGlyphToFramebuffer(), renderAttributeTextToFramebuffer()
       AttributeTextScreen.ts — char grid with per-cell fg/bg
-      DemoTextScene.ts     — per-machine demo content
-      CharMapper.ts        — ascii, petscii
-      TextScreen.ts        — simple char grid
-      TextCursor.ts        — cursor blink/position
+      DemoTextScene.ts      — per-machine demo content (createDemoForMachine)
+      CharMapper.ts         — ascii, petscii
+      TextScreen.ts         — simple char grid
+      TextCursor.ts         — cursor blink/position
     fonts/
-      FontLoader.ts        — loadBitmapFont() from .bin via fetch
-      fontPresets.ts       — font metadata (xBits, invertBits, cellWidth/Height)
-      FontRegistry.ts      — global font cache
+      FontLoader.ts         — loadBitmapFont() from .bin via fetch
+      fontPresets.ts        — font metadata (xBits, invertBits, cellWidth/Height)
+      FontRegistry.ts       — global font cache
     image/
-      ImageLoader.ts       — loadImage() + imageToIndexedFramebuffer()
-  input/        — keyboard controller
-  wasm/         — Go WASM bridge (WIP)
-  worker/       — web worker protocol
+      ImageLoader.ts        — loadImage() + imageToIndexedFramebuffer()
+  input/            — keyboard controller
+  wasm/             — Go WASM bridge (WIP)
+  worker/           — web worker protocol
 ```
 
 ## Preset system
 
-Central in `src/video/presets.ts`. Machines: zx, c64, cga, pet, mda, trs80, apple1, vic20.
+Central in `src/video/presets/index.ts`. Machines: zx, c64, cga, pet, mda, trs80, apple1, vic20.
 
 Each preset has `type: 'text' | 'bitmap'`, framebuffer dimensions, PAR, palette, fontId, and FontGeometry (glyphWidth/Height, cellWidth/Height, bytesPerGlyph, xBits, invertBits, leftBit).
 
 Three-level UI: Machine → Text|Bitmap → Resolution variant.
+
+To add presets for a new machine, create `src/video/presets/<machine>.ts` and register it in `index.ts`.
 
 ## Rendering pipeline
 
@@ -97,9 +111,13 @@ Bitmap mode: `imageToIndexedFramebuffer()` loads tukan.jpg, quantizes to palette
 
 ## Color nuances
 
-- **ZX**: AttributeBitmapDecoder decodes INK/PAPER/BRIGHT/FLASH per 8×8 cell
-- **C64**: TextModeDecoder.colorModel='c64' reads colorRam as 4-bit nybble (foreground only)
-- **Apple 1**: TextRenderOptions.invertMsb swaps fg/bg when charCode >= 128
+| Machine | Feature | Implementation |
+|---|---|---|
+| **ZX** | Attribute INK/PAPER/BRIGHT/FLASH per 8×8 cell | `AttributeBitmapDecoder` + `TextModeDecoder.colorModel='zx'` |
+| **C64** | Color RAM as 4-bit nybble (foreground only) | `TextModeDecoder.colorModel='c64'` |
+| **CGA** | Blink attribute, RGBI 16-color palette | `TextModeDecoder.colorModel='cga'` + inline palette |
+| **MDA** | Blink attribute, monochrome green | `TextModeDecoder.colorModel='mda'` |
+| **Apple 1** | Inverted chars via MSB=1 swap fg↔bg | `TextRenderOptions.invertMsb` |
 
 ## Conventions
 
