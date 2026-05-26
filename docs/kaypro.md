@@ -10,8 +10,8 @@
 | Chip | SY6545A-1 CRTC |
 | Pixel clock | 18 MHz |
 | Rozdzielczość tekstowa | Kaypro II: 80 × 24; Kaypro 4/84: 80 × 25 |
-| Font | Kaypro II: 7 × 8 z ROM-u 81-146A; Kaypro 4/84: 8 × 16 z ROM-u 81-235 |
-| Rozdzielczość efektywna | Kaypro II: 560 × 192; Kaypro 4/84: 640 × 400 |
+| Font | Kaypro II: ROM 7 × 8 skalowany do komórki 7 × 16; Kaypro 4/84: 8 × 16 z ROM-u 81-235 |
+| Rozdzielczość efektywna | Kaypro II: 560 × 384; Kaypro 4/84: 640 × 400 |
 | Emulowane skalowanie | Square-pixel (PAR 1:1), bez ściskania fontu |
 | Kolory | Monochromatyczny (zielony P1 fosfor) |
 | Ekran | 9" CRT (wbudowany) |
@@ -27,7 +27,7 @@ Kaypro używa SY6545A-1 CRTC z oddzielną pamięcią znaków i atrybutów:
 - **Attribute RAM**: 2048 bajtów (równoległy do character RAM)
 - **Font ROM**: Kaypro II: 2 KB 81-146A (górne 128 glyphów odwrócone bitowo); Kaypro 4/84: 4 KB 81-235
 
-Kaypro II używa fontu 7×8; ASCII jest w górnej połowie ROM-u (`code + 128`) i wymaga odwrócenia bitów. Kaypro 4/84 używa wyższego fontu 8×16. Atrybuty pozwalają na odwrócenie wideo (inverse).
+Kaypro II używa fontu ROM 7×8; ASCII jest w górnej połowie ROM-u (`code + 128`) i wymaga odwrócenia bitów. W emulatorze glif jest skalowany pionowo 2× do komórki 7×16, żeby tryb 80×24 miał czytelne proporcje CRT. Kaypro 4/84 używa wyższego fontu 8×16. Atrybuty pozwalają na odwrócenie wideo (inverse).
 
 ### Atrybut tekstowy
 
@@ -64,7 +64,7 @@ W praktyce bardzo wolne: ~300 pikseli/s przez BIOS, do ~25 fps przez bezpośredn
 
 - [x] Preset `kaypro2-text-80x24` (Kaypro II, tryb tekstowy 80×24)
 - [x] Preset `kaypro4-text-80x25` (Kaypro 4/84, tryb tekstowy 80×25)
-- [x] Font Kaypro II 7×8 z `kaypro2.u43` / 81-146A (offset 1024, inverted)
+- [x] Font Kaypro II 7×8 z `kaypro2.u43` / 81-146A (offset 1024, inverted, scaleY 2×)
 - [x] Font Kaypro 4/84 8×16 z `kaypro4.u9` / 81-235
 - [x] Skalowanie square-pixel dla czytelnego fontu 8×16
 - [x] Paleta monochromatyczna (zielona)

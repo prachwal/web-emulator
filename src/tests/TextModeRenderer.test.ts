@@ -38,6 +38,20 @@ describe('renderGlyphToFramebuffer', () => {
     renderGlyphToFramebuffer(font, 0x41, fb, 4, 4, 0, 0, 1, 0);
     expect(fb[0]).toBeGreaterThanOrEqual(0);
   });
+
+  it('scales glyph rows when scaleY is set', () => {
+    const data = new Uint8Array(8);
+    data[0] = 0xff;
+    data[1] = 0x00;
+    const font = loadFontFromBin('test', 'Test', data, 1, 8, 8, 'msb-left', undefined, undefined, undefined, 8, 16, undefined, 2);
+    const fb = new Uint8Array(8 * 16);
+
+    renderGlyphToFramebuffer(font, 0, fb, 8, 16, 0, 0, 1, 0);
+
+    expect(fb[0]).toBe(1);
+    expect(fb[8]).toBe(1);
+    expect(fb[16]).toBe(0);
+  });
 });
 
 describe('renderAttributeTextToFramebuffer', () => {

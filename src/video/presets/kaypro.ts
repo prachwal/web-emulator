@@ -8,9 +8,9 @@ const kayproPal = [
 ];
 
 export const kayproPresets = [
-  T('kaypro2-text-80x24', 'kaypro', 'Kaypro II', 80, 24, 7, 8, 560, 192, 1,
+  T('kaypro2-text-80x24', 'kaypro', 'Kaypro II', 80, 24, 7, 16, 560, 384, 1,
     'kaypro2.u43', 'kaypro-2', 128, {
-      glyphWidth: 7, glyphHeight: 8, cellWidth: 7, cellHeight: 8,
+      glyphWidth: 7, glyphHeight: 8, cellWidth: 7, cellHeight: 16,
       bytesPerGlyph: 8, leftBit: 4, xBits: [-1, 4, 3, 2, 1, 0, -1],
       invertBits: true,
     },

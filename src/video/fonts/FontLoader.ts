@@ -15,6 +15,8 @@ export type LoadBitmapFontOptions = {
   bytesPerGlyph?: number;
   xBits?: number[];
   invertBits?: boolean;
+  scaleX?: number;
+  scaleY?: number;
   sourcePath?: string;
 };
 
@@ -33,6 +35,8 @@ export async function loadBitmapFont(
     bytesPerGlyph = charHeight * Math.ceil(charWidth / 8),
     xBits,
     invertBits,
+    scaleX,
+    scaleY,
     sourcePath,
   } = options;
 
@@ -57,7 +61,7 @@ export async function loadBitmapFont(
 
   return loadFontFromBin(
     id, name, fontData, glyphCount, charWidth, charHeight,
-    bitOrder, sourcePath ?? url, xBits, invertBits, cellWidth, cellHeight,
+    bitOrder, sourcePath ?? url, xBits, invertBits, cellWidth, cellHeight, scaleX, scaleY,
   );
 }
 

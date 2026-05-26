@@ -86,6 +86,10 @@ export function renderGlyphToFramebuffer(
 ): void {
   const cellW = font.cellWidth ?? font.charWidth;
   const cellH = font.cellHeight ?? font.charHeight;
+  const scaleX = font.scaleX ?? 1;
+  const scaleY = font.scaleY ?? 1;
+  const glyphW = font.charWidth * scaleX;
+  const glyphH = font.charHeight * scaleY;
 
   for (let gy = 0; gy < cellH; gy++) {
     for (let gx = 0; gx < cellW; gx++) {
@@ -94,8 +98,8 @@ export function renderGlyphToFramebuffer(
 
       if (px < 0 || px >= outputWidth || py < 0 || py >= outputHeight) continue;
 
-      if (gy < font.charHeight && gx < font.charWidth) {
-        const bit = getGlyphBit(font, charCode, gx, gy);
+      if (gy < glyphH && gx < glyphW) {
+        const bit = getGlyphBit(font, charCode, Math.floor(gx / scaleX), Math.floor(gy / scaleY));
         framebuffer[py * outputWidth + px] = bit ? fgColor : bgColor;
       } else {
         framebuffer[py * outputWidth + px] = bgColor;

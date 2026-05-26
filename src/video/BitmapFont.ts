@@ -13,6 +13,8 @@ export interface BitmapFont {
   bitOrder: BitOrder;
   xBits?: number[];
   invertBits?: boolean;
+  scaleX?: number;
+  scaleY?: number;
   sourcePath?: string;
 }
 
@@ -56,6 +58,8 @@ export function loadFontFromBin(
   invertBits?: boolean,
   cellWidth?: number,
   cellHeight?: number,
+  scaleX?: number,
+  scaleY?: number,
 ): BitmapFont {
   const bytesPerGlyph = charHeight * Math.ceil(charWidth / 8);
   return {
@@ -72,6 +76,8 @@ export function loadFontFromBin(
     sourcePath,
     xBits,
     invertBits,
+    scaleX,
+    scaleY,
   };
 }
 

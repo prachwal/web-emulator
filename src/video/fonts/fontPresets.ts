@@ -180,10 +180,11 @@ export const fontPresets: FontPreset[] = [
     description: 'Kaypro II 81-146A character ROM upper half (2048B)',
     glyphCount: 128,
     charWidth: 7, charHeight: 8, bytesPerGlyph: 8,
-    cellWidth: 7, cellHeight: 8,
+    cellWidth: 7, cellHeight: 16,
     bitOrder: 'msb-left', offset: 1024,
     xBits: [-1, 4, 3, 2, 1, 0, -1],
     invertBits: true,
+    scaleY: 2,
     mapperId: 'ascii',
   },
   {
