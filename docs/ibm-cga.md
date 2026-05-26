@@ -68,6 +68,7 @@ Każda komórka znaku: 8 × 8 pikseli, atrybut bajt = [blink:1][bg:3][fg:4].
 - [x] Preset `cga-text-40x25` (tryb tekstowy 40×25)
 - [x] Preset `cga-text-80x25` (tryb tekstowy 80×25)
 - [x] Preset `cga-320x200` (tryb graficzny z `TilemapDecoder`)
+- [x] Preset `cga-640x200` (tryb graficzny 640×200 2c, mode 6, używa `Bitmap1BppDecoder`)
 - [x] Font CGA (thick i thin)
 - [x] Paleta CGA 16 kolorów inline
 
@@ -75,6 +76,5 @@ Każda komórka znaku: 8 × 8 pikseli, atrybut bajt = [blink:1][bg:3][fg:4].
 
 - [ ] **Palety CGA mode 4** — obecnie nie ma przełączania 4-kolorowych palet dla trybu 320×200.
 - [ ] **Composite artifact colors** — symulacja kolorów artifact NTSC.
-- [ ] **160×100 16c** — tryb niskiej rozdzielczości z pełną paletą.
-- [ ] **640×200 2c** — tryb wysoko rozdzielczy (mode 6).
+- [ ] **160×100 16c** — tryb niskiej rozdzielczości z pełną paletą (wymaga emulacji CRTC).
 - [ ] **Blink attribute** — w trybie tekstowym atrybut blink (bit 7 tła).

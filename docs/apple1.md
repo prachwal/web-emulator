@@ -41,8 +41,9 @@ Video w Apple 1 jest zrealizowane na około 30 układach TTL (bramki, liczniki, 
 - [x] Font Apple 1 (apple1.vid, 128 glifów)
 - [x] Bit order LSB-first
 - [x] Paleta zielonego monochromatycznego
+- [x] **Odwrócone znaki (MSB=1)** — opcja `invertMsb` w `TextRenderOptions`. Gdy `charCode ≥ 128`, czyszczony jest MSB i zamieniane fg↔bg. Demo Apple 1 pokazuje odwrócony pasek tytułowy.
+- [x] Test: `invertMsb swaps fg/bg when charCode >= 128` w `TextModeRenderer.test.ts`
 
 ## Czego brakuje
 
-- [ ] **Odwrócone znaki (MSB=1)** — w Apple 1 ustawienie 7. bitu kodu znaku odwraca kolory (foreground ↔ background). Obecnie nieobsługiwane.
 - [ ] **Górna połowa fontu (kody 64–127)** — w rzeczywistym Apple 1 górne 64 znaki są puste lub lustrzane. Wymaga weryfikacji apple1.vid.

@@ -44,8 +44,11 @@
 - [x] CellHeight = 12 dla lepszego wypełnienia pionowego
 - [x] Paleta monochromatyczna
 
+## Uwaga o descendentach
+
+Glify descendentów (g, j, p, q, y) w foncie TRS-80 Model III mieszczą się w 8×8 pikselach — ogon descendentu znajduje się w dolnych wierszach glifu (rows 6-7). CellHeight=12 dodaje odstęp pod glifem, ale descendent jest już w glifie. Dodatkowe przesunięcie nie jest potrzebne.
+
 ## Czego brakuje
 
-- [ ] **Descendery w renderowaniu** — obecnie glif rysuje się od góry komórki, ale descendery (dolne 4 piksele) nie są obsługiwane (glyphData ma tylko 8 bajtów, nie 12). Potrzebne: przesunięcie glifu w komórce (góra komórki = render od offsetY) i czarne tło w pustej dolnej części.
-- [ ] **Semi-graphics mode** — brak.
+- [ ] **Semi-graphics mode** — brak (128×48, 2 kolory).
 - [ ] **Tryb 32×16** (podwójna szerokość) — brak presetu.

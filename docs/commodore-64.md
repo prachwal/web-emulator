@@ -61,12 +61,13 @@
 - [x] Paleta C64 (16 kolorów)
 - [x] Font C64 CHARGEN (2 zestawy, 512 glifów)
 - [x] Mapper PETSCII
+- [x] **Color RAM (4-bit nybble)** — `TextModeDecoder.colorModel: 'c64'` czyta `colorRam` jako 4-bit nybble (tylko foreground, background z `backgroundColorIndex`). Zarejestrowane w `VideoSystem`.
+- [x] **Bitmap2BppDecoder** — dekoder dla `'bitmap-2bpp'` z obsługą Color RAM per komórkę 8×8 (kolor 1 z nybbla, kolor 2 z foregroundColorIndex). Zarejestrowany w `VideoSystem`.
+- [x] Demo C64 pokazuje informacje o VIC-II, SID, Color RAM, sprite'ach, trybach 320×200/160×200
 
 ## Czego brakuje
 
-- [ ] **Color RAM (4-bit nybble)** — obecnie `TextModeDecoder` traktuje bajt jako [bg:4][fg:4], podczas gdy C64 używa 4-bitowych nybbli w $D800 (tylko foreground, background z rejestrów). To kluczowa różnica.
-- [ ] **Bitmap 2bpp decoder** — `'bitmap-2bpp'` jest zadeklarowany w `VideoMode` ale nie ma implementacji. Preset `c64-320x200` nie może być poprawnie wyświetlony.
 - [ ] **Rejestry tła $D021–$D024** — w trybie bitmapowym kolor tła pochodzi z rejestru, nie z Color RAM.
-- [ ] **Multicolor modes** — brak.
+- [ ] **Multicolor modes** — brak (160×200, 4 kolory na komórkę).
 - [ ] **Sprite'y** — brak (8 sprite'ów, 24×21).
 - [ ] **Raster interrupt** — brak symulacji zmian w trakcie skanowania.
