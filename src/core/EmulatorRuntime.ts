@@ -36,6 +36,7 @@ export class EmulatorRuntime {
       canvas,
       sourceWidth: profile.sourceWidth,
       sourceHeight: profile.sourceHeight,
+      pixelAspectRatio: profile.pixelAspectRatio,
       crt: this.config.crt,
       preferred: 'auto',
     });

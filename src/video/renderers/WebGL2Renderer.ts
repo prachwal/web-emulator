@@ -1,5 +1,7 @@
 import type { IRenderer, RendererOptions } from './IRenderer';
 import type { CrtSettings } from '../../core/types';
+import { computeViewport } from '../DisplayGeometry';
+import type { DisplayGeometry } from '../DisplayGeometry';
 import screenVert from '../shaders/webgl/screen.vert?raw';
 import paletteFrag from '../shaders/webgl/palette.frag?raw';
 import crtFrag from '../shaders/webgl/crt.frag?raw';
@@ -41,6 +43,7 @@ export class WebGL2Renderer implements IRenderer {
   private canvas: HTMLCanvasElement | OffscreenCanvas | null = null;
   private sourceWidth: number = 0;
   private sourceHeight: number = 0;
+  private pixelAspectRatio: number = 1;
   private displayWidth: number = 0;
   private displayHeight: number = 0;
   private dpr: number = 1;
@@ -66,6 +69,7 @@ export class WebGL2Renderer implements IRenderer {
     this.canvas = options.canvas;
     this.sourceWidth = options.sourceWidth;
     this.sourceHeight = options.sourceHeight;
+    this.pixelAspectRatio = options.pixelAspectRatio;
     this.crt = options.crt;
 
     const gl = this.canvas.getContext('webgl2', {
@@ -159,18 +163,22 @@ export class WebGL2Renderer implements IRenderer {
     if (!this.gl) return;
     const gl = this.gl;
 
-    const scale = Math.max(1, Math.floor(Math.min(
-      this.displayWidth * this.dpr / this.sourceWidth,
-      this.displayHeight * this.dpr / this.sourceHeight,
-    )));
-    const vw = this.sourceWidth * scale;
-    const vh = this.sourceHeight * scale;
-    const ox = Math.floor(((this.displayWidth * this.dpr) - vw) / 2);
-    const oy = Math.floor(((this.displayHeight * this.dpr) - vh) / 2);
+    const cw = Math.round(this.displayWidth * this.dpr);
+    const ch = Math.round(this.displayHeight * this.dpr);
+    const geo: DisplayGeometry = {
+      sourceWidth: this.sourceWidth,
+      sourceHeight: this.sourceHeight,
+      pixelAspectRatio: this.pixelAspectRatio,
+      integerScale: true,
+      overscanX: 0,
+      overscanY: 0,
+    };
+    const vp = computeViewport(geo, cw, ch);
+    const { viewportWidth: vw, viewportHeight: vh, offsetX: ox, offsetY: oy, logicalWidth, logicalHeight } = vp;
 
     // Pass 1: palette mapping
-    const w = this.crt.enabled ? this.sourceWidth : vw;
-    const h = this.crt.enabled ? this.sourceHeight : vh;
+    const w = this.crt.enabled ? this.sourceWidth : Math.round(logicalWidth);
+    const h = this.crt.enabled ? this.sourceHeight : Math.round(logicalHeight);
     const xOff = this.crt.enabled ? 0 : ox;
     const yOff = this.crt.enabled ? 0 : oy;
 

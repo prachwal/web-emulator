@@ -1,5 +1,7 @@
 import type { IRenderer, RendererOptions } from './IRenderer';
 import type { CrtSettings } from '../../core/types';
+import { computeViewport } from '../DisplayGeometry';
+import type { DisplayGeometry } from '../DisplayGeometry';
 
 export class Canvas2DRenderer implements IRenderer {
   readonly kind = 'canvas2d' as const;
@@ -8,6 +10,7 @@ export class Canvas2DRenderer implements IRenderer {
   private ctx: CanvasRenderingContext2D | OffscreenCanvasRenderingContext2D | null = null;
   private sourceWidth: number = 0;
   private sourceHeight: number = 0;
+  private pixelAspectRatio: number = 1;
   private displayWidth: number = 0;
   private displayHeight: number = 0;
   private dpr: number = 1;
@@ -25,6 +28,7 @@ export class Canvas2DRenderer implements IRenderer {
     this.canvas = options.canvas;
     this.sourceWidth = options.sourceWidth;
     this.sourceHeight = options.sourceHeight;
+    this.pixelAspectRatio = options.pixelAspectRatio;
     this.crt = options.crt;
     const ctx = this.canvas.getContext('2d');
     if (!ctx) throw new Error('Canvas2D: failed to get 2d context');
@@ -63,15 +67,16 @@ export class Canvas2DRenderer implements IRenderer {
     ctx.fillStyle = '#000';
     ctx.fillRect(0, 0, cw, ch);
 
-    const scale = Math.max(1, Math.floor(Math.min(
-      cw / this.sourceWidth,
-      ch / this.sourceHeight,
-    )));
-
-    const vw = this.sourceWidth * scale;
-    const vh = this.sourceHeight * scale;
-    const ox = Math.floor((cw - vw) / 2);
-    const oy = Math.floor((ch - vh) / 2);
+    const geo: DisplayGeometry = {
+      sourceWidth: this.sourceWidth,
+      sourceHeight: this.sourceHeight,
+      pixelAspectRatio: this.pixelAspectRatio,
+      integerScale: true,
+      overscanX: 0,
+      overscanY: 0,
+    };
+    const vp = computeViewport(geo, cw, ch);
+    const { viewportWidth: vw, viewportHeight: vh, offsetX: ox, offsetY: oy } = vp;
 
     if (this.palette.length === 0) return;
 

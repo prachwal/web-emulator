@@ -7,6 +7,7 @@ export async function createRenderer(options: {
   canvas: HTMLCanvasElement | OffscreenCanvas;
   sourceWidth: number;
   sourceHeight: number;
+  pixelAspectRatio: number;
   crt: CrtSettings;
   preferred?: 'auto' | 'webgl2' | 'webgpu' | 'canvas2d';
 }): Promise<IRenderer> {
@@ -43,6 +44,7 @@ function createWebGL2(options: {
   canvas: HTMLCanvasElement | OffscreenCanvas;
   sourceWidth: number;
   sourceHeight: number;
+  pixelAspectRatio: number;
   crt: CrtSettings;
 }): IRenderer {
   const renderer = new WebGL2Renderer();
@@ -50,6 +52,7 @@ function createWebGL2(options: {
     canvas: options.canvas,
     sourceWidth: options.sourceWidth,
     sourceHeight: options.sourceHeight,
+    pixelAspectRatio: options.pixelAspectRatio,
     crt: options.crt,
   });
   return renderer;
@@ -59,6 +62,7 @@ function createCanvas2D(options: {
   canvas: HTMLCanvasElement | OffscreenCanvas;
   sourceWidth: number;
   sourceHeight: number;
+  pixelAspectRatio: number;
   crt: CrtSettings;
 }): IRenderer {
   const renderer = new Canvas2DRenderer();
@@ -66,6 +70,7 @@ function createCanvas2D(options: {
     canvas: options.canvas,
     sourceWidth: options.sourceWidth,
     sourceHeight: options.sourceHeight,
+    pixelAspectRatio: options.pixelAspectRatio,
     crt: options.crt,
   });
   return renderer;

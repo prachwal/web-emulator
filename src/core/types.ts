@@ -77,6 +77,7 @@ export interface MachineProfile {
   defaultPalette: string;
   defaultFont?: string;
   supportedModes: VideoMode[];
+  pixelAspectRatio: number;
   border: {
     enabled: boolean;
     left: number;
@@ -93,6 +94,7 @@ export const zxSpectrumProfile: MachineProfile = {
   sourceHeight: 192,
   refreshRate: 50,
   defaultPalette: 'zx-spectrum',
+  pixelAspectRatio: 1,
   supportedModes: ['attribute-bitmap'],
   border: { enabled: true, left: 32, right: 32, top: 24, bottom: 24 },
 };
@@ -105,6 +107,7 @@ export const c64Profile: MachineProfile = {
   refreshRate: 50,
   defaultPalette: 'c64',
   defaultFont: 'c64-charrom',
+  pixelAspectRatio: 5 / 6,
   supportedModes: ['text', 'bitmap-2bpp', 'c64-text'],
   border: { enabled: true, left: 24, right: 24, top: 20, bottom: 20 },
 };

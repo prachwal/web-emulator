@@ -4,6 +4,7 @@ export interface RendererOptions {
   canvas: HTMLCanvasElement | OffscreenCanvas;
   sourceWidth: number;
   sourceHeight: number;
+  pixelAspectRatio: number;
   crt: CrtSettings;
 }
 
