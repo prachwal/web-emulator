@@ -143,7 +143,7 @@ export const PRESETS: Preset[] = [
       '#000055','#0000ff','#00ff00','#00ffff','#ff0000','#ff00ff','#ffff00','#ffffff',
     ]),
 
-  T('cga-text-80x25', 'cga', 'IBM CGA', 80, 25, 8, 8, 640, 200, 1,
+  T('cga-text-80x25', 'cga', 'IBM CGA', 80, 25, 8, 8, 640, 200, 5 / 6,
     'cga-thick.bin', 'cga-thick', 256, f8(8, 7),
     m(6, 5, 6, 5), '#cccccc', '#000000', '#000000', '#e8e0d0', '#a09880', [
       '#000000','#0000aa','#00aa00','#00aaaa','#aa0000','#aa00aa','#aaaa00','#aaaaaa',
@@ -157,7 +157,7 @@ export const PRESETS: Preset[] = [
       '#555555','#5555ff','#55ff55','#ff5555','#00ffff','#ff00ff','#ffff55','#aaffaa',
     ]),
 
-  T('pet-text-80x25', 'pet', 'Commodore PET', 80, 25, 8, 8, 640, 200, 1,
+  T('pet-text-80x25', 'pet', 'Commodore PET', 80, 25, 8, 8, 640, 200, 5 / 6,
     'pet-4032.bin', 'pet-4032', 256, f8(8, 7),
     m(6, 5, 6, 5), '#33ff33', '#000000', '#000000', '#303030', '#666', [
       '#000000','#ffffff','#880000','#00aa00','#0000aa','#aa00aa','#00aaaa','#aaaa00',
@@ -214,7 +214,7 @@ export const PRESETS: Preset[] = [
     'cga:320×200 4c', 'tilemap'),
 
   G('cga-640x200', 'cga', 'IBM CGA', 'CGA 640×200 2c',
-    80, 25, 640, 200, 1,
+    80, 25, 640, 200, 5 / 6,
     'cga-thick.bin', 'cga-thick', 256, f8(8, 7),
     m(6, 5, 6, 5), '#ffffff', '#000000', '#000000', '#e8e0d0', '#a09880',
     ['#000000','#ffffff','#ffffff','#ffffff','#ffffff','#ffffff','#ffffff','#ffffff',
