@@ -1,0 +1,10 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+
+  // Enable built-in LSP (TypeScript, JSON, Markdown)
+  "lsp": {
+    "typescript": {
+      "extensions": ["ts", "tsx"]
+    }
+  }
+}
