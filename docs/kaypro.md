@@ -9,10 +9,10 @@
 | Video RAM | 2 KB character RAM + 2 KB attribute RAM |
 | Chip | SY6545A-1 CRTC |
 | Pixel clock | 18 MHz |
-| Rozdzielczość tekstowa | 80 × 25 |
-| Font | 8 × 16 (256 glyphs, 4 KB ROM) |
-| Rozdzielczość efektywna | 640 × 400 |
-| Emulowane skalowanie | Square-pixel 640 × 400 (PAR 1:1), bez ściskania fontu |
+| Rozdzielczość tekstowa | Kaypro II: 80 × 24; Kaypro 4/84: 80 × 25 |
+| Font | Kaypro II: 7 × 8 z ROM-u 81-146A; Kaypro 4/84: 8 × 16 z ROM-u 81-235 |
+| Rozdzielczość efektywna | Kaypro II: 560 × 192; Kaypro 4/84: 640 × 400 |
+| Emulowane skalowanie | Square-pixel (PAR 1:1), bez ściskania fontu |
 | Kolory | Monochromatyczny (zielony P1 fosfor) |
 | Ekran | 9" CRT (wbudowany) |
 | System | CP/M 2.2 / 3.0 |
@@ -25,9 +25,9 @@ Kaypro używa SY6545A-1 CRTC z oddzielną pamięcią znaków i atrybutów:
 
 - **Character RAM**: 2048 bajtów (80 × 25 = 2000, 48 niewykorzystane)
 - **Attribute RAM**: 2048 bajtów (równoległy do character RAM)
-- **Font ROM**: 2732 EPROM (4 KB, 256 znaków × 16 bajtów/znak)
+- **Font ROM**: Kaypro II: 2 KB 81-146A (górne 128 glyphów odwrócone bitowo); Kaypro 4/84: 4 KB 81-235
 
-Każdy znak to 8 × 16 pikseli. Atrybuty pozwalają na odwrócenie wideo (inverse).
+Kaypro II używa fontu 7×8; ASCII jest w górnej połowie ROM-u (`code + 128`) i wymaga odwrócenia bitów. Kaypro 4/84 używa wyższego fontu 8×16. Atrybuty pozwalają na odwrócenie wideo (inverse).
 
 ### Atrybut tekstowy
 
@@ -62,9 +62,10 @@ W praktyce bardzo wolne: ~300 pikseli/s przez BIOS, do ~25 fps przez bezpośredn
 
 ## Co już mamy
 
-- [x] Preset `kaypro2-text-80x25` (Kaypro II, tryb tekstowy 80×25)
+- [x] Preset `kaypro2-text-80x24` (Kaypro II, tryb tekstowy 80×24)
 - [x] Preset `kaypro4-text-80x25` (Kaypro 4/84, tryb tekstowy 80×25)
-- [x] Font 8×16 z `kaypro4.u9`
+- [x] Font Kaypro II 7×8 z `kaypro2.u43` / 81-146A (offset 1024, inverted)
+- [x] Font Kaypro 4/84 8×16 z `kaypro4.u9` / 81-235
 - [x] Skalowanie square-pixel dla czytelnego fontu 8×16
 - [x] Paleta monochromatyczna (zielona)
 - [x] Demo z BASIC listingiem i CP/M READY prompt
