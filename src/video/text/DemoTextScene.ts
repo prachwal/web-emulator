@@ -98,16 +98,17 @@ function createPetDemo(cols: number, rows: number): AttributeTextScreen {
   const s = new AttributeTextScreen(cols, rows);
   s.clear(32, 1, 0);
   const w = (x: number, y: number, t: string, f = 1, b = 0) => s.writeText(x, y, t, f, b);
+  const model = cols >= 80 ? '4032 (80 COL)' : '2001 (40 COL)';
   w(0, 0, bar(cols), 2, 0);
-  w(0, 1, spacer(cols, 'COMMODORE PET 2001'), 2, 0);
+  w(0, 1, spacer(cols, 'COMMODORE PET ' + model), 2, 0);
   w(0, 2, bar(cols), 2, 0);
   w(2, 4, '10 PRINT "HELLO"', 1, 0);
   w(2, 5, '20 INPUT A$', 1, 0);
   w(2, 6, '30 PRINT A$', 1, 0);
   w(2, 7, '40 GOTO 20', 1, 0);
   if (rows > 9) {
-    w(2, 9, 'PET 2001: IEEE-488', 3, 0);
-    w(2, 10, '16K RAM  BASIC 1.0', 3, 0);
+    w(2, 9, 'PET ' + (cols >= 80 ? '4032' : '2001') + ': IEEE-488', 3, 0);
+    w(2, 10, cols >= 80 ? '32K RAM  BASIC 4.0' : '16K RAM  BASIC 1.0', 3, 0);
   }
   if (rows > 12) {
     w(2, 12, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 1, 0);
