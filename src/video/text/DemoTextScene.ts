@@ -123,8 +123,14 @@ function createPetDemo(cols: number, rows: number): AttributeTextScreen {
     w(2, 11, 'IEEE-488  PETSCII  CRTC', 1, 0);
   }
   if (rows > 13) {
-    w(2, 13, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 1, 0);
-    w(2, 14, '0123456789', 1, 0);
+    w(2, 13, 'UPPER+GRAPHIC  SET', 1, 0);
+    w(2, 14, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 1, 0);
+    w(2, 15, '0123456789', 1, 0);
+  }
+  if (rows > 16) {
+    w(2, 16, 'LOWER+UPPER  SET', 1, 0);
+    s.writeText(2, 17, 'abcdefghijklmnopqrstuvwxyz', 1, 0);
+    s.writeText(2, 18, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 1, 0);
   }
   return s;
 }

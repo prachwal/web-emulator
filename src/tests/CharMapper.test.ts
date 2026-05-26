@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { asciiCharMapper, petsciiCharMapper, getMapper } from '../video/text/CharMapper';
+import { asciiCharMapper, petsciiCharMapper, petsciiShiftedCharMapper, getMapper } from '../video/text/CharMapper';
 
 describe('asciiCharMapper', () => {
   it('passes through ASCII characters', () => {
@@ -26,5 +26,15 @@ describe('getMapper', () => {
   });
   it('returns petscii for petscii id', () => {
     expect(getMapper('petscii').id).toBe('petscii');
+  });
+
+  it('petscii shifted keeps lowercase distinct from uppercase', () => {
+    const m = petsciiShiftedCharMapper;
+    const lowerA = m.mapCharCode(0x61); // 'a'
+    const upperA = m.mapCharCode(0x41); // 'A'
+    expect(lowerA).not.toBe(upperA);
+    expect(m.mapCharCode(0x61)).toBe(1);  // 'a' → 1
+    expect(m.mapCharCode(0x7a)).toBe(26); // 'z' → 26
+    expect(m.mapCharCode(0x41)).toBe(33); // 'A' → 33 (PETSCII uppercase slot)
   });
 });
