@@ -43,9 +43,12 @@ export class TextModeDecoder implements IVideoModeDecoder<TextModeMemory> {
             fgIdx = cr & 0x0f;
             bgIdx = backgroundColorIndex;
           } else if (colorModel === 'zx') {
+            const flash = (cr >> 7) & 1;
+            const flashPhase = Math.floor(_frameNumber / 16) % 2;
             fgIdx = cr & 0x07;
             bgIdx = (cr >> 3) & 0x07;
             if (cr & 0x40) { fgIdx += 8; bgIdx += 8; }
+            if (flash && flashPhase) { const tmp = fgIdx; fgIdx = bgIdx; bgIdx = tmp; }
           } else if (colorModel === 'cga' || colorModel === 'mda') {
             const blink = (cr >> 7) & 1;
             const blinkPhase = Math.floor(_frameNumber / 16) % 2;

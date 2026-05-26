@@ -29,13 +29,10 @@ function createZxDemo(cols: number, rows: number): AttributeTextScreen {
   w(4, 7, 'HELLO WORLD', 15, 0);
   w(4, 8, 'HELLO WORLD', 15, 0);
   if (rows > 10) {
-    w(1, 10, 'ATTR: INK  PAPER  BRIGHT', 6, 0);
-    for (let i = 0; i < 8 && 8 + i * 3 < cols; i++) {
-      const x = 8 + i * 3;
-      s.putChar(x, 11, 0xdb, i + (i < 2 ? 8 : 0), 0);
-      s.putChar(x, 12, 0xdb, 7, i + 1);
-      s.putChar(x + 1, 11, 48, 7, 0);
-      s.putChar(x + 1, 12, 48, 7, 0);
+    w(1, 10, 'ATTR: INK+PAPER  BRIGHT+8  FLASH', 6, 0);
+    for (let i = 0; i < 8 && i + 1 < cols; i++) {
+      s.putChar(i + 1, 11, 0xdb, 7, i);
+      s.putChar(i + 1, 12, 0xdb, i + 8, 0);
     }
   }
   if (rows > 14) {
@@ -43,8 +40,8 @@ function createZxDemo(cols: number, rows: number): AttributeTextScreen {
     w(1, 15, '0123456789 .,!?;:', 7, 0);
   }
   if (rows > 17) {
-    w(1, 17, 'BORDER: PAPER 1 INK 7', 5, 0);
-    w(1, 18, 'BRIGHT: +8 TO COLOR IDX', 5, 0);
+    w(1, 17, 'PAPER 1 INK 7  BRIGHT +8', 5, 0);
+    w(1, 18, 'FLASH bit 7  BORDER idx', 5, 0);
   }
   w(0, rows - 1, top, 2, 0);
   return s;
