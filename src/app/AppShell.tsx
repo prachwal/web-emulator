@@ -69,6 +69,7 @@ export function AppShell() {
                 preset={currentPreset.value}
                 paused={paused.value}
                 activeFontId={currentPreset.value.fontId}
+                monitorId={selectedMonitorId.value}
               />
             </div>
           </div>

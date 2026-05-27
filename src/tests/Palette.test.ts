@@ -1,5 +1,18 @@
 import { describe, it, expect } from 'vitest';
-import { parseCssHexColor, paletteToRgbaBytes, paletteToUint32 } from '../video/Palette';
+import { paletteToMonochrome, parseCssHexColor, paletteToRgbaBytes, paletteToUint32 } from '../video/Palette';
+
+describe('paletteToMonochrome', () => {
+  it('converts colors to green shades', () => {
+    const result = paletteToMonochrome(['#ff0000', '#00ff00', '#0000ff', '#ffffff'], 'green');
+    expect(result[0]).toMatch(/^#00[0-9a-f]{2}00$/);
+    expect(result[3]).toBe('#00ff00');
+  });
+
+  it('converts colors to amber shades', () => {
+    const result = paletteToMonochrome(['#ff0000', '#ffffff'], 'amber');
+    expect(result[0]).toMatch(/^#ff[0-9a-f]{2}00$/);
+  });
+});
 
 describe('parseCssHexColor', () => {
   it('parses 6-digit hex', () => {

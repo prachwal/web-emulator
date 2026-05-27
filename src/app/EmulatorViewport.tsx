@@ -1,7 +1,7 @@
 import { useRef, useEffect } from 'preact/hooks';
 import type { CrtSettings } from '../core/types';
 import { EmulatorRuntime } from '../core/EmulatorRuntime';
-import { paletteToRgbaBytes } from '../video/Palette';
+import { paletteToRgbaBytes, paletteToMonochrome } from '../video/Palette';
 import { createDefaultFont } from '../video/BitmapFont';
 import { loadBitmapFont } from '../video/fonts/FontLoader';
 import { globalFontRegistry } from '../video/fonts/FontRegistry';
@@ -12,15 +12,17 @@ import { renderAttributeTextToFramebuffer } from '../video/text/TextModeRenderer
 import { getMapper } from '../video/text/CharMapper';
 import { loadImage, imageToIndexedFramebuffer } from '../video/image/ImageLoader';
 import { displaySettings, parseHexColor } from './DisplaySettings';
+import { getMonitor } from '../video/monitors/index';
 
 export interface EmulatorViewportProps {
   crt: CrtSettings;
   preset: Preset;
   paused: boolean;
   activeFontId?: string;
+  monitorId?: string;
 }
 
-export function EmulatorViewport({ crt, preset, paused, activeFontId }: EmulatorViewportProps) {
+export function EmulatorViewport({ crt, preset, paused, activeFontId, monitorId }: EmulatorViewportProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const runtimeRef = useRef<EmulatorRuntime | null>(null);
   const rafRef = useRef<number>(0);
@@ -51,7 +53,14 @@ export function EmulatorViewport({ crt, preset, paused, activeFontId }: Emulator
         runtime.renderer.setScaling(ds.parMultiplier, ds.scaleMode === 'integer');
         runtime.renderer.setZoom(ds.zoom);
       }
-      runtime.renderer?.uploadPalette(paletteToRgbaBytes(preset.palette));
+      let palette = preset.palette;
+      if (monitorId) {
+        const mon = getMonitor(monitorId);
+        if (mon && mon.color === 'mono' && mon.phosphor && mon.phosphor !== 'rgb') {
+          palette = paletteToMonochrome(palette, mon.phosphor);
+        }
+      }
+      runtime.renderer?.uploadPalette(paletteToRgbaBytes(palette));
       const isText = preset.type === 'text';
       const fw = preset.framebufferWidth;
       const fh = preset.framebufferHeight;

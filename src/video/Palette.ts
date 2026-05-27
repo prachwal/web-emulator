@@ -36,6 +36,21 @@ export function paletteToUint32(colors: string[]): Uint32Array {
   return arr;
 }
 
+export function paletteToMonochrome(colors: string[], phosphor: 'green' | 'amber' | 'white'): string[] {
+  const lums = colors.map(c => {
+    const [r, g, b] = parseCssHexColor(c);
+    return 0.299 * r + 0.587 * g + 0.114 * b;
+  });
+  const maxLum = Math.max(1, ...lums);
+  return colors.map((c, i) => {
+    const v = Math.round(Math.min(255, lums[i] * 255 / maxLum));
+    const s = v.toString(16).padStart(2, '0');
+    if (phosphor === 'green') return `#00${s}00`;
+    if (phosphor === 'amber') return `#ff${Math.round(v * 0.7).toString(16).padStart(2, '0')}00`;
+    return `#${s}${s}${s}`;
+  });
+}
+
 export const zxSpectrumColors: string[] = [
   '#000000', '#0000D7', '#D70000', '#D700D7',
   '#00D700', '#00D7D7', '#D7D700', '#D7D7D7',
