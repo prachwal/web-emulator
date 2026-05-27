@@ -12,6 +12,7 @@ import { C64MulticolorDecoder } from './modes/C64MulticolorDecoder';
 import { KayproGraphicsDecoder } from './modes/KayproGraphicsDecoder';
 import { HgcBitmapDecoder } from './modes/HgcBitmapDecoder';
 import { CpcGateArrayDecoder } from './modes/CpcGateArrayDecoder';
+import { C64SpriteDecoder } from './modes/C64SpriteDecoder';
 import { loadPalette, paletteToUint32 } from './Palette';
 import type { BitmapFont } from './BitmapFont';
 import { createDefaultFont } from './BitmapFont';
@@ -46,6 +47,7 @@ export class VideoSystem {
     this.registerDecoder(new CpcGateArrayDecoder(0));
     this.registerDecoder(new CpcGateArrayDecoder(1));
     this.registerDecoder(new CpcGateArrayDecoder(2));
+    this.registerDecoder(new C64SpriteDecoder());
 
     this.loadProfilePalette(profile);
     this.setMode(profile.supportedModes[0]);

@@ -28,7 +28,9 @@ export type VideoMode =
   | 'herc-bitmap'
   | 'cga-palette-0'
   | 'cga-palette-1'
-  | 'cpc-gate-array';
+  | 'cpc-gate-array'
+  | 'c64-sprites'
+  | 'adm3a';
 
 export interface VideoState {
   mode: VideoMode;
