@@ -85,6 +85,7 @@ function machineFeatures(machineId: string): string[] {
     apple1: ['40x24', 'LSB-FIRST', 'INVERT MSB=1', 'WOZ MON'],
     vic20: ['22x23', '176x184 BM', '4-bit COL RAM', 'PETSCII'],
     kaypro: ['80x25', '8x16 FONT', 'CP/M', 'ADM-3A'],
+    cpc: ['640x200', '27 COLORS', '3 MODES', 'CP/M'],
   };
   const feat = features[machineId] ?? ['TEXT MODE', 'DEMO'];
   return feat.filter((_, i) => i < 4);

@@ -7,6 +7,7 @@ import { trs80Presets } from './trs80';
 import { apple1Presets } from './apple1';
 import { vic20Presets } from './vic20';
 import { kayproPresets } from './kaypro';
+import { cpcPresets } from './cpc';
 import type { Preset } from './types';
 
 export type { Preset, FontGeometry, Margins } from './types';
@@ -20,6 +21,7 @@ export { trs80Presets } from './trs80';
 export { apple1Presets } from './apple1';
 export { vic20Presets } from './vic20';
 export { kayproPresets } from './kaypro';
+export { cpcPresets } from './cpc';
 
 export const PRESETS: Preset[] = [
   ...zxPresets,
@@ -31,6 +33,7 @@ export const PRESETS: Preset[] = [
   ...apple1Presets,
   ...vic20Presets,
   ...kayproPresets,
+  ...cpcPresets,
 ];
 
 export function presetKey(p: Preset): string {
