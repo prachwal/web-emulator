@@ -25,9 +25,9 @@ Zgodność: DEFv1
 
 ## Czego brakuje
 
-- [ ] Oryginalny font ROM `rbw-char.rom` — obecnie używa zastępczego fontu Kaypro
-- [ ] Obsługa trybu 132 × 24
-- [ ] Wsparcie dla podwójnego CPU (Z80 + 8088)
+- [x] Oryginalny font ROM — z bitsavers E98_020E3.BIN (8×8, 2048B)
+- [x] Obsługa trybu 132×24 — preset `rainbow-text-132x24` (1056×192, PAR 8/33)
+- [ ] Pełna weryfikacja zestawu znaków — sprawdzenie znaków 128-255 w E98_020E3
 
 ### Monitor
 
