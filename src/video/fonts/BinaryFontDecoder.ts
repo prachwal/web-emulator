@@ -6,6 +6,7 @@ export interface FontDecodeParams {
   glyphCount: number;
   offset: number;
   bytesPerGlyph: number;
+  bytesPerRow: number;
   bitOrder: 'msb-first' | 'lsb-first';
   invert: boolean;
 }
@@ -39,17 +40,23 @@ export class BinaryFontDecoder {
   }
 
   decodeGlyph(charCode: number): DecodedGlyph {
-    const { charWidth, charHeight, bytesPerGlyph, offset, bitOrder, invert } = this.params;
+    const { charWidth, charHeight, bytesPerGlyph, bytesPerRow, offset, bitOrder, invert } = this.params;
     const start = offset + charCode * bytesPerGlyph;
-    const glyphData = this.data.slice(start, start + charHeight);
+    const rowBytes = Math.ceil(charWidth / 8);
+    const stride = bytesPerRow > 0 ? bytesPerRow : rowBytes;
     const pixels = new Uint8Array(charWidth * charHeight);
 
-    for (let y = 0; y < charHeight && y < glyphData.length; y++) {
-      let byteVal = glyphData[y];
-      if (invert) byteVal = ~byteVal & 0xff;
-      for (let x = 0; x < charWidth; x++) {
-        const bitIdx = bitOrder === 'msb-first' ? 7 - x : x;
-        pixels[y * charWidth + x] = (byteVal >> bitIdx) & 1;
+    for (let y = 0; y < charHeight; y++) {
+      for (let rb = 0; rb < rowBytes; rb++) {
+        const byteOffset = start + y * stride + rb;
+        if (byteOffset >= this.data.length) continue;
+        let byteVal = this.data[byteOffset];
+        if (invert) byteVal = ~byteVal & 0xff;
+        for (let b = 0; b < 8 && rb * 8 + b < charWidth; b++) {
+          const x = rb * 8 + b;
+          const bitIdx = bitOrder === 'msb-first' ? 7 - b : b;
+          pixels[y * charWidth + x] = (byteVal >> bitIdx) & 1;
+        }
       }
     }
     return { charCode, pixels, width: charWidth, height: charHeight };
@@ -70,7 +77,7 @@ export function defaultFontParams(data?: Uint8Array): FontDecodeParams {
   return {
     charWidth: 8, charHeight: 8, cellWidth: 8, cellHeight: 8,
     glyphCount: Math.min(guessCount, 512),
-    offset: 0, bytesPerGlyph: 8,
+    offset: 0, bytesPerGlyph: 8, bytesPerRow: 0,
     bitOrder: 'msb-first', invert: false,
   };
 }

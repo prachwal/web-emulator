@@ -1,7 +1,7 @@
 import { signal } from '@preact/signals';
-import { useRef, useEffect } from 'preact/hooks';
-import type { ReferenceImageState } from '../video/comparison/ReferenceImage';
-import { defaultRefState, loadReferenceImage } from '../video/comparison/ReferenceImage';
+import { useRef, useEffect, useState } from 'preact/hooks';
+import type { ReferenceImageState, DiffMetrics } from '../video/comparison/ReferenceImage';
+import { defaultRefState, loadReferenceImage, computeDiff } from '../video/comparison/ReferenceImage';
 
 export const refState = signal<ReferenceImageState>(defaultRefState());
 
@@ -96,6 +96,25 @@ export function ReferenceComparisonPanel() {
               <input type="range" min="-200" max="200" value={s.offsetY}
                 onInput={e => refState.value = { ...s, offsetY: +e.currentTarget.value }} />
             </label>
+
+            {s.imageData && (() => {
+              const canvas = document.querySelector('.crt-tube canvas') as HTMLCanvasElement | null;
+              if (canvas) {
+                try {
+                  const ctx = canvas.getContext('2d');
+                  if (ctx) {
+                    const current = ctx.getImageData(0, 0, canvas.width, canvas.height);
+                    const metrics = computeDiff(s.imageData, current, s.offsetX, s.offsetY, s.scale);
+                    return <div style="margin-top:6px;padding:4px;background:#111;border-radius:3px;font-size:10px">
+                      <div>Avg diff: {(metrics.avgDiff * 100).toFixed(1)}%</div>
+                      <div>Max diff: {(metrics.maxDiff * 100).toFixed(1)}%</div>
+                      <div>Match: {metrics.matchPercent.toFixed(1)}%</div>
+                    </div>;
+                  }
+                } catch {}
+              }
+              return null;
+            })()}
 
             <button onClick={() => refState.value = defaultRefState()}>Clear</button>
           </>

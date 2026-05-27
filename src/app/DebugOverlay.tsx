@@ -7,8 +7,6 @@ export interface DiagInfo {
   rendererKind: string;
   sourceW: number;
   sourceH: number;
-  viewportW: number;
-  viewportH: number;
   par: number;
   zoom: number;
   dpr: number;
@@ -20,7 +18,6 @@ export interface DiagInfo {
 export const diagSignal = signal<DiagInfo>({
   fps: 0, frameTime: 0, rendererKind: '-',
   sourceW: 0, sourceH: 0,
-  viewportW: 0, viewportH: 0,
   par: 1, zoom: 1, dpr: 1,
   fontId: '', machineName: '',
   metrics: null,
@@ -47,7 +44,6 @@ export function DebugOverlay() {
       <div>FPS: {d.fps}  ~{d.frameTime}ms</div>
       <div>Renderer: {d.rendererKind}</div>
       <div>Source: {d.sourceW}×{d.sourceH}</div>
-      <div>Viewport: {d.viewportW}×{d.viewportH}</div>
       <div>PAR: {d.par.toFixed(3)}  Zoom: {d.zoom.toFixed(2)}</div>
       <div>DPR: {d.dpr.toFixed(1)}  Font: {d.fontId}</div>
       <div>{d.machineName}</div>

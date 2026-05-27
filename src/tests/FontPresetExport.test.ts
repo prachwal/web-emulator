@@ -4,7 +4,7 @@ import type { FontDecodeParams } from '../video/fonts/BinaryFontDecoder';
 
 const params: FontDecodeParams = {
   charWidth: 8, charHeight: 8, cellWidth: 8, cellHeight: 8,
-  glyphCount: 256, offset: 0, bytesPerGlyph: 8,
+  glyphCount: 256, offset: 0, bytesPerGlyph: 8, bytesPerRow: 0,
   bitOrder: 'msb-first', invert: false,
 };
 

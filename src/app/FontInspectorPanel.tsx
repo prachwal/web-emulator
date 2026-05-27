@@ -18,6 +18,12 @@ const state = signal<InspectorState>({
   params: defaultFontParams(), glyphs: [], selectedChar: 32, error: null,
 });
 
+interface ExportFormState {
+  id: string; name: string; computer: string; sourcePath: string; mapperId: 'ascii' | 'petscii';
+}
+
+const exportForm = signal<ExportFormState>({ id: 'my-font', name: 'My Font', computer: 'Custom', sourcePath: '', mapperId: 'ascii' });
+
 function reload(data: Uint8Array, params: FontDecodeParams): void {
   const decoder = new BinaryFontDecoder(data, params);
   state.value = {
@@ -65,6 +71,7 @@ export function FontInspectorPanel() {
         <label>Glyphs<input type="number" min="1" max="1024" value={s.params.glyphCount} onChange={e => updateParam('glyphCount', +e.currentTarget.value)} /></label>
         <label>Offset<input type="number" min="0" step="1" value={s.params.offset} onChange={e => updateParam('offset', +e.currentTarget.value)} /></label>
         <label>B/Glyph<input type="number" min="1" max="32" value={s.params.bytesPerGlyph} onChange={e => updateParam('bytesPerGlyph', +e.currentTarget.value)} /></label>
+        <label>B/Row<input type="number" min="0" max="8" value={s.params.bytesPerRow} onChange={e => updateParam('bytesPerRow', +e.currentTarget.value)} /></label>
         <label>Bit order<select value={s.params.bitOrder} onChange={e => updateParam('bitOrder', e.currentTarget.value as any)}>
           <option value="msb-first">MSB</option><option value="lsb-first">LSB</option>
         </select></label>
@@ -95,47 +102,38 @@ export function FontInspectorPanel() {
         </div>}
 
         {/* export section */}
-        <div style="margin:8px 0;padding:6px;background:#1a1a1a;border-radius:4px">
+        {s.fileName && <div style="margin:8px 0;padding:6px;background:#1a1a1a;border-radius:4px">
           <div style="font-weight:bold;margin-bottom:4px">Export FontPreset</div>
-          <label>ID<input type="text" value={s.fileName.replace(/\.\w+$/,'').toLowerCase().replace(/[^a-z0-9_-]/g,'-')}
-            onChange={e => {/* handled on click */}} style="width:100%;box-sizing:border-box" /></label>
-          <label>Name<input type="text" value={s.fileName.replace(/\.\w+$/,'')} style="width:100%;box-sizing:border-box" /></label>
-          <label>Computer<input type="text" value="Custom" style="width:100%;box-sizing:border-box" /></label>
-          <label>Source path<input type="text" value={s.fileName} style="width:100%;box-sizing:border-box" /></label>
-          <label>Mapper<select>
+          <label>ID<input type="text" value={exportForm.value.id}
+            onChange={e => { const v = e.currentTarget.value; const base = s.fileName.replace(/\.\w+$/,'').toLowerCase().replace(/[^a-z0-9_-]/g,'-'); exportForm.value = { ...exportForm.value, id: v || base }; }} style="width:100%;box-sizing:border-box" /></label>
+          <label>Name<input type="text" value={exportForm.value.name}
+            onChange={e => exportForm.value = { ...exportForm.value, name: e.currentTarget.value || s.fileName.replace(/\.\w+$/,'') }} style="width:100%;box-sizing:border-box" /></label>
+          <label>Computer<input type="text" value={exportForm.value.computer}
+            onChange={e => exportForm.value = { ...exportForm.value, computer: e.currentTarget.value }} style="width:100%;box-sizing:border-box" /></label>
+          <label>Source path<input type="text" value={exportForm.value.sourcePath || s.fileName}
+            onChange={e => exportForm.value = { ...exportForm.value, sourcePath: e.currentTarget.value }} style="width:100%;box-sizing:border-box" /></label>
+          <label>Mapper<select value={exportForm.value.mapperId}
+            onChange={e => exportForm.value = { ...exportForm.value, mapperId: e.currentTarget.value as any }}>
             <option value="ascii">ASCII</option><option value="petscii">PETSCII</option>
           </select></label>
           <div style="display:flex;gap:4px;margin-top:6px">
             <button onClick={() => {
-              const id = (document.querySelector('#fi-export-id') as HTMLInputElement)?.value || 'my-font';
-              const err = validateId(id);
+              const f = exportForm.value;
+              const err = validateId(f.id);
               if (err) { alert(err); return; }
-              const name = (document.querySelector('#fi-export-name') as HTMLInputElement)?.value || 'Custom';
-              const computer = (document.querySelector('#fi-export-comp') as HTMLInputElement)?.value || 'Custom';
-              const src = (document.querySelector('#fi-export-src') as HTMLInputElement)?.value || '';
-              const mapper = ((document.querySelector('#fi-export-mapper') as HTMLSelectElement)?.value || 'ascii') as 'ascii' | 'petscii';
-              const json = generateJsonExport(s.params, { id, name, computer, sourcePath: src, mapperId: mapper });
-              navigator.clipboard.writeText(json).then(() => alert('JSON copied to clipboard!'));
+              const json = generateJsonExport(s.params, { id: f.id, name: f.name, computer: f.computer, sourcePath: f.sourcePath || s.fileName, mapperId: f.mapperId });
+              navigator.clipboard.writeText(json).then(() => alert('JSON copied!'));
             }}>Copy JSON</button>
             <button onClick={() => {
-              const id = (document.querySelector('#fi-export-id') as HTMLInputElement)?.value || 'my-font';
-              const name = (document.querySelector('#fi-export-name') as HTMLInputElement)?.value || 'Custom';
-              const computer = (document.querySelector('#fi-export-comp') as HTMLInputElement)?.value || 'Custom';
-              const src = (document.querySelector('#fi-export-src') as HTMLInputElement)?.value || '';
-              const mapper = ((document.querySelector('#fi-export-mapper') as HTMLSelectElement)?.value || 'ascii') as 'ascii' | 'petscii';
+              const f = exportForm.value;
               try {
-                const ts = generateTsExport(s.params, { id, name, computer, sourcePath: src, mapperId: mapper });
-                navigator.clipboard.writeText(ts).then(() => alert('TS config copied to clipboard!'));
+                const ts = generateTsExport(s.params, { id: f.id, name: f.name, computer: f.computer, sourcePath: f.sourcePath || s.fileName, mapperId: f.mapperId });
+                navigator.clipboard.writeText(ts).then(() => alert('TS config copied!'));
               } catch (e: any) { alert(e.message); }
             }}>Copy TS</button>
           </div>
           <div style="font-size:9px;color:#666;margin-top:4px">Paste into <code>fontPresets.ts</code></div>
-          <div id="fi-export-id" style="display:none">{s.fileName.replace(/\.\w+$/,'').toLowerCase().replace(/[^a-z0-9_-]/g,'-')}</div>
-          <div id="fi-export-name" style="display:none">{s.fileName.replace(/\.\w+$/,'')}</div>
-          <div id="fi-export-comp" style="display:none">Custom</div>
-          <div id="fi-export-src" style="display:none">{s.fileName}</div>
-          <div id="fi-export-mapper" style="display:none">ascii</div>
-        </div>
+        </div>}
       </>}
     </div>
   );

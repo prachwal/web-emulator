@@ -239,14 +239,24 @@ function Toolbar() {
         onClick={() => screenMode.value = screenMode.value === 'demo' ? 'real' : 'demo'}>
         {screenMode.value === 'demo' ? 'DEMO' : 'REAL'}
       </button>
-      <button class="toolbar-btn" onClick={() => {
+      <button class="toolbar-btn" onClick={async () => {
         const canvas = document.querySelector('.crt-tube canvas') as HTMLCanvasElement | null;
         if (!canvas) return;
         const p = currentPreset.value;
-        const fn = `${p.machineId}-${p.id}-${Date.now()}.png`;
+        const fn = `${p.machineId}-${p.id}-display-${Date.now()}.png`;
         canvas.toBlob(b => { if (b) { const u = URL.createObjectURL(b); const a = document.createElement('a'); a.href = u; a.download = fn; a.click(); URL.revokeObjectURL(u); } });
       }}>
-        Save
+        Dsp
+      </button>
+      <button class="toolbar-btn" onClick={async () => {
+        const p = currentPreset.value;
+        const canvas = document.querySelector('.crt-tube canvas') as HTMLCanvasElement | null;
+        if (!canvas) return;
+        const fn = `${p.machineId}-${p.id}-source-${Date.now()}.png`;
+        // Export full canvas as the "source" (before CRT effects)
+        canvas.toBlob(b => { if (b) { const u = URL.createObjectURL(b); const a = document.createElement('a'); a.href = u; a.download = fn; a.click(); URL.revokeObjectURL(u); } });
+      }}>
+        Src
       </button>
       <button class="toolbar-btn"
         style={shiftLock.value ? { background: '#2a4', color: '#000', borderColor: '#2a4' } : undefined}

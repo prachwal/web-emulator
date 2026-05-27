@@ -28,7 +28,7 @@ export function generateJsonExport(params: FontDecodeParams, meta: FontExportMet
     computer: meta.computer,
     description: `${meta.name} font (${params.glyphCount} glyphs, ${params.charWidth}x${params.charHeight})`,
     glyphCount: params.glyphCount,
-    charWidth: params.charWidth, charHeight: params.charHeight, bytesPerGlyph: params.bytesPerGlyph,
+    charWidth: params.charWidth, charHeight: params.charHeight, bytesPerGlyph: params.bytesPerGlyph, bytesPerRow: params.bytesPerRow,
     cellWidth: params.cellWidth, cellHeight: params.cellHeight,
     bitOrder,
     offset: params.offset,
@@ -53,7 +53,7 @@ export function generateTsExport(params: FontDecodeParams, meta: FontExportMeta)
   lines.push(`  computer: '${meta.computer}',`);
   lines.push(`  description: '${meta.name} font (${params.glyphCount} glyphs, ${params.charWidth}x${params.charHeight})',`);
   lines.push(`  glyphCount: ${params.glyphCount},`);
-  lines.push(`  charWidth: ${params.charWidth}, charHeight: ${params.charHeight}, bytesPerGlyph: ${params.bytesPerGlyph},`);
+  lines.push(`  charWidth: ${params.charWidth}, charHeight: ${params.charHeight}, bytesPerGlyph: ${params.bytesPerGlyph}, bytesPerRow: ${params.bytesPerRow},`);
   lines.push(`  cellWidth: ${params.cellWidth}, cellHeight: ${params.cellHeight},`);
   lines.push(`  bitOrder: '${params.bitOrder === 'lsb-first' ? 'lsb-left' : 'msb-left'}', offset: ${params.offset},`);
   lines.push(`  xBits: ${params.bitOrder === 'lsb-first' ? 'lsb8' : 'msb8'},`);
