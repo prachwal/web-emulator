@@ -223,6 +223,15 @@ function Toolbar() {
         onClick={() => screenMode.value = screenMode.value === 'demo' ? 'real' : 'demo'}>
         {screenMode.value === 'demo' ? 'DEMO' : 'REAL'}
       </button>
+      <button class="toolbar-btn" onClick={() => {
+        const canvas = document.querySelector('.crt-tube canvas') as HTMLCanvasElement | null;
+        if (!canvas) return;
+        const p = currentPreset.value;
+        const fn = `${p.machineId}-${p.id}-${Date.now()}.png`;
+        canvas.toBlob(b => { if (b) { const u = URL.createObjectURL(b); const a = document.createElement('a'); a.href = u; a.download = fn; a.click(); URL.revokeObjectURL(u); } });
+      }}>
+        Save
+      </button>
       <button class="toolbar-btn"
         style={shiftLock.value ? { background: '#2a4', color: '#000', borderColor: '#2a4' } : undefined}
         onClick={() => shiftLock.value = !shiftLock.value}>
