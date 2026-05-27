@@ -174,34 +174,35 @@ const bootScreens: Record<string, (cols: number) => AttributeTextScreen> = {
   },
 
   // === Amstrad ===
+  // CPC boot uses fg=15 (white in all CPC palettes), bg=0 (black)
   'cpc-464'(cols: number) {
     const s = new AttributeTextScreen(cols, 25);
-    s.clear(32, 1, 0);
-    w(s, 16, 2, 'AMSTRAD', 1, 0);
-    w(s, 12, 3, '464  BASIC  v1.0', 1, 0);
-    w(s, 11, 5, '(c) 1984 Amsoft', 1, 0);
-    w(s, 12, 7, '64K  CP/M Plus', 1, 0);
-    w(s, 8, 10, 'READY', 1, 0);
+    s.clear(32, 15, 0);
+    const c = Math.floor((cols - 7) / 2);
+    w(s, c, 2, 'AMSTRAD', 15, 0);
+    w(s, Math.max(0, c - 3), 4, '464  BASIC  v1.0', 15, 0);
+    w(s, Math.max(0, c - 4), 6, '(c) 1984 Amsoft', 15, 0);
+    w(s, 0, 10, 'READY', 15, 0);
     return s;
   },
   'cpc-664'(cols: number) {
     const s = new AttributeTextScreen(cols, 25);
-    s.clear(32, 1, 0);
-    w(s, 16, 2, 'AMSTRAD', 1, 0);
-    w(s, 12, 3, '664  BASIC  v1.1', 1, 0);
-    w(s, 11, 5, '(c) 1985 Amsoft', 1, 0);
-    w(s, 12, 7, '64K  CP/M Plus', 1, 0);
-    w(s, 8, 10, 'READY', 1, 0);
+    s.clear(32, 15, 0);
+    const c = Math.floor((cols - 7) / 2);
+    w(s, c, 2, 'AMSTRAD', 15, 0);
+    w(s, Math.max(0, c - 3), 4, '664  BASIC  v1.1', 15, 0);
+    w(s, Math.max(0, c - 4), 6, '(c) 1985 Amsoft', 15, 0);
+    w(s, 0, 10, 'READY', 15, 0);
     return s;
   },
   'cpc-6128'(cols: number) {
     const s = new AttributeTextScreen(cols, 25);
-    s.clear(32, 1, 0);
-    w(s, 16, 2, 'AMSTRAD', 1, 0);
-    w(s, 12, 3, '6128  BASIC  v1.1', 1, 0);
-    w(s, 11, 5, '(c) 1985 Amsoft', 1, 0);
-    w(s, 12, 7, '128K  CP/M Plus', 1, 0);
-    w(s, 8, 10, 'READY', 1, 0);
+    s.clear(32, 15, 0);
+    const c = Math.floor((cols - 7) / 2);
+    w(s, c, 2, 'AMSTRAD', 15, 0);
+    w(s, Math.max(0, c - 3), 4, '6128  BASIC  v1.1', 15, 0);
+    w(s, Math.max(0, c - 4), 6, '(c) 1985 Amsoft', 15, 0);
+    w(s, 0, 10, 'READY', 15, 0);
     return s;
   },
 

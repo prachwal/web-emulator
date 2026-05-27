@@ -26,11 +26,8 @@ export const petsciiCharMapper: CharMapper = {
     if (input < 0x20) return input;
     if (input >= 0x41 && input <= 0x5a) return input - 0x40;
     if (input >= 0x61 && input <= 0x7a) return input - 0x60;
-    if (input >= 0x30 && input <= 0x39) return input - 0x10;
-    if (input >= 0x21 && input <= 0x2f) return input;
-    if (input >= 0x3a && input <= 0x40) return input;
-    if (input === 0x20) return 0x20;
-    return 0x2e;
+    if (input >= 0x30 && input <= 0x39) return input;
+    return input;
   },
 };
 
@@ -44,11 +41,8 @@ export const petsciiShiftedCharMapper: CharMapper = {
     if (input < 0x20) return input;
     if (input >= 0x61 && input <= 0x7a) return input - 0x60;
     if (input >= 0x41 && input <= 0x5a) return input;
-    if (input >= 0x30 && input <= 0x39) return input - 0x10;
-    if (input >= 0x21 && input <= 0x2f) return input;
-    if (input >= 0x3a && input <= 0x40) return input;
-    if (input === 0x20) return 0x20;
-    return 0x2e;
+    if (input >= 0x30 && input <= 0x39) return input;
+    return input;
   },
 };
 

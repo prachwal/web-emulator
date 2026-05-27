@@ -15,8 +15,9 @@ describe('petsciiCharMapper', () => {
   it('maps lowercase a to PETSCII 1', () => {
     expect(petsciiCharMapper.mapCharCode(0x61)).toBe(1);
   });
-  it('maps 0 to PETSCII 32', () => {
-    expect(petsciiCharMapper.mapCharCode(0x30)).toBe(0x20);
+  it('maps 0 to PETSCII 48 (unchanged from ASCII - digits at same positions)', () => {
+    expect(petsciiCharMapper.mapCharCode(0x30)).toBe(0x30);
+    expect(petsciiCharMapper.mapCharCode(0x39)).toBe(0x39);
   });
   it('passes through PETSCII graphics codes 0-31', () => {
     expect(petsciiCharMapper.mapCharCode(0)).toBe(0);
