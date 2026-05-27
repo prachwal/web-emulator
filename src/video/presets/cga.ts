@@ -22,6 +22,22 @@ export const cgaPresets = [
      '#000000','#00ffff','#ff00ff','#ffffff','#00ffff','#ff00ff','#ffffff','#ffffff'],
     'cga:320×200 4c', 'tilemap'),
 
+  G('cga-320x200-pal0', 'cga', 'IBM CGA', '320×200 Pal 0 G/R/Br',
+    40, 25, 320, 200, 5 / 6,
+    'cga-thick.bin', 'cga-thick', 256, f8(8, 7),
+    m(10, 8, 10, 8), '#cccccc', '#000000', '#000000', '#e8e0d0', '#a09880',
+    ['#000000','#00aa00','#aa0000','#aaaa00','#00aa00','#aa0000','#aaaa00','#aaaaaa',
+     '#000000','#00aa00','#aa0000','#aaaa00','#00aa00','#aa0000','#aaaa00','#ffffff'],
+    'cga-pal0', 'cga-palette-0'),
+
+  G('cga-320x200-pal1', 'cga', 'IBM CGA', '320×200 Pal 1 C/M/W',
+    40, 25, 320, 200, 5 / 6,
+    'cga-thick.bin', 'cga-thick', 256, f8(8, 7),
+    m(10, 8, 10, 8), '#cccccc', '#000000', '#000000', '#e8e0d0', '#a09880',
+    ['#000000','#00aaaa','#aa00aa','#aaaaaa','#00aaaa','#aa00aa','#aaaaaa','#aaaaaa',
+     '#000000','#00aaaa','#aa00aa','#aaaaaa','#00aaaa','#aa00aa','#aaaaaa','#ffffff'],
+    'cga-pal1', 'cga-palette-1'),
+
   G('cga-640x200', 'cga', 'IBM CGA', 'CGA 640×200 2c',
     80, 25, 640, 200, 5 / 12,
     'cga-thick.bin', 'cga-thick', 256, f8(8, 7),
