@@ -15,17 +15,16 @@ Zgodność: DEFv1
 | Kolory | Monochromatyczny (LCD) |
 | Ekran | 8-line LCD (480 × 64 native) |
 | System | CP/M 2.2 |
-| Font | Kaypro 4/84 8×8 (zastępczy) |
+| Font | Oryginalny chargen PX-8/HC-80 (2048B, 8×8) |
 
 ## Co już mamy
 
 - [x] Preset `epson-px8-text-80x8`
-- [x] Font — Kaypro 4/84 (8×8, górna połowa znaku 8×16)
+- [x] Font — oryginalny chargen PX-8 (electrickery.nl font.zip FONT.ROM, 2048B)
 - [x] Demo z listingiem BASIC i informacjami o maszynie
 
 ## Czego brakuje
 
-- [ ] Oryginalny font PX-8 — obecnie używa zastępczego fontu Kaypro
 - [ ] Wsparcie dla ROM-based software (WordStar, Calc, Portable BASIC)
 - [ ] Obsługa LCD kontrastu
 
@@ -50,3 +49,4 @@ Monochromatyczny tekst na LCD. 80×8 znaków, ciekłokrystaliczny wyświetlacz, 
 - Wikipedia: <https://en.wikipedia.org/wiki/Epson_PX-8>
 - Retroarchive: <http://www.retroarchive.org/maslin/disks/roms/index.html>
 - SeaSoft PX-8 page: <https://www.seasip.info/Cpm/px8.html>
+- Electrickery PX-8 ROMs & font: <https://electrickery.nl/comp/px8/roms/> → `font.zip` → `FONT.ROM` (oryginalny chargen HC-80/PX-8, 2048B)
