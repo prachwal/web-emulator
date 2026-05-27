@@ -46,6 +46,10 @@ Video w Apple 1 jest zrealizowane na około 30 układach TTL (bramki, liczniki, 
 - [x] **Odwrócone znaki (MSB=1)** — opcja `invertMsb` w `TextRenderOptions`. Gdy `charCode ≥ 128`, czyszczony jest MSB i zamieniane fg↔bg. Demo Apple 1 pokazuje odwrócony pasek tytułowy.
 - [x] Test: `invertMsb swaps fg/bg when charCode >= 128` w `TextModeRenderer.test.ts`
 
+### Monitor
+
+Zobacz: [Dostępne monitory](monitors.md)
+
 ## Źródła plików i dokumentacji
 
 ### ROM / font

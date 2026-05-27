@@ -93,3 +93,27 @@ Przed commitem sprawdź:
 - [ ] `npm test` przechodzi
 - [ ] `npm run build` przechodzi
 - [ ] Dokumentacja zawiera znacznik `Zgodność: DEFv1`
+
+## Struktura folderów dokumentacji
+
+```
+docs/
+├── computer-definition.md       # Ten plik (specyfikacja DEFv1)
+├── font-previews/               # Obrazy fontów
+├── amstrad/   ├── cpc.md, monitors.md
+├── commodore/ ├── c64.md, pet.md, vic20.md, monitors.md
+├── ibm/       ├── cga.md, mda.md, monitors.md
+├── sinclair/  ├── zx-spectrum.md, monitors.md
+├── apple/     ├── apple1.md, monitors.md
+├── kaypro/    ├── kaypro.md, monitors.md
+├── tandy/     ├── trs80.md, monitors.md
+├── dec/       ├── rainbow.md, monitors.md
+├── epson/     ├── px8.md, monitors.md
+├── morrow/    ├── md3.md, monitors.md
+├── osborne/   ├── osborne.md, monitors.md
+├── otrona/    ├── otrona.md, monitors.md
+└── xerox/     ├── xerox.md, monitors.md
+```
+
+Każda maszyna ma własny podfolder. Sekcja **Monitor** w `docs/<brand>/<machine>.md` linkuje do `monitors.md` w tym samym folderze.
+

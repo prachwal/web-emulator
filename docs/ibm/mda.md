@@ -47,6 +47,10 @@ Emulacyjnie można użyć zielonej skali.
 
 - [x] Preset `mda-herc-720x348` (HGC bitmap 720×348, monochromatyczny zielony)
 
+### Monitor
+
+Zobacz: [Dostępne monitory](monitors.md)
+
 ## Źródła plików i dokumentacji
 
 ### ROM / font

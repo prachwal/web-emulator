@@ -29,6 +29,10 @@ Zgodność: DEFv1
 - [ ] Obsługa trybu 132 × 24
 - [ ] Wsparcie dla podwójnego CPU (Z80 + 8088)
 
+### Monitor
+
+Zobacz: [Dostępne monitory](monitors.md)
+
 ## Źródła plików i dokumentacji
 
 - Wikipedia: <https://en.wikipedia.org/wiki/Rainbow_100>

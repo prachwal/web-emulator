@@ -76,6 +76,10 @@ W praktyce bardzo wolne: ~300 pikseli/s przez BIOS, do ~25 fps przez bezpośredn
 - [x] Demo z BASIC listingiem i CP/M READY prompt
 - [x] Specyfikacje w toolbar
 
+### Monitor
+
+Zobacz: [Dostępne monitory](monitors.md)
+
 ## Źródła plików i dokumentacji
 
 ### ROM / font

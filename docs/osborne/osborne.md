@@ -29,6 +29,10 @@ Zgodność: DEFv1
 - [ ] Obsługa trybu graficznego 52 × 24 × 128
 - [ ] Emulacja terminala
 
+### Monitor
+
+Zobacz: [Dostępne monitory](monitors.md)
+
 ## Źródła plików i dokumentacji
 
 ### ROM / font

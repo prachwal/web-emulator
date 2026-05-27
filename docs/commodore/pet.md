@@ -43,6 +43,10 @@ PET jest monochromatyczny. Kolor jest emulowany:
 - [x] Paleta PET (zielony tekst)
 - [x] Demo PET dostosowuje tytuł i informacje do modelu (40/80 kolumn)
 
+### Monitor
+
+Zobacz: [Dostępne monitory](monitors.md)
+
 ## Źródła plików i dokumentacji
 
 ### ROM / font

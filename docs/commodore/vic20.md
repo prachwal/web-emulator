@@ -68,6 +68,10 @@ Zgodność: DEFv1
 - [x] Paleta VIC-20 16 kolorów
 - [x] Demo VIC-20 pokazuje pełną paletę 16 kolorów, informacje o 4-bit Color RAM, 176×184 bitmap
 
+### Monitor
+
+Zobacz: [Dostępne monitory](monitors.md)
+
 ## Źródła plików i dokumentacji
 
 ### ROM / font

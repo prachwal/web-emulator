@@ -193,9 +193,10 @@ Subagents defined in `.opencode/agents/`:
 - No comments in code (exception: section headers in CSS)
 - **When using external fonts, ROMs, or binaries:**
   1. Search upstream emulator source repos for the files
-  2. Document the exact source (repo URL, file path, offset) in the machine's `docs/<machine>.md`
+  2. Document the exact source (repo URL, file path, offset) in the machine's `docs/<brand>/<machine>.md`
   3. Add a "Źródła plików i dokumentacji" section with all links
   4. This saves time on future lookups
+- Documentacja maszyn w `docs/<brand>/<machine>.md`, monitory w `docs/<brand>/monitors.md`
 - Use `@preact/signals` for reactive state (signal, computed)
 - Preact TSX with `.tsx` extension
 - CSS classes follow BEM-lite (`.crt-label`, `.toolbar-btn`)

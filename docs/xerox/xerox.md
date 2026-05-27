@@ -1,4 +1,4 @@
-# Otrona Attache
+# Xerox 820-II
 
 Zgodność: DEFv1
 
@@ -6,32 +6,35 @@ Zgodność: DEFv1
 
 | Właściwość | Wartość |
 |---|---|
-| CPU | Z80A @ 4 MHz |
-| RAM | 64 KB (128 KB w późniejszych) |
+| CPU | Z80 @ 4 MHz |
+| RAM | 64 KB |
 | Rozdzielczość tekstowa | 80 × 24 |
 | Komórka znaku | 8 × 8 |
 | Rozdzielczość efektywna | 640 × 192 |
 | Proporcje piksela | 1:1 |
-| Kolory | Monochromatyczny (bursztynowy) |
-| Ekran | 7" amber CRT |
+| Kolory | Monochromatyczny (zielony) |
+| Ekran | Monitor zielony/amber |
 | System | CP/M 2.2 |
 | Font | Kaypro 4/84 8×8 (zastępczy) |
 
 ## Co już mamy
 
-- [x] Preset `otrona-text-80x24`
+- [x] Preset `xerox-text-80x24`
 - [x] Font — Kaypro 4/84 (8×8, górna połowa znaku 8×16)
-- [x] Paleta bursztynowa (amber P1 fosfor)
 - [x] Demo z listingiem BASIC i informacjami o maszynie
 
 ## Czego brakuje
 
-- [ ] Oryginalny font ROM `otrona-g.rom` — obecnie używa zastępczego fontu Kaypro
-- [ ] Obsługa grafiki GSX (Graphics System Extension)
-- [ ] Wsparcie dla trybu 80 × 24 z 8×10 komórką
+- [ ] Oryginalny font ROM `x2401u57.rom` — obecnie używa zastępczego fontu Kaypro
+- [ ] Obsługa protokołu terminala (Xerox 820-II jako terminal)
+- [ ] Dwa zestawy znaków
+
+### Monitor
+
+Zobacz: [Dostępne monitory](monitors.md)
 
 ## Źródła plików i dokumentacji
 
-- Wikipedia: <https://en.wikipedia.org/wiki/Otrona_Attache>
-- bitsavers: <https://bitsavers.org/pdf/otrona/>
+- Wikipedia: <https://en.wikipedia.org/wiki/Xerox_820>
+- bitsavers: <https://bitsavers.org/pdf/xerox/820/>
 - Retroarchive: <http://www.retroarchive.org/maslin/disks/roms/index.html>

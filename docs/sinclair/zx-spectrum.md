@@ -52,6 +52,10 @@ Kolejność GRB: numer koloru = bit G/R/B (a nie R/G/B).
 - [x] **Atrybuty INK/PAPER/BRIGHT/FLASH w `TextModeDecoder`** — `colorModel:'zx'` dekoduje attr byte z BRIGHT (+8) i FLASH (swap fg↔bg co 16f)
 - [x] Demo ZX pokazuje attr cells: INK na PAPER tle, BRIGHT kolory, FLASH
 
+### Monitor
+
+Zobacz: [Dostępne monitory](monitors.md)
+
 ## Źródła plików i dokumentacji
 
 ### ROM / font

@@ -27,6 +27,10 @@ Zgodność: DEFv1
 
 - [ ] Oryginalny font ROM `md3-31.rom` — obecnie używa zastępczego fontu Kaypro
 
+### Monitor
+
+Zobacz: [Dostępne monitory](monitors.md)
+
 ## Źródła plików i dokumentacji
 
 - Wikipedia: <https://en.wikipedia.org/wiki/Morrow_Micro_Decision>

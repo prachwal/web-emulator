@@ -29,6 +29,10 @@ Zgodność: DEFv1
 - [ ] Wsparcie dla ROM-based software (WordStar, Calc, Portable BASIC)
 - [ ] Obsługa LCD kontrastu
 
+### Monitor
+
+Zobacz: [Dostępne monitory](monitors.md)
+
 ## Źródła plików i dokumentacji
 
 - Wikipedia: <https://en.wikipedia.org/wiki/Epson_PX-8>

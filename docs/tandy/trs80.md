@@ -51,6 +51,10 @@ Zgodność: DEFv1
 
 Glify descendentów (g, j, p, q, y) w foncie TRS-80 Model III mieszczą się w 8×8 pikselach — ogon descendentu znajduje się w dolnych wierszach glifu (rows 6-7). CellHeight=12 dodaje odstęp pod glifem, ale descendent jest już w glifie. Dodatkowe przesunięcie nie jest potrzebne.
 
+### Monitor
+
+Zobacz: [Dostępne monitory](monitors.md)
+
 ## Źródła plików i dokumentacji
 
 ### ROM / font

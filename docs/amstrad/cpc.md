@@ -82,6 +82,10 @@ Palety emulowane:
 - [x] **Wybór monitora** — GT-65 (zielony), CTM-644 (kolor), MP-1 (PAL TV) w menu Computer→Model→Monitor
 - [x] **Prawdziwy dekoder trybów video** — `CpcGateArrayDecoder` dekodujący VRAM na piksele (gate array)
 
+### Monitor
+
+Zobacz: [Dostępne monitory](monitors.md)
+
 ## Źródła plików i dokumentacji
 
 ### ROM / font
