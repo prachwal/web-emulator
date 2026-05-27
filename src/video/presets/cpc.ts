@@ -37,11 +37,11 @@ export const cpcPresets = [
     m(10, 8, 10, 8), '#ffffff', '#000000', '#000000', '#303030', '#666', cpcPal2, undefined, '#000011'),
 
   T('cpc664-mode2-80x25', 'cpc', 'Amstrad CPC 664', 80, 25, 8, 8, 640, 200, 5 / 12,
-    'cpc464-chargen.bin', 'cpc-464', 256, f8(8, 7),
+    'cpc664-chargen.bin', 'cpc-664', 256, f8(8, 7),
     m(10, 8, 10, 8), '#ffffff', '#000000', '#000000', '#303030', '#666', cpcPal2, undefined, '#000011'),
 
   T('cpc6128-mode2-80x25', 'cpc', 'Amstrad CPC 6128', 80, 25, 8, 8, 640, 200, 5 / 12,
-    'cpc464-chargen.bin', 'cpc-464', 256, f8(8, 7),
+    'cpc6128-chargen.bin', 'cpc-6128', 256, f8(8, 7),
     m(10, 8, 10, 8), '#ffffff', '#000000', '#000000', '#303030', '#666', cpcPal2, undefined, '#000011'),
 
   G('cpc464-bmp-160x200', 'cpc', 'Amstrad CPC 464', 'BMP 160×200 16c',

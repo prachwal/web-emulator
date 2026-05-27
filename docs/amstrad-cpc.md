@@ -73,6 +73,24 @@ Palety emulowane:
 - [x] Font CPC 8×8 z ROM-u `cpc464.rom` (offset 0x3800, 256 glyphów)
 - [x] Paleta 27 kolorów RGB (3-bit), mapowanie 27→16, 27→4, 27→2
 
+## Źródła plików i dokumentacji
+
+### ROM / font
+- **Caprice32** — emulator CPC z otwartym kodem (GPLv2): `ColinPitrat/caprice32` na GitHub
+  - ROM `cpc464.rom` / `cpc664.rom` / `cpc6128.rom` w katalogu `rom/`
+  - Chargen wyekstrahowany z offsetu `0x3800` (256 glifów × 8 bajtów = 2048 B)
+  - Repozytorium: <https://github.com/ColinPitrat/caprice32>
+
+### Inne emulatory CPC
+  - **JavaCPC** (Java): <https://github.com/pedgarcia/javacpc-src>
+  - **xcpc** (C, POSIX): <https://github.com/burzumishi/xcpc>
+  - **izkaypro** (Rust, terminal): <https://github.com/ivanizag/izkaypro>
+
+### Dokumentacja techniczna
+  - CPCWiki: <https://www.cpcwiki.eu/>
+  - Bread80 — analiza gate array: <https://bread80.com/2021/06/03/understanding-the-amstrad-cpc-video-ram-and-gate-array-subsystem/>
+  - Chris Fenton — Kaypro/CPC: <https://www.chrisfenton.com/exploring-kaypro-video-performance/>
+
 ## Czego brakuje
 
 - [ ] **Prawdziwy dekoder trybów video** — dekodowanie VRAM na piksele (gate array)
