@@ -57,7 +57,17 @@ Każdy nowy komputer w emulatorze musi spełniać poniższą specyfikację. Doku
 - Pokazuje nazwę modelu, specyfikację i przykładowy kod BASIC
 - Zaimportowana i zarejestrowana w `DemoTextScene.ts`
 
-## 5. Dokumentacja (`docs/<machine>.md`)
+## 5. Monitory
+
+Każda maszyna może mieć jeden lub więcej monitorów zdefiniowanych w `src/video/monitors/index.ts`.
+
+Wymagane:
+- Minimum jeden monitor w `monitorsForMachine(machineId)` dla każdego `machineId`
+- Monitor `id` w `MONITORS` z wypełnionymi polami: `type` (crt/lcd), `color` (mono/color), `phosphor`, `sizeInches`, `notes`
+- Dla monitorów mono → `paletteToMonochrome` konwertuje paletę automatycznie
+- Monitor wyświetlany w menu: Computer → Model → **Monitor** → Mode → Resolution
+
+## 6. Dokumentacja (`docs/<machine>.md`)
 
 Wymagane sekcje:
 - **Nagłówek** — nazwa komputera

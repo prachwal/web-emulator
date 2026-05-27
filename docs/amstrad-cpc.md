@@ -67,13 +67,20 @@ Palety emulowane:
 - [x] Preset `cpc464-mode0-20x25` (Mode 0, 160×200, 16 kolorów)
 - [x] Preset `cpc464-mode1-40x25` (Mode 1, 320×200, 4 kolory)
 - [x] Preset `cpc464-mode2-80x25` (Mode 2, 640×200, 2 kolory)
-- [x] Preset `cpc664-mode2-80x25` (CPC 664)
-- [x] Preset `cpc6128-mode2-80x25` (CPC 6128)
+- [x] Preset `cpc664-mode0/1/2` (pełne pokrycie)
+- [x] Preset `cpc6128-mode0/1/2` (pełne pokrycie)
 - [x] Preset `cpc464-bmp-160x200` (bitmapa 160×200, 16 kolorów)
 - [x] Preset `cpc464-bmp-320x200` (bitmapa 320×200, 4 kolory)
 - [x] Preset `cpc464-bmp-640x200` (bitmapa 640×200, 2 kolory)
-- [x] Font CPC 8×8 z ROM-u `cpc464.rom` (offset 0x3800, 256 glyphów)
+- [x] Preset `cpc664-bmp-160x200` / `-320x200` / `-640x200`
+- [x] Preset `cpc6128-bmp-160x200` / `-320x200` / `-640x200`
+- [x] Tekstowe Mode 0/1 dla CPC 664 i 6128 (wcześniej tylko Mode 2)
+- [x] Font CPC 8×8 z ROM-u `cpc464.rom` (offset 0x3800, 256 glyphów), font presety `cpc-464`/`cpc-664`/`cpc-6128`
 - [x] Paleta 27 kolorów RGB (3-bit), mapowanie 27→16, 27→4, 27→2
+- [x] **Tryb graficzny 160×200 16c / 320×200 4c / 640×200 2c** — presety bitmapowe dla wszystkich modeli
+- [x] **Kolorowe demo** — dema używają wielu kolorów (header czerwony, BASIC niebieski, RUN biały)
+- [x] **Wybór monitora** — GT-65 (zielony), CTM-644 (kolor), MP-1 (PAL TV) w menu Computer→Model→Monitor
+- [x] **Prawdziwy dekoder trybów video** — `CpcGateArrayDecoder` dekodujący VRAM na piksele (gate array)
 
 ## Źródła plików i dokumentacji
 
@@ -95,6 +102,5 @@ Palety emulowane:
 
 ## Czego brakuje
 
-- [x] **Prawdziwy dekoder trybów video** — `CpcGateArrayDecoder` dekodujący VRAM na piksele (gate array)
 - [ ] **Obsługa .dsk** — obrazy dyskietek 3"
 - [ ] **Paleta definiowalna przez użytkownika** — wybór dowolnych 4/16 z 27
