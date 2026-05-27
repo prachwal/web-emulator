@@ -1,0 +1,57 @@
+name: Bug report
+description: Report a problem with the emulator
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to fill out this bug report.
+  - type: textarea
+    id: description
+    attributes:
+      label: Describe the bug
+      description: What happened? What did you expect to happen?
+    validations:
+      required: true
+  - type: input
+    id: machine
+    attributes:
+      label: Machine / preset
+      description: Which machine and preset were you using? (e.g. C64, c64-text-40x25)
+      placeholder: e.g. ZX Spectrum, zx-text-32x24
+    validations:
+      required: true
+  - type: dropdown
+    id: mode
+    attributes:
+      label: Mode
+      description: Which display mode?
+      options:
+        - DEMO
+        - REAL (boot screen)
+        - Bitmap
+    validations:
+      required: true
+  - type: dropdown
+    id: renderer
+    attributes:
+      label: Renderer
+      options:
+        - WebGL2
+        - Canvas2D
+        - Auto
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Steps to reproduce
+      description: How can we reproduce the issue?
+      placeholder: |
+        1. Select '...'
+        2. Click on '...'
+        3. See error
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant console output
+      description: Please copy and paste any relevant console output.
+      render: shell
