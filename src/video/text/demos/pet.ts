@@ -32,10 +32,16 @@ export function createPetDemo(cols: number, rows: number): AttributeTextScreen {
     w(2, 15, 'UPPER+GRAPHIC  SET', 1, 0);
     w(2, 16, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 1, 0);
     w(2, 17, '0123456789', 1, 0);
+    w(2, 18, 'PETSCII GRAPHICS 128-159:', 1, 0);
+    if (cols > 16) {
+      const gfx: number[] = [];
+      for (let i = 128; i < 160 && gfx.length < cols - 2; i++) gfx.push(i);
+      pg(2, 19, gfx, 1, 0);
+    }
   }
-  if (rows > 19) {
-    w(2, 19, 'LOWER+UPPER  SET (shifted)', 1, 0);
-    s.writeText(2, 20, 'abcdefghijklmnopqrstuvwxyz', 1, 0);
+  if (rows > 21) {
+    w(2, 21, 'LOWER+UPPER  SET (shifted)', 1, 0);
+    s.writeText(2, 22, 'abcdefghijklmnopqrstuvwxyz', 1, 0);
   }
   return s;
 }
