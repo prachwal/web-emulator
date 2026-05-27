@@ -13,6 +13,9 @@ import { createKayproDemo } from './demos/kaypro';
 import { createOsborneDemo } from './demos/osborne';
 import { createOtronaDemo } from './demos/otrona';
 import { createXeroxDemo } from './demos/xerox';
+import { createC128Demo } from './demos/c128';
+import { createZx128Demo } from './demos/zx128';
+import { createSinclairQlDemo } from './demos/sinclair-ql';
 import { createMorrowDemo } from './demos/morrow';
 import { createRainbowDemo } from './demos/rainbow';
 import { createEpsonPx8Demo } from './demos/epson-px8';
@@ -58,6 +61,9 @@ const demoFns: Record<string, (c: number, r: number) => AttributeTextScreen> = {
   morrow: createMorrowDemo,
   rainbow: createRainbowDemo,
   'epson-px8': createEpsonPx8Demo,
+  c128: createC128Demo,
+  zx128: createZx128Demo,
+  'sinclair-ql': createSinclairQlDemo,
 };
 
 export function createDemoForMachine(

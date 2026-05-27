@@ -14,6 +14,9 @@ import { xeroxPresets } from './xerox';
 import { morrowPresets } from './morrow';
 import { rainbowPresets } from './rainbow';
 import { epsonPx8Presets } from './epson-px8';
+import { c128Presets } from './c128';
+import { zx128Presets } from './zx128';
+import { sinclairQlPresets } from './sinclair-ql';
 import type { Preset } from './types';
 
 export type { Preset, FontGeometry, Margins } from './types';
@@ -37,6 +40,9 @@ export { xeroxPresets } from './xerox';
 export { morrowPresets } from './morrow';
 export { rainbowPresets } from './rainbow';
 export { epsonPx8Presets } from './epson-px8';
+export { c128Presets } from './c128';
+export { zx128Presets } from './zx128';
+export { sinclairQlPresets } from './sinclair-ql';
 
 export const PRESETS: Preset[] = [
   ...zxPresets,
@@ -58,6 +64,9 @@ export const PRESETS: Preset[] = [
   ...morrowPresets,
   ...rainbowPresets,
   ...epsonPx8Presets,
+  ...c128Presets,
+  ...zx128Presets,
+  ...sinclairQlPresets,
 ];
 
 export function presetKey(p: Preset): string {

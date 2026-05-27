@@ -84,6 +84,9 @@ export function monitorsForMachine(machineId: string): string[] {
     morrow: ['morrow-adm3'],
     rainbow: ['vr201'],
     'epson-px8': ['px8-lcd'],
+    c128: ['kaypro-crt', 'c1701'],
+    zx128: ['zx-tv', 'zx-green'],
+    'sinclair-ql': ['generic-color', 'generic-mono'],
   };
   return map[machineId] ?? ['generic-color'];
 }
