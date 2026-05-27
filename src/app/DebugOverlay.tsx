@@ -1,4 +1,5 @@
 import { signal } from '@preact/signals';
+import type { RenderMetrics } from '../core/RenderMetrics';
 
 export interface DiagInfo {
   fps: number;
@@ -13,6 +14,7 @@ export interface DiagInfo {
   dpr: number;
   fontId: string;
   machineName: string;
+  metrics: RenderMetrics | null;
 }
 
 export const diagSignal = signal<DiagInfo>({
@@ -21,6 +23,7 @@ export const diagSignal = signal<DiagInfo>({
   viewportW: 0, viewportH: 0,
   par: 1, zoom: 1, dpr: 1,
   fontId: '', machineName: '',
+  metrics: null,
 });
 
 let rafCount = 0;
@@ -38,6 +41,7 @@ export function updateDiagFps(): void {
 
 export function DebugOverlay() {
   const d = diagSignal.value;
+  const m = d.metrics;
   return (
     <div class="debug-overlay">
       <div>FPS: {d.fps}  ~{d.frameTime}ms</div>
@@ -47,6 +51,17 @@ export function DebugOverlay() {
       <div>PAR: {d.par.toFixed(3)}  Zoom: {d.zoom.toFixed(2)}</div>
       <div>DPR: {d.dpr.toFixed(1)}  Font: {d.fontId}</div>
       <div>{d.machineName}</div>
+      {m && <>
+        <div style="margin-top:6px;border-top:1px solid #444;padding-top:4px;font-size:10px">
+          Text: {m.cpuTextRenderMs}ms  Dirty: {m.dirtyCellsCount}
+        </div>
+        <div style="font-size:10px">
+          Full: {m.fullRerenderCount}  Upload: {m.frameUploadMs}ms
+        </div>
+        <div style="font-size:10px">
+          Frame: {m.frameNumber}  RAF: {m.rafDeltaMs}ms
+        </div>
+      </>}
     </div>
   );
 }

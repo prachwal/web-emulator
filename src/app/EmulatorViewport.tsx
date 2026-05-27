@@ -15,6 +15,8 @@ import { displaySettings, parseHexColor } from './DisplaySettings';
 import { getMonitor } from '../video/monitors/index';
 import { createBootScreenForMachine } from '../video/text/BootScreenScene';
 import { diagSignal, updateDiagFps } from './DebugOverlay';
+import { createMetricsCollector } from '../core/RenderMetrics';
+import type { MetricsCollector } from '../core/RenderMetrics';
 
 export interface EmulatorViewportProps {
   crt: CrtSettings;
@@ -32,6 +34,8 @@ export function EmulatorViewport({ crt, preset, paused, activeFontId, monitorId,
   const rafRef = useRef<number>(0);
   const fontRef = useRef(createDefaultFont(8, 8));
   const screenRef = useRef(createDemoForMachine('generic', 40, 25));
+  const metricsRef = useRef<MetricsCollector>(createMetricsCollector());
+  let rafLastTime = performance.now();
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -118,21 +122,30 @@ if (preset.machineId === 'zx' || preset.machineId === 'zx128') {
           if (!r.renderer) { rafRef.current = requestAnimationFrame(loop); return; }
           if (r.paused) { rafRef.current = requestAnimationFrame(loop); return; }
           updateDiagFps();
+          const m = metricsRef.current;
+          const rafDelta = performance.now() - (rafLastTime ?? performance.now());
+          rafLastTime = performance.now();
+          m.beginTextRender();
+          const baseMid = activeFontId ? getMapperIdForFont(activeFontId) : 'ascii';
+          const loopMapper = shiftLock && baseMid === 'petscii' ? getMapper('petscii-shifted') : getMapper(baseMid);
+          const fb = r.video.state.framebuffer;
+          textOpts.frameNumber = r.video.state.frameNumber;
+          renderAttributeTextToFramebuffer(screenRef.current, fontRef.current, fb, textOpts, loopMapper);
+          m.endTextRender(screenRef.current?.columns ?? 0, true);
+          r.video.state.frameNumber++;
+          m.beginUpload();
+          r.renderer.uploadFrame(fb);
+          m.endUpload();
+          r.renderer.render(r.video.state.frameNumber);
+          m.endRender();
           diagSignal.value = { ...diagSignal.value,
             rendererKind: r.renderer.kind,
             sourceW: r.video.state.sourceWidth, sourceH: r.video.state.sourceHeight,
             par: preset.pixelAspectRatio, zoom: 0.9,
             dpr: globalThis.devicePixelRatio || 1,
             fontId: fontRef.current?.id ?? '', machineName: preset.machineName,
+            metrics: m.snapshot(r.video.state.frameNumber, r.renderer.kind, rafDelta),
           };
-          const baseMid = activeFontId ? getMapperIdForFont(activeFontId) : 'ascii';
-          const loopMapper = shiftLock && baseMid === 'petscii' ? getMapper('petscii-shifted') : getMapper(baseMid);
-          const fb = r.video.state.framebuffer;
-          textOpts.frameNumber = r.video.state.frameNumber;
-          renderAttributeTextToFramebuffer(screenRef.current, fontRef.current, fb, textOpts, loopMapper);
-          r.video.state.frameNumber++;
-          r.renderer.uploadFrame(fb);
-          r.renderer.render(r.video.state.frameNumber);
           rafRef.current = requestAnimationFrame(loop);
         };
 
@@ -154,15 +167,20 @@ if (preset.machineId === 'zx' || preset.machineId === 'zx128') {
           if (!r.renderer) { rafRef.current = requestAnimationFrame(loop); return; }
           if (r.paused) { rafRef.current = requestAnimationFrame(loop); return; }
           updateDiagFps();
+          const m2 = metricsRef.current;
+          m2.beginUpload();
+          r.renderer.uploadFrame(r.video.state.framebuffer);
+          m2.endUpload();
+          r.renderer.render(r.video.state.frameNumber);
+          m2.endRender();
           diagSignal.value = { ...diagSignal.value,
             rendererKind: r.renderer.kind,
             sourceW: r.video.state.sourceWidth, sourceH: r.video.state.sourceHeight,
             par: preset.pixelAspectRatio, zoom: 0.9,
             dpr: globalThis.devicePixelRatio || 1,
             fontId: fontRef.current?.id ?? '', machineName: preset.machineName,
+            metrics: m2.snapshot(r.video.state.frameNumber, r.renderer.kind, 16),
           };
-          r.renderer.uploadFrame(r.video.state.framebuffer);
-          r.renderer.render(r.video.state.frameNumber);
           r.video.state.frameNumber++;
           rafRef.current = requestAnimationFrame(loop);
         };
