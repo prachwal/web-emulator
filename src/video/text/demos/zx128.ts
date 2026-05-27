@@ -1,10 +1,17 @@
 import { AttributeTextScreen } from '../AttributeTextScreen';
 import { bar, spacer } from './shared';
 
+/** ZX Spectrum attribute: auto-detect BRIGHT from ink>=8 */
+function zxAttr(ink: number, paper: number, flash = false): number {
+  const bright = ink >= 8 ? 0x40 : 0;
+  return (paper & 0x07) << 3 | (ink & 0x07) | bright | (flash ? 0x80 : 0);
+}
+
 export function createZx128Demo(cols: number, rows: number): AttributeTextScreen {
   const s = new AttributeTextScreen(cols, rows);
-  s.clear(32, 7, 0);
-  const w = (x: number, y: number, t: string, f = 7, b = 0) => s.writeText(x, y, t, f, b);
+  s.clear(32, zxAttr(7, 0), 0);
+  const w = (x: number, y: number, t: string, ink = 7, paper = 0) =>
+    s.writeText(x, y, t, zxAttr(ink, paper), 0);
   const top = bar(cols, '=');
   w(0, 0, top, 2, 0);
   w(0, 1, spacer(cols, 'ZX SPECTRUM 128  128K AY-3-8912'), 6, 0);

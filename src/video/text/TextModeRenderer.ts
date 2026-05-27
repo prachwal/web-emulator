@@ -9,6 +9,9 @@ export interface TextRenderOptions {
   invert?: boolean;
   flashPhase?: boolean;
   invertMsb?: boolean;
+  /** ZX Spectrum attribute byte per cell; when set, fg/bg encode INK/PAPER/BRIGHT/FLASH */
+  zxAttr?: Uint8Array;
+  frameNumber?: number;
 }
 
 export function renderAttributeTextToFramebuffer(
@@ -32,14 +35,27 @@ export function renderAttributeTextToFramebuffer(
       const invertCell = !!(options.invertMsb && charCode >= 128);
       if (invertCell) charCode &= 0x7f;
       const swap = invertGlobal !== invertCell;
-      const fgColor = swap ? screen.background[cellIndex] : screen.foreground[cellIndex];
-      const bgColor = swap ? screen.foreground[cellIndex] : screen.background[cellIndex];
+
+      let fgIdx = swap ? screen.background[cellIndex] : screen.foreground[cellIndex];
+      let bgIdx = swap ? screen.foreground[cellIndex] : screen.background[cellIndex];
+
+      // ZX Spectrum attribute decoding (INK/PAPER/BRIGHT/FLASH)
+      if (options.zxAttr && cellIndex < options.zxAttr.length) {
+        const attr = options.zxAttr[cellIndex];
+        const flash = (attr >> 7) & 1;
+        const flashPhase = options.flashPhase !== undefined ? options.flashPhase
+          : (options.frameNumber !== undefined ? Math.floor(options.frameNumber / 16) % 2 : 0);
+        fgIdx = attr & 0x07;
+        bgIdx = (attr >> 3) & 0x07;
+        if (attr & 0x40) { fgIdx += 8; bgIdx += 8; }
+        if (flash && flashPhase) { const t = fgIdx; fgIdx = bgIdx; bgIdx = t; }
+      }
 
       renderGlyphToFramebuffer(
         font, charCode, framebuffer,
         outputWidth, outputHeight,
         col * cellW, row * cellH,
-        fgColor, bgColor,
+        fgIdx, bgIdx,
       );
     }
   }

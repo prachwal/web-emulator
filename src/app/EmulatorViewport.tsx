@@ -99,7 +99,13 @@ export function EmulatorViewport({ crt, preset, paused, activeFontId, monitorId,
           : createDemoForMachine(preset.machineId, preset.cols, preset.rows);
         screenRef.current = screen;
 
-        const textOpts = { invertMsb: preset.machineId === 'apple1' };
+        const textOpts: {
+  invertMsb?: boolean; flashPhase?: boolean; frameNumber?: number; zxAttr?: Uint8Array;
+} = { invertMsb: preset.machineId === 'apple1' };
+if (preset.machineId === 'zx' || preset.machineId === 'zx128') {
+  textOpts.zxAttr = screen.foreground; // reuse foreground as attr byte
+  textOpts.frameNumber = 0;
+}
         renderAttributeTextToFramebuffer(screen, font, runtime.video.state.framebuffer, textOpts, mapper);
 
         runtime.start();
@@ -110,6 +116,7 @@ export function EmulatorViewport({ crt, preset, paused, activeFontId, monitorId,
           if (!r.renderer) { rafRef.current = requestAnimationFrame(loop); return; }
           const mid = activeFontId ? getMapperIdForFont(activeFontId) : 'ascii';
           const fb = r.video.state.framebuffer;
+          textOpts.frameNumber = r.video.state.frameNumber;
           renderAttributeTextToFramebuffer(screenRef.current, fontRef.current, fb, textOpts, getMapper(mid));
           r.video.state.frameNumber++;
           r.renderer.uploadFrame(fb);
