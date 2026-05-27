@@ -119,6 +119,33 @@ Bitmap mode: `imageToIndexedFramebuffer()` loads tukan.jpg, quantizes to palette
 | **MDA** | Blink attribute, monochrome green | `TextModeDecoder.colorModel='mda'` |
 | **Apple 1** | Inverted chars via MSB=1 swap fg↔bg | `TextRenderOptions.invertMsb` |
 
+## Available skills
+
+The agent has 42 skills; load with `skill({name: "<skill>"})`. Relevant to this project:
+
+| Skill | When to use |
+|---|---|
+| `preact-ui` | Designing/refactoring Preact TSX components, signals, hooks, forms |
+| `typescript-fundamentals` | Type design, interfaces, patterns, module organization |
+| `project-tooling` | Vite, Vitest, TypeScript, ESLint config, package scripts |
+| `vite-config` | Changing Vite config, aliases, env vars, build output |
+| `eslint-config` | Setting up or fixing ESLint flat config |
+| `vitest-vue-testing` | Writing/fixing Vitest tests with jsdom |
+| `web-testing` | Playwright E2E tests, visual comparison |
+| `web-performance` | Render optimization, WebGL, Core Web Vitals, code splitting |
+| `scss-system` | SCSS design system, tokens, mixins, theming |
+| `web-design-review` | Reviewing visual design implementation, spacing, typography, color |
+| `release-docs` | README, changelogs, deployment docs, version notes |
+| `docs-instructions` | AGENTS.md, Copilot/Codex instructions, repo prompts |
+| `web-deployment` | Netlify/Vercel deploy, env vars, redirects, cache headers |
+
+Less relevant: `netlify-*`, `vue-*`, `auth0-cli`, `mongodb-netlify`, `neon-netlify`,
+`storybook-ui`, `vercel-*`, `a11y-review`, `web-*` (auth, forms, i18n, SEO, PWA, security, privacy, content).
+
+Usage: load a skill when the task description matches its trigger phrase
+(e.g. "review this UI" → `web-design-review`, "write a test" → `vitest-vue-testing`).
+If multiple skills match, load the most specific one first.
+
 ## Conventions
 
 - No comments in code (exception: section headers in CSS)
