@@ -13,7 +13,7 @@ const SETTINGS_VERSION = 2;
 const DEFAULTS: DisplaySettings = {
   scaleMode: 'smooth',
   parMultiplier: 1,
-  zoom: 0.85,
+  zoom: 0.9,
   showBorder: true,
 };
 

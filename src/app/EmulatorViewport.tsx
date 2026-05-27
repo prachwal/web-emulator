@@ -47,6 +47,10 @@ export function EmulatorViewport({ crt, preset, paused, activeFontId }: Emulator
       if (!ds.showBorder && runtime.renderer) {
         runtime.renderer.setBorderColor([0, 0, 0]);
       }
+      if (runtime.renderer) {
+        runtime.renderer.setScaling(ds.parMultiplier, ds.scaleMode === 'integer');
+        runtime.renderer.setZoom(ds.zoom);
+      }
       runtime.renderer?.uploadPalette(paletteToRgbaBytes(preset.palette));
       const isText = preset.type === 'text';
       const fw = preset.framebufferWidth;

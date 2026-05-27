@@ -36,15 +36,18 @@ export function computeViewport(
   const logicalHeight = geometry.sourceHeight;
 
   let scale: number;
+  const maxFill = 0.92;
+  const eW = canvasWidth * maxFill;
+  const eH = canvasHeight * maxFill;
   if (geometry.integerScale) {
     scale = Math.max(1, Math.floor(Math.min(
-      canvasWidth / logicalWidth,
-      canvasHeight / logicalHeight,
+      eW / logicalWidth,
+      eH / logicalHeight,
     )));
   } else {
     scale = Math.min(
-      canvasWidth / logicalWidth,
-      canvasHeight / logicalHeight,
+      eW / logicalWidth,
+      eH / logicalHeight,
     );
   }
   scale *= geometry.zoom;
