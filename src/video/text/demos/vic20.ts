@@ -23,7 +23,7 @@ export function createVic20Demo(cols: number, rows: number): AttributeTextScreen
     for (let c = 0; c < 8 && c + 18 < cols; c++) {
       w(18 + c, 11, '' + (c + 8), c + 9, 6);
     }
-    w(1, 12, '4-BIT NYBBLE COLOR RAM', 1, 6);
+    w(1, 12, '4-BIT NYBBLE COLOR RAM', 5, 6);
     if (cols > 10) {
       pg(1, 13, commodoreGraphics, 1, 6);
       w(1, 14, 'PETSCII CHR$(192-207)', 1, 6);

@@ -66,7 +66,8 @@ Zgodność: DEFv1
 - [x] Font VIC-20 (2 zestawy, 512 glifów)
 - [x] Mapper PETSCII
 - [x] Paleta VIC-20 16 kolorów
-- [x] Demo VIC-20 pokazuje pełną paletę 16 kolorów, informacje o 4-bit Color RAM, 176×184 bitmap
+- [x] Demo VIC-20 pokazuje pełną paletę 16 kolorów, per-znak Color RAM (fg przez `AttributeTextScreen`), 176×184 bitmap
+- [x] Preset `vic20-multi-176x184` — tryb Multicolor 176×184
 
 ### Monitor
 
@@ -96,5 +97,4 @@ Biały tekst na czarnym tle w rozdzielczości 22×23 znaków.
 
 ## Czego brakuje
 
-- [ ] **Color RAM (nybble)** — podobnie jak w C64, VIC-20 ma 4-bitową pamięć kolorów (wymaga osobnego dekodera lub `colorModel`).
-- [ ] **Multicolor** — brak.
+- [ ] **Color RAM (nybble)** — wsparcie przez `AttributeTextScreen` per-cell fg już działa; do pełnej zgodności brak osobnego dekodera z `colorModel: 'vic20'`.
