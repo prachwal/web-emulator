@@ -153,6 +153,19 @@ export function EmulatorViewport({ crt, preset, paused, activeFontId, monitorId 
   useEffect(() => {
     const r = runtimeRef.current;
     if (!r?.renderer) return;
+    let palette = preset.palette;
+    if (monitorId) {
+      const mon = getMonitor(monitorId);
+      if (mon && mon.color === 'mono' && mon.phosphor && mon.phosphor !== 'rgb') {
+        palette = paletteToMonochrome(palette, mon.phosphor);
+      }
+    }
+    r.renderer.uploadPalette(paletteToRgbaBytes(palette));
+  }, [monitorId, preset]);
+
+  useEffect(() => {
+    const r = runtimeRef.current;
+    if (!r?.renderer) return;
     const ds = displaySettings.value;
     r.renderer.setScaling(ds.parMultiplier, ds.scaleMode === 'integer');
     r.renderer.setZoom(ds.zoom);
