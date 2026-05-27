@@ -60,5 +60,10 @@ export const cpc664Presets = [
 ];
 
 export const cpc6128Presets = [
+  cpct('Amstrad CPC 6128', 'cpc-6128', 20, 160, 5 / 3, cpcPal16G),
+  cpct('Amstrad CPC 6128', 'cpc-6128', 40, 320, 5 / 6, cpcPal4),
   cpct('Amstrad CPC 6128', 'cpc-6128', 80, 640, 5 / 12, cpcPal2),
+  cpcb('Amstrad CPC 6128', 'cpc-6128', 'BMP 160×200 16c', 20, 160, 5 / 3, cpcPal16),
+  cpcb('Amstrad CPC 6128', 'cpc-6128', 'BMP 320×200 4c', 40, 320, 5 / 6, cpcPal4),
+  cpcb('Amstrad CPC 6128', 'cpc-6128', 'BMP 640×200 2c', 80, 640, 5 / 12, cpcPal2),
 ];
