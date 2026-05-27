@@ -41,6 +41,8 @@ const demoFns: Record<string, (c: number, r: number) => AttributeTextScreen> = {
   apple1: createApple1Demo,
   vic20: createVic20Demo,
   kaypro: createKayproDemo,
+  'kaypro-ii': createKayproDemo,
+  'kaypro-4': createKayproDemo,
   'cpc-464': createCpc464Demo,
   'cpc-664': createCpc664Demo,
   'cpc-6128': createCpc6128Demo,

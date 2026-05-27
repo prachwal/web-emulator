@@ -10,7 +10,8 @@ export const MACHINE_FEATURES: Record<string, string[]> = {
   trs80: ['64x16', '8x12 CELL', 'DESCENDER', '512x192'],
   apple1: ['40x24', 'LSB-FIRST', 'INVERT MSB=1', 'WOZ MON'],
   vic20: ['22x23', '176x184 BM', '4-bit COL RAM', 'PETSCII'],
-  kaypro: ['80x25', '8x16 FONT', 'CP/M', 'ADM-3A'],
+  'kaypro-ii': ['80×24', '7×16 FONT', 'CP/M', 'SY6545'],
+  'kaypro-4': ['80×25', '8×16 FONT', '160×100 GFX', 'CP/M'],
 };
 
 export function machineFeatures(machineId: string): string[] {

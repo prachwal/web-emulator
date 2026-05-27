@@ -6,7 +6,7 @@ import { mdaPresets } from './mda';
 import { trs80Presets } from './trs80';
 import { apple1Presets } from './apple1';
 import { vic20Presets } from './vic20';
-import { kayproPresets } from './kaypro';
+import { kaypro2Presets, kaypro4Presets } from './kaypro';
 import { cpc464Presets, cpc664Presets, cpc6128Presets } from './cpc';
 import type { Preset } from './types';
 
@@ -20,7 +20,8 @@ export { mdaPresets } from './mda';
 export { trs80Presets } from './trs80';
 export { apple1Presets } from './apple1';
 export { vic20Presets } from './vic20';
-export { kayproPresets } from './kaypro';
+export { kaypro2Presets } from './kaypro';
+export { kaypro4Presets } from './kaypro';
 export { cpc464Presets } from './cpc';
 export { cpc664Presets } from './cpc';
 export { cpc6128Presets } from './cpc';
@@ -34,7 +35,8 @@ export const PRESETS: Preset[] = [
   ...trs80Presets,
   ...apple1Presets,
   ...vic20Presets,
-  ...kayproPresets,
+  ...kaypro2Presets,
+  ...kaypro4Presets,
   ...cpc464Presets,
   ...cpc664Presets,
   ...cpc6128Presets,
