@@ -16,12 +16,11 @@ Zgodność: DEFv1
 | Storage | Datasette / 3.5" floppy (1541) |
 | OS | BASIC 3.5 + built-in software |
 
-## Paleta (16 standardowych)
+## Paleta TED (128 kolorów)
 
-0: #000000, 1: #FFFFFF, 2: #880000, 3: #AAFFEE,
-4: #CC44CC, 5: #00CC55, 6: #0000AA, 7: #EEEE77,
-8: #FF8855, 9: #FF00AA, 10: #885500, 11: #555555,
-12: #888888, 13: #00FF00, 14: #0000FF, 15: #BBBBBB
+Paleta TED 7360: 8 barw × 8 poziomów luminancji + macierz alternatywna (bit 7).
+Indeksy 0-63: macierz standardowa, 64-127: macierz alternatywna.
+Pełna paleta zdefiniowana w `presets/c16.ts`.
 
 ## Co już mamy
 
@@ -34,7 +33,6 @@ Zgodność: DEFv1
 
 ## Czego brakuje
 
-- [ ] Obsługa TED 128 kolorów (obecnie 16)
 - [ ] Emulacja BASIC 3.5 / built-in software
 
 ## Ekran startowy (REAL)
