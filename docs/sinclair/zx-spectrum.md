@@ -56,6 +56,19 @@ Kolejność GRB: numer koloru = bit G/R/B (a nie R/G/B).
 
 Zobacz: [Dostępne monitory](monitors.md)
 
+## Ekran startowy (REAL)
+
+```
+Sinclair BASIC
+(C) 1982 Sinclair Research Ltd
+
+0
+
+              READY
+```
+
+Biały tekst (INK 7) na czarnym tle (PAPER 0). Bez "READY" przy starcie — pojawia się po naciśnięciu klawisza.
+
 ## Źródła plików i dokumentacji
 
 ### ROM / font

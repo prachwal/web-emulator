@@ -32,6 +32,18 @@ Zgodność: DEFv1
 
 Zobacz: [Dostępne monitory](monitors.md)
 
+## Ekran startowy (REAL)
+
+```
+           Xerox 820-II
+  Z80  64K  CP/M 2.2
+  Dual 8" SSDD Floppy Drives
+
+        A>
+```
+
+Monochromatyczny zielony tekst na czarnym tle. 80×24 znaki, 8" stacje dyskietek.
+
 ## Źródła plików i dokumentacji
 
 - Wikipedia: <https://en.wikipedia.org/wiki/Xerox_820>

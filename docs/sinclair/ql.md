@@ -40,6 +40,20 @@ Zgodność: DEFv1
 
 - [ ] Obsługa QDOS
 
+## Ekran startowy (REAL)
+
+```
+QL SERIAL No  000000
+MICRODRIVE STORAGE
+QDOS VERSION 1.03
+128 KB RAM
+
+BASIC
+ 0 REMark
+```
+
+Biały tekst na czarnym tle w trybie Mode 4 (512×256, 4 kolory).
+
 ## Źródła
 
 - Q-emulator: <https://github.com/madrat/q-emulator>

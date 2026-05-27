@@ -86,6 +86,18 @@ Palety emulowane:
 
 Zobacz: [Dostępne monitory](monitors.md)
 
+## Ekran startowy (REAL)
+
+```
+  AMSTRAD
+ 464 BASIC v1.0
+ (c) 1984 Amsoft
+
+READY
+```
+
+Biały tekst na czarnym tle w trybie Mode 1 (40×25, 4 kolory) lub Mode 0 (20×25, 16 kolorów). Logo AMSTRAD wyśrodkowane.
+
 ## Źródła plików i dokumentacji
 
 ### ROM / font

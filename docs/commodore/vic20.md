@@ -72,6 +72,17 @@ Zgodność: DEFv1
 
 Zobacz: [Dostępne monitory](monitors.md)
 
+## Ekran startowy (REAL)
+
+```
+ **** VIC-20 BASIC ****
+  3583 BYTES FREE
+
+READY.
+```
+
+Biały tekst na czarnym tle w rozdzielczości 22×23 znaków.
+
 ## Źródła plików i dokumentacji
 
 ### ROM / font

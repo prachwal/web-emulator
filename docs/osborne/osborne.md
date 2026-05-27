@@ -33,6 +33,19 @@ Zgodność: DEFv1
 
 Zobacz: [Dostępne monitory](monitors.md)
 
+## Ekran startowy (REAL)
+
+```
+     Osborne 1
+  Z80A  64K  CP/M 2.2
+  52 Character Display
+  WordStar  SuperCalc  MBASIC
+
+        A>
+```
+
+Monochromatyczny zielony tekst na czarnym tle. 52×24 znaki, 5" CRT.
+
 ## Źródła plików i dokumentacji
 
 ### ROM / font

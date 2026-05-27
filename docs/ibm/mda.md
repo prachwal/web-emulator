@@ -51,6 +51,19 @@ Emulacyjnie można użyć zielonej skali.
 
 Zobacz: [Dostępne monitory](monitors.md)
 
+## Ekran startowy (REAL)
+
+```
+IBM Personal Computer BASIC
+Version C1.10 Copyright IBM Corp 1981
+
+ 61404 Bytes free
+
+Ok
+```
+
+Monochromatyczny tekst (zielony/amber w zależności od monitora) na czarnym tle. MDA 80×25, 9×14 komórka znaku, bez trybu graficznego.
+
 ## Źródła plików i dokumentacji
 
 ### ROM / font

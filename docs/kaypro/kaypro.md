@@ -80,6 +80,19 @@ W praktyce bardzo wolne: ~300 pikseli/s przez BIOS, do ~25 fps przez bezpośredn
 
 Zobacz: [Dostępne monitory](monitors.md)
 
+## Ekran startowy (REAL)
+
+```
+               KAYPRO II
+  Z80 CPU  64K RAM  CP/M 2.2
+  Two 5.25" DS/DD Disk Drives
+  Perfect Writer  Perfect Calc
+
+        A>
+```
+
+Monochromatyczny zielony tekst na czarnym tle. CP/M 2.2 prompt A>. Dla Kaypro 4/84 pokazuje "KAYPRO 4/84" i "800K Disk Drives".
+
 ## Źródła plików i dokumentacji
 
 ### ROM / font

@@ -37,6 +37,18 @@ Zgodność: DEFv1
 - [ ] Obsługa TED 128 kolorów (obecnie 16)
 - [ ] Emulacja BASIC 3.5 / built-in software
 
+## Ekran startowy (REAL)
+
+```
+   **** COMMODORE PLUS/4 ****
+    64K RAM SYSTEM
+     58877 BASIC BYTES FREE
+
+READY.
+```
+
+Biały tekst na czarnym tle. 64K RAM, BASIC 3.5, ten sam chip TED co C16.
+
 ## Źródła
 
 - Zimmers: <http://www.zimmers.net/anonftp/pub/cbm/firmware/characters/c16.bin>

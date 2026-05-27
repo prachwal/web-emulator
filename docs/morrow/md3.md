@@ -31,6 +31,19 @@ Zgodność: DEFv1
 
 Zobacz: [Dostępne monitory](monitors.md)
 
+## Ekran startowy (REAL)
+
+```
+           Morrow MD3
+  Z80  64K  CP/M 2.2
+  6" 26MB Hard Disk
+  Micro-Pro WordStar  SuperCalc
+
+        A>
+```
+
+Monochromatyczny zielony tekst na czarnym tle. 80×24 znaki, 8×12 komórka, wbudowany dysk twardy 26MB.
+
 ## Źródła plików i dokumentacji
 
 - Wikipedia: <https://en.wikipedia.org/wiki/Morrow_Micro_Decision>

@@ -33,6 +33,18 @@ Zgodność: DEFv1
 
 Zobacz: [Dostępne monitory](monitors.md)
 
+## Ekran startowy (REAL)
+
+```
+               EPSON PX-8
+  Z80  64K  CP/M 2.2
+  Built-in LCD 80x8
+
+          A>
+```
+
+Monochromatyczny tekst na LCD. 80×8 znaków, ciekłokrystaliczny wyświetlacz, komputer kieszonkowy.
+
 ## Źródła plików i dokumentacji
 
 - Wikipedia: <https://en.wikipedia.org/wiki/Epson_PX-8>

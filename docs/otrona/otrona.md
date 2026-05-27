@@ -33,6 +33,18 @@ Zgodność: DEFv1
 
 Zobacz: [Dostępne monitory](monitors.md)
 
+## Ekran startowy (REAL)
+
+```
+        Otrona Attache
+  Z80A  64K  CP/M 2.2
+  Dual 5.25" Disk Drives
+
+        A>
+```
+
+Bursztynowy (amber P1 fosfor) tekst na czarnym tle. 80×24 znaki, 7" amber CRT.
+
 ## Źródła plików i dokumentacji
 
 - Wikipedia: <https://en.wikipedia.org/wiki/Otrona_Attache>

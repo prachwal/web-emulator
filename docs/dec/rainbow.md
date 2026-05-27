@@ -35,6 +35,18 @@ Zgodność: DEFv1
 
 Zobacz: [Dostępne monitory](monitors.md)
 
+## Ekran startowy (REAL)
+
+```
+      DEC Rainbow 100
+  Z80 + 8088  CP/M + MS-DOS
+  80x24 Monochrome Terminal
+
+        A>
+```
+
+Monochromatyczny zielony tekst na czarnym tle. DEC VR201 monitor, 80×24 lub 132×24 znaków.
+
 ## Źródła plików i dokumentacji
 
 ### ROM / font

@@ -50,6 +50,16 @@ Video w Apple 1 jest zrealizowane na około 30 układach TTL (bramki, liczniki, 
 
 Zobacz: [Dostępne monitory](monitors.md)
 
+## Ekran startowy (REAL)
+
+```
+APPLE 1
+MONITOR
+
+```
+
+Monitor Woz monitora — znak backslash (`\`) jako prompt. Zielony fosfor na czarnym tle, 40×24 znaków, LSB-first.
+
 ## Źródła plików i dokumentacji
 
 ### ROM / font

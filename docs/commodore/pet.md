@@ -47,6 +47,17 @@ PET jest monochromatyczny. Kolor jest emulowany:
 
 Zobacz: [Dostępne monitory](monitors.md)
 
+## Ekran startowy (REAL)
+
+```
+   *** COMMODORE PET ***
+    8K RAM SYSTEM
+
+READY.
+```
+
+Biały tekst na czarnym tle. PET 2001 wyświetla 40×25 znaków.
+
 ## Źródła plików i dokumentacji
 
 ### ROM / font

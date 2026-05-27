@@ -55,6 +55,20 @@ Glify descendentów (g, j, p, q, y) w foncie TRS-80 Model III mieszczą się w 8
 
 Zobacz: [Dostępne monitory](monitors.md)
 
+## Ekran startowy (REAL)
+
+```
+TRS-80 Model III BASIC
+(C) 1980 Tandy Corp
+
+MEMORY SIZE = 49152
+
+READY
+>
+```
+
+Biały tekst na czarnym tle w trybie 64×16 lub 32×16. BASIC w ROMie TRS-80 Model III.
+
 ## Źródła plików i dokumentacji
 
 ### ROM / font

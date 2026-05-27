@@ -80,6 +80,19 @@ Każda komórka znaku: 8 × 8 pikseli, atrybut bajt = [blink:1][bg:3][fg:4].
 
 Zobacz: [Dostępne monitory](monitors.md)
 
+## Ekran startowy (REAL)
+
+```
+IBM Personal Computer BASIC
+Version C1.10 Copyright IBM Corp 1981
+
+ 61404 Bytes free
+
+Ok
+```
+
+Biały tekst (kolor 7) na czarnym tle w trybie 80×25. Cassette BASIC w ROMie IBM PC.
+
 ## Źródła plików i dokumentacji
 
 ### ROM / font
