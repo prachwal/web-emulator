@@ -6,15 +6,34 @@ Vite + Preact (TSX) + TypeScript CRT web emulator. Renders retro computer video 
 
 ## Commands
 
+### CLI
+
 ```sh
 npm run dev          # Vite dev server
 npm run build        # tsc -b && vite build
-npm test             # vitest run (67 tests, 12 files)
+npm test             # vitest run (currently 76 tests, 12 files)
 npm run lint         # tsc --noEmit
 npm run test:watch   # vitest watch
 ```
 
 After adding/editing presets or machine features, restart the dev server (`npm run dev`) — changes are picked up by Vite HMR.
+
+### OpenCode slash commands (`.opencode/commands/`)
+
+| Command | What it does |
+|---|---|
+| `/build` | Run `npm test && npm run build`, show failures |
+| `/commit` | Stage all, review diff, commit with proper message |
+| `/docs` | Update `<machine>.md` and DemoTextScene after feature work |
+| `/add-machine` | Scaffold preset files, demo, docs for a new machine |
+
+### Repetitive tasks — standard procedure
+
+After implementing features for a machine, always do in order:
+1. Update `docs/<machine>.md` — move items from "Czego brakuje" to "Co już mamy" with [x]
+2. Update `src/video/text/DemoTextScene.ts` — add demo content
+3. Run `npm test && npm run build`
+4. Git add, commit with `feat(machine):` or `fix(area):`
 
 ## Architecture
 
