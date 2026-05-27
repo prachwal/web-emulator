@@ -22,8 +22,15 @@ const cpcPal16G = [
   '#00cc00','#00cc33','#66ff00','#99ff99',
 ];
 
-const cpcPal4 = ['#000000','#00ff00','#008000','#33ff33'];
-const cpcPal2 = ['#000000','#00ff00'];
+const cpcPal4 = ['#000000','#0000ff','#ff0000','#ffffff',
+  '#0000ff','#ff0000','#ffffff','#ffffff',
+  '#000000','#0000ff','#ff0000','#ffffff',
+  '#000000','#0000ff','#ff0000','#ffffff'];
+
+const cpcPal2 = ['#000000','#00ff00','#00ff00','#00ff00',
+  '#00ff00','#00ff00','#00ff00','#00ff00',
+  '#000000','#00ff00','#00ff00','#00ff00',
+  '#00ff00','#00ff00','#00ff00','#00ff00'];
 
 const cpcBorder = '#002000';
 
@@ -42,7 +49,7 @@ function cpcb(name: string, mid: string, label: string, cols: number, fw: number
 }
 
 export const cpc464Presets = [
-  cpct('Amstrad CPC 464', 'cpc-464', 20, 160, 5 / 3, cpcPal16G),
+  cpct('Amstrad CPC 464', 'cpc-464', 20, 160, 5 / 3, cpcPal16),
   cpct('Amstrad CPC 464', 'cpc-464', 40, 320, 5 / 6, cpcPal4),
   cpct('Amstrad CPC 464', 'cpc-464', 80, 640, 5 / 12, cpcPal2),
   cpcb('Amstrad CPC 464', 'cpc-464', 'BMP 160×200 16c', 20, 160, 5 / 3, cpcPal16),
@@ -51,7 +58,7 @@ export const cpc464Presets = [
 ];
 
 export const cpc664Presets = [
-  cpct('Amstrad CPC 664', 'cpc-664', 20, 160, 5 / 3, cpcPal16G),
+  cpct('Amstrad CPC 664', 'cpc-664', 20, 160, 5 / 3, cpcPal16),
   cpct('Amstrad CPC 664', 'cpc-664', 40, 320, 5 / 6, cpcPal4),
   cpct('Amstrad CPC 664', 'cpc-664', 80, 640, 5 / 12, cpcPal2),
   cpcb('Amstrad CPC 664', 'cpc-664', 'BMP 160×200 16c', 20, 160, 5 / 3, cpcPal16),
@@ -60,7 +67,7 @@ export const cpc664Presets = [
 ];
 
 export const cpc6128Presets = [
-  cpct('Amstrad CPC 6128', 'cpc-6128', 20, 160, 5 / 3, cpcPal16G),
+  cpct('Amstrad CPC 6128', 'cpc-6128', 20, 160, 5 / 3, cpcPal16),
   cpct('Amstrad CPC 6128', 'cpc-6128', 40, 320, 5 / 6, cpcPal4),
   cpct('Amstrad CPC 6128', 'cpc-6128', 80, 640, 5 / 12, cpcPal2),
   cpcb('Amstrad CPC 6128', 'cpc-6128', 'BMP 160×200 16c', 20, 160, 5 / 3, cpcPal16),
