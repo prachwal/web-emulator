@@ -82,5 +82,5 @@ Zgodność: DEFv1
 ## Czego brakuje
 
 - [x] **Rejestry tła $D021–$D024** — `Bitmap2BppDecoder.backgroundColorIndex` obsługuje $D021; multicolor używa $D022/$D023
-- [ ] **Sprite'y** — brak (8 sprite'ów, 24×21).
+- [x] **Sprite'y** — dekoder `C64SpriteDecoder` z 8 sprite'ami 24×21.
 - [ ] **Raster interrupt** — brak symulacji zmian w trakcie skanowania.

@@ -95,6 +95,6 @@ Palety emulowane:
 
 ## Czego brakuje
 
-- [ ] **Prawdziwy dekoder trybów video** — dekodowanie VRAM na piksele (gate array)
+- [x] **Prawdziwy dekoder trybów video** — `CpcGateArrayDecoder` dekodujący VRAM na piksele (gate array)
 - [ ] **Obsługa .dsk** — obrazy dyskietek 3"
 - [ ] **Paleta definiowalna przez użytkownika** — wybór dowolnych 4/16 z 27

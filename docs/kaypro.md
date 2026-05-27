@@ -95,6 +95,6 @@ W praktyce bardzo wolne: ~300 pikseli/s przez BIOS, do ~25 fps przez bezpośredn
 
 ## Czego brakuje
 
-- [ ] **Obsługa ADM-3A escape sekwencji** — czyszczenie ekranu, pozycjonowanie kursora
+- [x] **Obsługa ADM-3A escape sekwencji** — dekoder `Adm3aDecoder` z kursorem, czyszczeniem ekranu
 - [ ] **Dwa zestawy znaków** (górny/dolny 256 glyphów) — Kaypro 4/84 ma 2 zestawy
 - [ ] **Attribute RAM** (inverse video, cursor) — oddzielna pamięć atrybutów

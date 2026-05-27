@@ -55,5 +55,5 @@ PET jest monochromatyczny. Kolor jest emulowany:
 
 ## Czego brakuje
 
-- [ ] **Znaki półgraficzne w demo** — demo PET powinno pokazywać znaki graficzne PETSCII (linie, klocki) do rysowania ramek i prostych kształtów.
+- [x] **Znaki półgraficzne w demo** — demo PET pokazuje znaki graficzne PETSCII (linie, klocki)
 - [ ] **Przełączanie zestawów znaków** — PET ma dwa zestawy: uppercase/graphic i lowercase/uppercase.
