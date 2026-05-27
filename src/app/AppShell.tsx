@@ -10,16 +10,19 @@ import {
   PRESETS, computerIds, machinesForComputer, machineName, presetsForMachine,
   type Preset,
 } from '../video/presets/index';
+import { monitorsForMachine, getMonitor } from '../video/monitors/index';
 
 const crt = signal<CrtSettings>(defaultCrtSettings());
 const showDebug = signal(false);
 const showDisplay = signal(false);
 const paused = signal(false);
 
-// Four-level selection state
+// Five-level selection state
 const selectedComputer = signal(computerIds()[0] ?? 'Sinclair');
 const availableModels = computed(() => machinesForComputer(selectedComputer.value));
 const selectedMachineId = signal(availableModels.value[0] ?? 'zx');
+const availableMonitors = computed(() => monitorsForMachine(selectedMachineId.value));
+const selectedMonitorId = signal(availableMonitors.value[0] ?? 'generic-color');
 const selectedType = signal<'text' | 'bitmap'>('text');
 const selectedVariantIdx = signal(0);
 
@@ -28,6 +31,15 @@ effect(() => {
   const models = availableModels.value;
   if (!models.includes(selectedMachineId.value)) {
     selectedMachineId.value = models[0] ?? '';
+    selectedVariantIdx.value = 0;
+  }
+});
+
+// Keep monitor in sync when machine changes
+effect(() => {
+  const monitors = availableMonitors.value;
+  if (!monitors.includes(selectedMonitorId.value)) {
+    selectedMonitorId.value = monitors[0] ?? 'generic-color';
     selectedVariantIdx.value = 0;
   }
 });
@@ -62,6 +74,7 @@ export function AppShell() {
           </div>
           <div class="crt-nameplate">
             {currentPreset.value.machineName}
+            {' | '}{getMonitor(selectedMonitorId.value)?.name ?? selectedMonitorId.value}
             {' '}{specInfo(currentPreset.value)}
             {' | '}{currentPreset.value.type.toUpperCase()}
             {currentPreset.value.videoMode ? ' \u00b7 ' + currentPreset.value.videoMode : ''}
@@ -125,9 +138,21 @@ function Toolbar() {
         ))}
       </select>
 
+      {/* Level 3: Monitor (display device) */}
+      <select class="toolbar-select"
+        value={selectedMonitorId.value}
+        onChange={e => {
+          selectedMonitorId.value = (e.target as HTMLSelectElement).value;
+          selectedVariantIdx.value = 0;
+        }}>
+        {availableMonitors.value.map(mid => (
+          <option key={mid} value={mid}>{getMonitor(mid)?.name ?? mid}</option>
+        ))}
+      </select>
+
       <div class="toolbar-divider" />
 
-      {/* Level 3: Text / Bitmap toggle */}
+      {/* Level 4: Text / Bitmap toggle */}
       <button class="toolbar-btn"
         disabled={presetsForMachine(selectedMachineId.value, 'text').length === 0}
         style={selectedType.value !== 'text' ? undefined : { background: '#2a4', color: '#000', borderColor: '#2a4' }}
