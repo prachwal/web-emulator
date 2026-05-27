@@ -191,7 +191,7 @@ export const fontPresets: FontPreset[] = [
     name: 'Amstrad CPC 464',
     url: '/fonts/cpc/cpc464-chargen.bin',
     computer: 'Amstrad CPC',
-    description: 'CPC 464 character generator (2048B)',
+    description: 'CPC 464 character generator (2048B, offset 0x3800)',
     glyphCount: 256,
     charWidth: 8, charHeight: 8, bytesPerGlyph: 8,
     cellWidth: 8, cellHeight: 8,

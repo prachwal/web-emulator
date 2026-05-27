@@ -22,6 +22,7 @@ export interface Preset {
   id: string;
   machineId: string;
   machineName: string;
+  computer: string;
   type: 'text' | 'bitmap';
   label: string;
   cols: number;
@@ -80,6 +81,16 @@ function screenBorder(screen: string, borderColor?: string): string {
   return screen;
 }
 
+function computerFromName(name: string): string {
+  const first = name.split(/\s+/)[0];
+  if (first === 'IBM' || first === 'Commodore' || first === 'Amstrad' || first === 'Kaypro') return first;
+  if (name.startsWith('ZX')) return 'Sinclair';
+  if (name.startsWith('TRS-80')) return 'Tandy';
+  if (name.startsWith('Apple')) return 'Apple';
+  if (name.startsWith('VIC-20')) return 'Commodore';
+  return first;
+}
+
 export const T = (
   id: string, machineId: string, machineName: string,
   cols: number, rows: number, cw: number, ch: number,
@@ -91,7 +102,7 @@ export const T = (
   vmode?: VideoMode,
   borderColor?: string,
 ): Preset => ({
-  id, machineId, machineName, type: 'text', label: `${cols}×${rows}`,
+  id, machineId, machineName, computer: computerFromName(machineName), type: 'text', label: `${cols}×${rows}`,
   cols, rows, charWidth: cw, charHeight: ch,
   framebufferWidth: fw, framebufferHeight: fh,
   pixelAspectRatio: par, displayAspectRatio: A43,
@@ -113,7 +124,7 @@ export const G = (
   vmode?: VideoMode,
   borderColor?: string,
 ): Preset => ({
-  id, machineId, machineName, type: 'bitmap', label,
+  id, machineId, machineName, computer: computerFromName(machineName), type: 'bitmap', label,
   cols, rows, charWidth: geom.glyphWidth, charHeight: geom.glyphHeight,
   framebufferWidth: fw, framebufferHeight: fh,
   pixelAspectRatio: par, displayAspectRatio: A43,

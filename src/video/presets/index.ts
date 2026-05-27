@@ -7,7 +7,7 @@ import { trs80Presets } from './trs80';
 import { apple1Presets } from './apple1';
 import { vic20Presets } from './vic20';
 import { kayproPresets } from './kaypro';
-import { cpcPresets } from './cpc';
+import { cpc464Presets, cpc664Presets, cpc6128Presets } from './cpc';
 import type { Preset } from './types';
 
 export type { Preset, FontGeometry, Margins } from './types';
@@ -21,7 +21,9 @@ export { trs80Presets } from './trs80';
 export { apple1Presets } from './apple1';
 export { vic20Presets } from './vic20';
 export { kayproPresets } from './kaypro';
-export { cpcPresets } from './cpc';
+export { cpc464Presets } from './cpc';
+export { cpc664Presets } from './cpc';
+export { cpc6128Presets } from './cpc';
 
 export const PRESETS: Preset[] = [
   ...zxPresets,
@@ -33,7 +35,9 @@ export const PRESETS: Preset[] = [
   ...apple1Presets,
   ...vic20Presets,
   ...kayproPresets,
-  ...cpcPresets,
+  ...cpc464Presets,
+  ...cpc664Presets,
+  ...cpc6128Presets,
 ];
 
 export function presetKey(p: Preset): string {
@@ -58,4 +62,14 @@ export function machineName(id: string): string {
 
 export function presetsForMachine(machineId: string, type: 'text' | 'bitmap'): Preset[] {
   return PRESETS.filter(p => p.machineId === machineId && p.type === type);
+}
+
+export function computerIds(): string[] {
+  return [...new Set(PRESETS.map(p => p.computer))].sort();
+}
+
+export function machinesForComputer(computer: string): string[] {
+  return [...new Set(
+    PRESETS.filter(p => p.computer === computer).map(p => p.machineId)
+  )].sort();
 }

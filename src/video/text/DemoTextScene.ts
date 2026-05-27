@@ -1,5 +1,6 @@
 import { AttributeTextScreen } from './AttributeTextScreen';
 import { TextScreen } from './TextScreen';
+import { createCpc464Demo, createCpc664Demo, createCpc6128Demo } from './demos/cpc';
 
 function bar(cols: number, chr = '-'): string {
   return '+' + chr.repeat(Math.max(0, cols - 2)) + '+';
@@ -292,33 +293,6 @@ function createKayproDemo(cols: number, rows: number): AttributeTextScreen {
   return s;
 }
 
-function createCpcDemo(cols: number, rows: number): AttributeTextScreen {
-  const s = new AttributeTextScreen(cols, rows);
-  s.clear(32, 2, 0);
-  const w = (x: number, y: number, t: string, f = 2, b = 0) => s.writeText(x, y, t, f, b);
-  w(0, 0, 'Amstrad CPC 464  Locomotive BASIC 1.0', 2, 0);
-  w(0, 1, cols >= 80 ? '64K Z80A  16MHz  27 COLOURS  CP/M' : '64K Z80A  27 COL', 2, 0);
-  w(1, 3, '10 PRINT "HELLO FROM CPC"', 10, 0);
-  w(1, 4, '20 FOR i=1 TO 5', 10, 0);
-  w(1, 5, '30 PRINT i', 10, 0);
-  w(1, 6, '40 NEXT i', 10, 0);
-  w(1, 7, 'RUN', 14, 0);
-  if (rows > 9) {
-    w(4, 9, ' 1  2  3  4  5', 10, 0);
-  }
-  if (rows > 11) {
-    w(0, 11, 'Ready', 10, 0);
-    w(1, 12, 'Mode 0: 160x200  16c  20 col', 2, 0);
-    w(1, 13, 'Mode 1: 320x200  4c   40 col', 2, 0);
-    w(1, 14, 'Mode 2: 640x200  2c   80 col', 2, 0);
-  }
-  if (rows > 16) {
-    w(1, 16, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 2, 0);
-    w(1, 17, '0123456789 .,;:!?()[]{}', 2, 0);
-  }
-  return s;
-}
-
 function createGenericDemo(cols: number, rows: number): AttributeTextScreen {
   const screen = new AttributeTextScreen(cols, rows);
   screen.clear(32, 15, 0);
@@ -348,7 +322,9 @@ const demoFns: Record<string, (c: number, r: number) => AttributeTextScreen> = {
   apple1: createApple1Demo,
   vic20: createVic20Demo,
   kaypro: createKayproDemo,
-  cpc: createCpcDemo,
+  'cpc-464': createCpc464Demo,
+  'cpc-664': createCpc664Demo,
+  'cpc-6128': createCpc6128Demo,
 };
 
 export function createDemoForMachine(

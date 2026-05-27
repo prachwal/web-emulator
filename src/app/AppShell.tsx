@@ -1,4 +1,4 @@
-import { signal, computed } from '@preact/signals';
+import { signal, computed, effect } from '@preact/signals';
 import { EmulatorViewport } from './EmulatorViewport';
 import { SettingsPanel } from './SettingsPanel';
 import { DebugOverlay } from './DebugOverlay';
@@ -7,7 +7,7 @@ import { machineFeatures } from './machineConfig';
 import type { CrtSettings } from '../core/types';
 import { defaultCrtSettings } from '../core/types';
 import {
-  PRESETS, machineIds, machineName, presetsForMachine,
+  PRESETS, computerIds, machinesForComputer, machineName, presetsForMachine,
   type Preset,
 } from '../video/presets/index';
 
@@ -16,10 +16,21 @@ const showDebug = signal(false);
 const showDisplay = signal(false);
 const paused = signal(false);
 
-// Three-level selection state
-const selectedMachineId = signal(machineIds()[0] ?? 'zx');
+// Four-level selection state
+const selectedComputer = signal(computerIds()[0] ?? 'Sinclair');
+const availableModels = computed(() => machinesForComputer(selectedComputer.value));
+const selectedMachineId = signal(availableModels.value[0] ?? 'zx');
 const selectedType = signal<'text' | 'bitmap'>('text');
 const selectedVariantIdx = signal(0);
+
+// Keep machine in sync when computer changes
+effect(() => {
+  const models = availableModels.value;
+  if (!models.includes(selectedMachineId.value)) {
+    selectedMachineId.value = models[0] ?? '';
+    selectedVariantIdx.value = 0;
+  }
+});
 
 const currentVariants = computed(() =>
   presetsForMachine(selectedMachineId.value, selectedType.value),
@@ -78,14 +89,27 @@ function specInfo(p: Preset): string {
 function Toolbar() {
   const p = currentPreset.value;
   const variants = currentVariants.value;
-  const mIds = machineIds();
+  const compIds = computerIds();
+  const models = availableModels.value;
 
   return (
     <header class="toolbar">
       <h1 class="toolbar-title">CRT</h1>
       <div class="toolbar-divider" />
 
-      {/* Level 1: Machine */}
+      {/* Level 1: Computer (brand) */}
+      <select class="toolbar-select"
+        value={selectedComputer.value}
+        onChange={e => {
+          selectedComputer.value = (e.target as HTMLSelectElement).value;
+          selectedVariantIdx.value = 0;
+        }}>
+        {compIds.map(c => (
+          <option key={c} value={c}>{c}</option>
+        ))}
+      </select>
+
+      {/* Level 2: Model (specific machine) */}
       <select class="toolbar-select"
         value={selectedMachineId.value}
         onChange={e => {
@@ -96,14 +120,14 @@ function Toolbar() {
           }
           selectedVariantIdx.value = 0;
         }}>
-        {mIds.map(mid => (
+        {models.map(mid => (
           <option key={mid} value={mid}>{machineName(mid)}</option>
         ))}
       </select>
 
       <div class="toolbar-divider" />
 
-      {/* Level 2: Text / Bitmap toggle */}
+      {/* Level 3: Text / Bitmap toggle */}
       <button class="toolbar-btn"
         disabled={presetsForMachine(selectedMachineId.value, 'text').length === 0}
         style={selectedType.value !== 'text' ? undefined : { background: '#2a4', color: '#000', borderColor: '#2a4' }}
@@ -127,7 +151,7 @@ function Toolbar() {
 
       <div class="toolbar-divider" />
 
-      {/* Level 3: Variant / Resolution */}
+      {/* Level 4: Variant / Resolution */}
       <select class="toolbar-select"
         value={selectedVariantIdx.value}
         onChange={e => {
