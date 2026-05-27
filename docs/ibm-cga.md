@@ -89,5 +89,5 @@ Każda komórka znaku: 8 × 8 pikseli, atrybut bajt = [blink:1][bg:3][fg:4].
 
 ## Czego brakuje
 
-- [ ] **Palety CGA mode 4** — obecnie nie ma przełączania 4-kolorowych palet dla trybu 320×200.
+- [x] **Palety CGA mode 4** — preset `cga-320x200-pal0` (G/R/Br) i `cga-320x200-pal1` (C/M/W)
 - [ ] **Composite artifact colors** — symulacja kolorów artifact NTSC.

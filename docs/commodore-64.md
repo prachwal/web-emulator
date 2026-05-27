@@ -81,6 +81,6 @@ Zgodność: DEFv1
 
 ## Czego brakuje
 
-- [ ] **Rejestry tła $D021–$D024** — w trybie bitmapowym kolor tła pochodzi z rejestru, nie z Color RAM.
+- [x] **Rejestry tła $D021–$D024** — `Bitmap2BppDecoder.backgroundColorIndex` obsługuje $D021; multicolor używa $D022/$D023
 - [ ] **Sprite'y** — brak (8 sprite'ów, 24×21).
 - [ ] **Raster interrupt** — brak symulacji zmian w trakcie skanowania.

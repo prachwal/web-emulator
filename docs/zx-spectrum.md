@@ -65,5 +65,5 @@ Kolejność GRB: numer koloru = bit G/R/B (a nie R/G/B).
 
 ## Czego brakuje
 
-- [ ] **Widoczny border** — ZX Spectrum ma 24+192+24 = 240 linii PAL, z czego 192 to obszar obrazu. Obramowanie (border) na razie nie jest renderowane (możliwe przez `borderColorIndex` w `AttributeBitmapMemory`).
+- [x] **Widoczny border** — kolor borderu (`#0000aa`) renderowany w tle za viewportem
 - [ ] **Dithering CRT** — ZX Spectrum na CRT ma naturalne rozmycie kolorów. Obecnie nie ma symulacji PAL blur.

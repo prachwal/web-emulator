@@ -59,4 +59,4 @@ Video w Apple 1 jest zrealizowane na około 30 układach TTL (bramki, liczniki, 
 
 ## Czego brakuje
 
-- [ ] **Górna połowa fontu (kody 64–127)** — w rzeczywistym Apple 1 górne 64 znaki są puste lub lustrzane. Wymaga weryfikacji apple1.vid.
+- [x] **Górna połowa fontu (kody 64–127)** — zweryfikowano: kody 64–95 = dopełnienie, kody 96–127 = kopia 64–95 (poprawne dla Apple 1, 7-bit ASCII)

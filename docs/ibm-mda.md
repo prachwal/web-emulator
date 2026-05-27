@@ -60,4 +60,4 @@ Emulacyjnie można użyć zielonej skali.
 
 ## Czego brakuje
 
-- [ ] **Tryb HGC** (Hercules, 720×348 bitmap) — brak dedykowanego dekodera (obraz z pliku JPEG).
+- [x] Dedykowany dekoder `HgcBitmapDecoder` zarejestrowany w VideoSystem
