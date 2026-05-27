@@ -13,6 +13,7 @@ import { getMapper } from '../video/text/CharMapper';
 import { loadImage, imageToIndexedFramebuffer } from '../video/image/ImageLoader';
 import { displaySettings, parseHexColor } from './DisplaySettings';
 import { getMonitor } from '../video/monitors/index';
+import { createBootScreenForMachine } from '../video/text/BootScreenScene';
 
 export interface EmulatorViewportProps {
   crt: CrtSettings;
@@ -20,9 +21,10 @@ export interface EmulatorViewportProps {
   paused: boolean;
   activeFontId?: string;
   monitorId?: string;
+  screenMode?: 'real' | 'demo';
 }
 
-export function EmulatorViewport({ crt, preset, paused, activeFontId, monitorId }: EmulatorViewportProps) {
+export function EmulatorViewport({ crt, preset, paused, activeFontId, monitorId, screenMode = 'demo' }: EmulatorViewportProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const runtimeRef = useRef<EmulatorRuntime | null>(null);
   const rafRef = useRef<number>(0);
@@ -92,7 +94,9 @@ export function EmulatorViewport({ crt, preset, paused, activeFontId, monitorId 
         const mapperId = activeFontId ? getMapperIdForFont(activeFontId) : 'ascii';
         const mapper = getMapper(mapperId);
 
-        const screen = createDemoForMachine(preset.machineId, preset.cols, preset.rows);
+        const screen = screenMode === 'real'
+          ? createBootScreenForMachine(preset.machineId, preset.cols)
+          : createDemoForMachine(preset.machineId, preset.cols, preset.rows);
         screenRef.current = screen;
 
         const textOpts = { invertMsb: preset.machineId === 'apple1' };
@@ -148,7 +152,7 @@ export function EmulatorViewport({ crt, preset, paused, activeFontId, monitorId 
       runtime.dispose();
       runtimeRef.current = null;
     };
-  }, [preset, activeFontId]);
+    }, [preset, activeFontId, screenMode]);
 
   useEffect(() => {
     const r = runtimeRef.current;

@@ -16,6 +16,7 @@ const crt = signal<CrtSettings>(defaultCrtSettings());
 const showDebug = signal(false);
 const showDisplay = signal(false);
 const paused = signal(false);
+const screenMode = signal<'real' | 'demo'>('demo');
 
 // Five-level selection state
 const selectedComputer = signal(computerIds()[0] ?? 'Sinclair');
@@ -74,6 +75,7 @@ export function AppShell() {
                 paused={paused.value}
                 activeFontId={currentPreset.value.fontId}
                 monitorId={selectedMonitorId.value}
+                screenMode={screenMode.value}
               />
             </div>
           </div>
@@ -213,6 +215,11 @@ function Toolbar() {
       <button class="toolbar-btn" onClick={() => showDisplay.value = !showDisplay.value}
         style={showDisplay.value ? { background: '#2a4', color: '#000', borderColor: '#2a4' } : undefined}>
         Disp
+      </button>
+      <button class="toolbar-btn"
+        style={screenMode.value === 'demo' ? { background: '#2a4', color: '#000', borderColor: '#2a4' } : undefined}
+        onClick={() => screenMode.value = screenMode.value === 'demo' ? 'real' : 'demo'}>
+        {screenMode.value === 'demo' ? 'DEMO' : 'REAL'}
       </button>
     </header>
   );
