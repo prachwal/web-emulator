@@ -68,6 +68,17 @@ Zgodność: DEFv1
 - [x] Demo C64 pokazuje informacje o VIC-II, SID, Color RAM, sprite'ach, trybach 320×200/160×200
 - [x] **Multicolor 160×200 4c** — preset `c64-160x200`, `C64MulticolorDecoder` (2bpp, 4 kolory na komórkę 4×8)
 
+## Źródła plików i dokumentacji
+
+### ROM / font
+- **VICE** — Versatile Commodore Emulator (open source, GPL): `vice-emu.sourceforge.net`
+- Font `chargen.bin` to standardowy C64 CHARGEN ROM (2 zestawy po 256 znaków, 4096B)
+- Repozytorium: <https://github.com/VICE-Team/svn-mirror>
+
+### Dokumentacja techniczna
+- C64 Wiki: <https://www.c64-wiki.com>
+- VIC-II Article: <https://vic-ii.world>
+
 ## Czego brakuje
 
 - [ ] **Rejestry tła $D021–$D024** — w trybie bitmapowym kolor tła pochodzi z rejestru, nie z Color RAM.

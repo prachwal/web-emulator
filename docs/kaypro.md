@@ -76,6 +76,23 @@ W praktyce bardzo wolne: ~300 pikseli/s przez BIOS, do ~25 fps przez bezpośredn
 - [x] Demo z BASIC listingiem i CP/M READY prompt
 - [x] Specyfikacje w toolbar
 
+## Źródła plików i dokumentacji
+
+### ROM / font
+- **Caprice32** — Amstrad CPC emulator (font: `kaypro4.u9` identyczny z `81-235.rom`): <https://github.com/ColinPitrat/caprice32>
+- **izkaypro** — Kaypro II emulator (Rust): <https://github.com/ivanizag/izkaypro>
+- **Kaypro disassembly** — ROM-y i fonty: <https://github.com/ivanizag/kaypro-disassembly>
+- Font `kaypro2.u43` (81-146A) z retroarchive: <http://www.retroarchive.org/maslin/disks/roms/index.html>
+- Font `kaypro4.u9` (81-235) z Caprice32
+
+### Dokumentacja techniczna
+- Retroarchive — ROM images: <http://www.retroarchive.org/maslin/disks/roms/index.html>
+- Bitsavers — Kaypro Technical Manual: <https://bitsavers.org/pdf/kaypro/>
+- Chris Fenton — Exploring Kaypro Video: <https://www.chrisfenton.com/exploring-kaypro-video-performance/>
+
+### Emulatory
+- Virtual Kaypro (Java): <http://sims.durgadas.com/kaypro/kaypro.html>
+
 ## Czego brakuje
 
 - [ ] **Obsługa ADM-3A escape sekwencji** — czyszczenie ekranu, pozycjonowanie kursora

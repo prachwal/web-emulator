@@ -43,6 +43,16 @@ PET jest monochromatyczny. Kolor jest emulowany:
 - [x] Paleta PET (zielony tekst)
 - [x] Demo PET dostosowuje tytuł i informacje do modelu (40/80 kolumn)
 
+## Źródła plików i dokumentacji
+
+### ROM / font
+- **VICE** — Versatile Commodore Emulator (open source, GPL): `vice-emu.sourceforge.net`
+- Fonty `pet-2001.bin` i `pet-4032.bin` pochodzą z PET ROM-ów
+- Repozytorium: <https://github.com/VICE-Team/svn-mirror>
+
+### Dokumentacja techniczna
+- PET-CBM Wiki: <https://www.c64-wiki.com>
+
 ## Czego brakuje
 
 - [ ] **Znaki półgraficzne w demo** — demo PET powinno pokazywać znaki graficzne PETSCII (linie, klocki) do rysowania ramek i prostych kształtów.

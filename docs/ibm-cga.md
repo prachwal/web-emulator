@@ -76,6 +76,17 @@ Każda komórka znaku: 8 × 8 pikseli, atrybut bajt = [blink:1][bg:3][fg:4].
 - [x] Blink attribute — `colorModel:'cga'` w `TextModeDecoder` (bit 7 zamienia fg↔bg co 16 klatek)
 - [x] **160×100 16c** — preset `cga-160x100`, `Cga160x100Decoder`, pokazuje tukan.jpg w 16 kolorach
 
+## Źródła plików i dokumentacji
+
+### ROM / font
+- **DOSBox** — DOS emulator (open source, GPL): `dosbox.com`
+- Font `cga-thick.bin` i `cga-thin.bin` pochodzą z IBM CGA ROM
+- Repozytorium: <https://github.com/dosbox/dosbox>
+
+### Dokumentacja techniczna
+- IBM CGA Technical Reference (1983)
+- VGA/SVGA Technical Reference
+
 ## Czego brakuje
 
 - [ ] **Palety CGA mode 4** — obecnie nie ma przełączania 4-kolorowych palet dla trybu 320×200.

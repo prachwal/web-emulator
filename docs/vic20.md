@@ -68,6 +68,17 @@ Zgodność: DEFv1
 - [x] Paleta VIC-20 16 kolorów
 - [x] Demo VIC-20 pokazuje pełną paletę 16 kolorów, informacje o 4-bit Color RAM, 176×184 bitmap
 
+## Źródła plików i dokumentacji
+
+### ROM / font
+- **VICE** — Versatile Commodore Emulator (open source, GPL): `vice-emu.sourceforge.net`
+- Font `vic20.bin` to standardowy VIC-20 CHARGEN ROM (4096B)
+- Repozytorium: <https://github.com/VICE-Team/svn-mirror>
+
+### Dokumentacja techniczna
+- VIC-20 Programmer's Reference Guide
+- Denial VIC-20 Forum: <https://sleepingelephant.com/denial>
+
 ## Czego brakuje
 
 - [ ] **Color RAM (nybble)** — podobnie jak w C64, VIC-20 ma 4-bitową pamięć kolorów (wymaga osobnego dekodera lub `colorModel`).

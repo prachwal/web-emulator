@@ -52,6 +52,17 @@ Kolejność GRB: numer koloru = bit G/R/B (a nie R/G/B).
 - [x] **Atrybuty INK/PAPER/BRIGHT/FLASH w `TextModeDecoder`** — `colorModel:'zx'` dekoduje attr byte z BRIGHT (+8) i FLASH (swap fg↔bg co 16f)
 - [x] Demo ZX pokazuje attr cells: INK na PAPER tle, BRIGHT kolory, FLASH
 
+## Źródła plików i dokumentacji
+
+### ROM / font
+- **Fuse** — The Free Unix Spectrum Emulator (open source, GPL): `fuse-emulator.sourceforge.net`
+- Font `zx-spectrum.bin` pochodzi z ROM-u ZX Spectrum 48K
+- Repozytorium: <https://github.com/FrodeSolheim/fs-fuse>
+
+### Dokumentacja techniczna
+- ZX Spectrum ULA — Chris Smith: comprehensive hardware analysis
+- World of Spectrum: <https://worldofspectrum.org>
+
 ## Czego brakuje
 
 - [ ] **Widoczny border** — ZX Spectrum ma 24+192+24 = 240 linii PAL, z czego 192 to obszar obrazu. Obramowanie (border) na razie nie jest renderowane (możliwe przez `borderColorIndex` w `AttributeBitmapMemory`).

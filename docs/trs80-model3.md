@@ -51,6 +51,17 @@ Zgodność: DEFv1
 
 Glify descendentów (g, j, p, q, y) w foncie TRS-80 Model III mieszczą się w 8×8 pikselach — ogon descendentu znajduje się w dolnych wierszach glifu (rows 6-7). CellHeight=12 dodaje odstęp pod glifem, ale descendent jest już w glifie. Dodatkowe przesunięcie nie jest potrzebne.
 
+## Źródła plików i dokumentacji
+
+### ROM / font
+- **xtrs** — TRS-80 emulator (open source): `http://www.tim-mann.org/xtrs.html`
+- Fonty `m1-chargen.bin` i `m3-chargen.bin` pochodzą z TRS-80 ROM-ów
+- Repozytorium: <https://github.com/Tim-Mann/xtrs>
+
+### Dokumentacja techniczna
+- TRS-80 Technical Reference Manual
+- Radio Shack Model III Service Manual
+
 ## Czego brakuje
 
 - [x] Semi-graphics 128×48 — preset `trs80-semi-128x48`, `SemiGraphicsDecoder` (2×3 bloki z kodów znaków)

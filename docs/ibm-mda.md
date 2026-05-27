@@ -47,6 +47,17 @@ Emulacyjnie można użyć zielonej skali.
 
 - [x] Preset `mda-herc-720x348` (HGC bitmap 720×348, monochromatyczny zielony)
 
+## Źródła plików i dokumentacji
+
+### ROM / font
+- **DOSBox** — DOS emulator (open source, GPL): `dosbox.com`
+- Font `mda-8x14.bin` pochodzi z IBM MDA ROM (emulowany przez CGA thick w komórce 8×14)
+- Repozytorium: <https://github.com/dosbox/dosbox>
+
+### Dokumentacja techniczna
+- IBM MDA Technical Reference (1983)
+- Hercules Graphics Card Technical Reference
+
 ## Czego brakuje
 
 - [ ] **Tryb HGC** (Hercules, 720×348 bitmap) — brak dedykowanego dekodera (obraz z pliku JPEG).

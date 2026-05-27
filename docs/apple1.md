@@ -46,6 +46,17 @@ Video w Apple 1 jest zrealizowane na około 30 układach TTL (bramki, liczniki, 
 - [x] **Odwrócone znaki (MSB=1)** — opcja `invertMsb` w `TextRenderOptions`. Gdy `charCode ≥ 128`, czyszczony jest MSB i zamieniane fg↔bg. Demo Apple 1 pokazuje odwrócony pasek tytułowy.
 - [x] Test: `invertMsb swaps fg/bg when charCode >= 128` w `TextModeRenderer.test.ts`
 
+## Źródła plików i dokumentacji
+
+### ROM / font
+- **Pom1** — Apple 1 emulator (open source): `https://github.com/schornfalk/pom1`
+- Font `apple1.vid` pochodzi z Apple 1 character generator (128 znaków, 1024B)
+- Wykorzystuje bit order LSB-first (bit 0 = lewy piksel)
+
+### Dokumentacja techniczna
+- Apple 1 Operation Manual (WOZ MON)
+- Apple 1 Technical Specifications
+
 ## Czego brakuje
 
 - [ ] **Górna połowa fontu (kody 64–127)** — w rzeczywistym Apple 1 górne 64 znaki są puste lub lustrzane. Wymaga weryfikacji apple1.vid.
