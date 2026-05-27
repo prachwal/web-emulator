@@ -4,7 +4,7 @@ import { computeViewport, videoModeToGeometry, getDefinitionForMode } from '../v
 describe('computeViewport', () => {
   it('handles square pixels', () => {
     const vp = computeViewport(
-      { sourceWidth: 256, sourceHeight: 192, pixelAspectRatio: 1, integerScale: true, overscanX: 0, overscanY: 0 },
+      { sourceWidth: 256, sourceHeight: 192, pixelAspectRatio: 1, integerScale: true, overscanX: 0, overscanY: 0, zoom: 1 },
       800, 600,
     );
     expect(vp.scale).toBe(3);
@@ -16,8 +16,8 @@ describe('computeViewport', () => {
 
   it('applies pixelAspectRatio < 1', () => {
     const vp = computeViewport(
-      { sourceWidth: 320, sourceHeight: 200, pixelAspectRatio: 5 / 6, integerScale: true, overscanX: 0, overscanY: 0 },
-      800, 600,
+      { sourceWidth: 320, sourceHeight: 200, pixelAspectRatio: 5 / 6, integerScale: true, overscanX: 0, overscanY: 0, zoom: 1 },
+       800, 600,
     );
     expect(vp.logicalWidth).toBeCloseTo(266.667);
     expect(vp.logicalHeight).toBe(200);
@@ -28,8 +28,8 @@ describe('computeViewport', () => {
 
   it('applies pixelAspectRatio at scale 1', () => {
     const vp = computeViewport(
-      { sourceWidth: 320, sourceHeight: 200, pixelAspectRatio: 5 / 6, integerScale: true, overscanX: 0, overscanY: 0 },
-      267, 200,
+      { sourceWidth: 320, sourceHeight: 200, pixelAspectRatio: 5 / 6, integerScale: true, overscanX: 0, overscanY: 0, zoom: 1 },
+       267, 200,
     );
     expect(vp.scale).toBe(1);
     expect(vp.viewportWidth).toBe(267);
@@ -38,8 +38,8 @@ describe('computeViewport', () => {
 
   it('centers viewport with letterboxing', () => {
     const vp = computeViewport(
-      { sourceWidth: 100, sourceHeight: 100, pixelAspectRatio: 1, integerScale: true, overscanX: 0, overscanY: 0 },
-      500, 300,
+      { sourceWidth: 100, sourceHeight: 100, pixelAspectRatio: 1, integerScale: true, overscanX: 0, overscanY: 0, zoom: 1 },
+       500, 300,
     );
     expect(vp.scale).toBe(3);
     expect(vp.viewportWidth).toBe(300);

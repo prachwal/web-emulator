@@ -14,6 +14,7 @@ export interface DisplayGeometry {
   integerScale: boolean;
   overscanX: number;
   overscanY: number;
+  zoom: number;
 }
 
 export interface Viewport {
@@ -46,6 +47,7 @@ export function computeViewport(
       canvasHeight / logicalHeight,
     );
   }
+  scale *= geometry.zoom;
 
   const viewportWidth = Math.round(logicalWidth * scale);
   const viewportHeight = Math.round(logicalHeight * scale);
@@ -68,6 +70,7 @@ export function videoModeToGeometry(
     integerScale,
     overscanX,
     overscanY,
+    zoom: 1,
   };
 }
 

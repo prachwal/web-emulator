@@ -142,6 +142,7 @@ export function EmulatorViewport({ crt, preset, paused, activeFontId }: Emulator
     if (!r?.renderer) return;
     const ds = displaySettings.value;
     r.renderer.setScaling(ds.parMultiplier, ds.scaleMode === 'integer');
+    r.renderer.setZoom(ds.zoom);
     const borderClr = ds.showBorder && preset.borderColor
       ? parseHexColor(preset.borderColor)
       : [0, 0, 0] as [number, number, number];

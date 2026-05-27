@@ -66,8 +66,9 @@ export class WebGL2Renderer implements IRenderer {
   };
 
   private borderColor: [number, number, number] = [0, 0, 0];
-  private integerScale: boolean = true;
+  private integerScale: boolean = false;
   private basePixelAspectRatio: number = 1;
+  private zoom: number = 1;
 
   initialize(options: RendererOptions): void {
     this.canvas = options.canvas;
@@ -179,6 +180,7 @@ export class WebGL2Renderer implements IRenderer {
       integerScale: this.integerScale,
       overscanX: 0,
       overscanY: 0,
+      zoom: this.zoom,
     };
     const vp = computeViewport(geo, cw, ch);
     const { viewportWidth: vw, viewportHeight: vh, offsetX: ox, offsetY: oy, logicalWidth, logicalHeight } = vp;
@@ -239,6 +241,10 @@ export class WebGL2Renderer implements IRenderer {
   setScaling(parMultiplier: number, integerScale: boolean): void {
     this.pixelAspectRatio = this.basePixelAspectRatio * parMultiplier;
     this.integerScale = integerScale;
+  }
+
+  setZoom(z: number): void {
+    this.zoom = z;
   }
 
   dispose(): void {

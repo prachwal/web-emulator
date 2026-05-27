@@ -15,7 +15,7 @@ function loadFromStorage(): DisplaySettings {
     if (raw) return JSON.parse(raw) as DisplaySettings;
   } catch { /* ignore */ }
   return {
-    scaleMode: 'integer',
+    scaleMode: 'smooth',
     parMultiplier: 1,
     zoom: 1,
     showBorder: true,

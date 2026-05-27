@@ -32,6 +32,10 @@ export class WebGPURenderer implements IRenderer {
     // noop
   }
 
+  setZoom(_zoom: number): void {
+    // noop
+  }
+
   render(_frameNumber: number): void {
     // noop
   }

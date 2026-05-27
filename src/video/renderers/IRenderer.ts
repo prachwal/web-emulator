@@ -19,5 +19,6 @@ export interface IRenderer {
   updateCrt(settings: CrtSettings): void;
   setBorderColor(color: [number, number, number]): void;
   setScaling(parMultiplier: number, integerScale: boolean): void;
+  setZoom(zoom: number): void;
   dispose(): void;
 }

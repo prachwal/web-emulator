@@ -67,6 +67,8 @@ export class Canvas2DRenderer implements IRenderer {
     this.integerScale = integerScale;
   }
 
+  setZoom(_z: number): void {}
+
   render(_frameNumber: number): void {
     if (!this.ctx || !this.canvas) return;
     const ctx = this.ctx;
@@ -85,6 +87,7 @@ export class Canvas2DRenderer implements IRenderer {
       integerScale: this.integerScale,
       overscanX: 0,
       overscanY: 0,
+      zoom: 1,
     };
     const vp = computeViewport(geo, cw, ch);
     const { viewportWidth: vw, viewportHeight: vh, offsetX: ox, offsetY: oy } = vp;
