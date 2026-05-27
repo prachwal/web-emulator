@@ -165,6 +165,14 @@ Usage: load a skill when the task description matches its trigger phrase
 (e.g. "review this UI" → `web-design-review`, "write a test" → `vitest-vue-testing`).
 If multiple skills match, load the most specific one first.
 
+## Subagents
+
+Subagents defined in `.opencode/agents/`:
+
+| Agent | Model | Purpose |
+|---|---|---|
+| `planner` | `openai/gpt-5.5` | Creates structured implementation plans from scout research for the build agent. Invoke with `@planner`.
+
 ## Conventions
 
 - No comments in code (exception: section headers in CSS)
