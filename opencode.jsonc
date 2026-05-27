@@ -8,6 +8,11 @@
       "type": "local",
       "command": ["python3", "tools/font-mcp-server.py"],
       "enabled": true
+    },
+    "checklist": {
+      "type": "local",
+      "command": ["python3", "tools/checklist-mcp-server.py"],
+      "enabled": true
     }
   }
 }

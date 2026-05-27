@@ -31,6 +31,7 @@ After adding/editing presets or machine features, restart the dev server (`npm r
 
 After implementing features for a machine, always do in order:
 1. Update `docs/<machine>.md` — move items from "Czego brakuje" to "Co już mamy" with [x]
+   (Use the `checklist` MCP tool: `check_item(path, item_text)` to mark items done)
 2. Update demo file in `src/video/text/demos/<machine>.ts`
 3. Run `npm test && npm run build`
 4. Git add, commit with `feat(machine):` or `fix(area):`
