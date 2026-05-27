@@ -1,5 +1,7 @@
 # TRS-80 Model III — video
 
+Zgodność: DEFv1
+
 ## Standard
 
 | Właściwość | Wartość |

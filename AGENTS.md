@@ -24,16 +24,27 @@ After adding/editing presets or machine features, restart the dev server (`npm r
 |---|---|
 | `/build` | Run `npm test && npm run build`, show failures |
 | `/commit` | Stage all, review diff, commit with proper message |
-| `/docs` | Update `<machine>.md` and DemoTextScene after feature work |
+| `/docs` | Update `<machine>.md` and demo after feature work |
 | `/add-machine` | Scaffold preset files, demo, docs for a new machine |
 
 ### Repetitive tasks — standard procedure
 
 After implementing features for a machine, always do in order:
 1. Update `docs/<machine>.md` — move items from "Czego brakuje" to "Co już mamy" with [x]
-2. Update `src/video/text/DemoTextScene.ts` — add demo content
+2. Update demo file in `src/video/text/demos/<machine>.ts`
 3. Run `npm test && npm run build`
 4. Git add, commit with `feat(machine):` or `fix(area):`
+
+### Computer definition spec
+
+A generic computer definition is documented in `docs/computer-definition.md` (DEFv1).
+**Before adding/modifying a machine, read that file.** It lists every file, registration,
+and field required for a complete implementation.
+
+- When creating a new machine: follow the spec step by step
+- When fixing a machine: validate against the spec checklist in section 6
+- Each `docs/<machine>.md` must have a `Zgodność: DEFv1` marker in its header.
+  If missing, run the checklist from section 6 automatically before committing.
 
 ## Architecture
 
@@ -104,6 +115,8 @@ Each preset has `type: 'text' | 'bitmap'`, framebuffer dimensions, PAR, palette,
 Three-level UI: Machine → Text|Bitmap → Resolution variant.
 
 To add presets for a new machine, create `src/video/presets/<machine>.ts` and register it in `index.ts`.
+
+**See `docs/computer-definition.md` for the complete checklist.**
 
 ## Rendering pipeline
 

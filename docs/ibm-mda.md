@@ -1,5 +1,7 @@
 # IBM MDA — Monochrome Display Adapter
 
+Zgodność: DEFv1
+
 ## Standard
 
 | Właściwość | Wartość |

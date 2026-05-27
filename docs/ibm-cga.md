@@ -1,5 +1,7 @@
 # IBM CGA — Color Graphics Adapter
 
+Zgodność: DEFv1
+
 ## Standard
 
 | Właściwość | Wartość |

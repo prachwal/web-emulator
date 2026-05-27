@@ -1,5 +1,7 @@
 # Commodore VIC-20 — video (VIC chip)
 
+Zgodność: DEFv1
+
 ## Chip graficzny: MOS VIC (6560/6561)
 
 | Właściwość | Wartość |

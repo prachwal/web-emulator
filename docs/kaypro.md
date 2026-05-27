@@ -1,5 +1,7 @@
 # Kaypro — CP/M Portable Computer
 
+Zgodność: DEFv1
+
 ## Standard
 
 | Właściwość | Wartość |

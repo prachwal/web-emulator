@@ -1,5 +1,7 @@
 # Commodore PET — video
 
+Zgodność: DEFv1
+
 ## Standard
 
 | Właściwość | Wartość |

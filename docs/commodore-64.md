@@ -1,5 +1,7 @@
 # Commodore 64 — video modes (VIC-II)
 
+Zgodność: DEFv1
+
 ## Chip graficzny: MOS VIC-II (6567/6569)
 
 | Właściwość | Wartość |

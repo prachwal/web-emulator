@@ -1,5 +1,7 @@
 # Apple 1 — video
 
+Zgodność: DEFv1
+
 ## Standard
 
 | Właściwość | Wartość |

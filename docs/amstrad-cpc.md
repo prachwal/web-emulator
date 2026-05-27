@@ -1,5 +1,7 @@
 # Amstrad CPC — Colour Personal Computer
 
+Zgodność: DEFv1
+
 ## Specyfikacja video
 
 | Właściwość | Wartość |

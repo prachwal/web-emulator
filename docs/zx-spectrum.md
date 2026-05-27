@@ -1,5 +1,7 @@
 # ZX Spectrum — video modes
 
+Zgodność: DEFv1
+
 ## Standard (jedyny oryginalny tryb)
 
 | Właściwość | Wartość |
