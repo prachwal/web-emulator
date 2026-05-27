@@ -77,8 +77,20 @@ const bootScreens: Record<string, (cols: number) => AttributeTextScreen> = {
     return s;
   },
 
-  // Real C128 VDC boot: green (1) on black, 80-col mode info
+  // Real C128 boot: depends on mode
+  // 40-col (VIC-II): white on blue, C64-compatible boot
+  // 80-col (VDC): green on black, 80-column mode
   c128(cols: number) {
+    if (cols <= 40) {
+      const s = new AttributeTextScreen(cols, 25);
+      s.clear(32, 1, 6);
+      w(s, 2, 2, 'COMMODORE 128 BASIC V7.0', 1, 6);
+      w(s, 3, 4, ' 128K RAM SYSTEM', 1, 6);
+      w(s, 0, 6, ' 122365 BYTES FREE', 1, 6);
+      w(s, 0, 8, '40-COLUMN MODE', 1, 6);
+      w(s, 0, 11, 'READY.', 1, 6);
+      return s;
+    }
     const s = new AttributeTextScreen(cols, 25);
     s.clear(32, 1, 0);
     w(s, 4, 2, 'COMMODORE 128 BASIC V7.0', 1, 0);
