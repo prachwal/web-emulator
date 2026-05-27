@@ -51,7 +51,12 @@ export const cpc464Presets = [
 ];
 
 export const cpc664Presets = [
+  cpct('Amstrad CPC 664', 'cpc-664', 20, 160, 5 / 3, cpcPal16G),
+  cpct('Amstrad CPC 664', 'cpc-664', 40, 320, 5 / 6, cpcPal4),
   cpct('Amstrad CPC 664', 'cpc-664', 80, 640, 5 / 12, cpcPal2),
+  cpcb('Amstrad CPC 664', 'cpc-664', 'BMP 160×200 16c', 20, 160, 5 / 3, cpcPal16),
+  cpcb('Amstrad CPC 664', 'cpc-664', 'BMP 320×200 4c', 40, 320, 5 / 6, cpcPal4),
+  cpcb('Amstrad CPC 664', 'cpc-664', 'BMP 640×200 2c', 80, 640, 5 / 12, cpcPal2),
 ];
 
 export const cpc6128Presets = [
