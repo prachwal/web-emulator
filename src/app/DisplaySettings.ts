@@ -8,18 +8,26 @@ export interface DisplaySettings {
 }
 
 const STORAGE_KEY = 'crt-display-settings';
+const SETTINGS_VERSION = 2;
+
+const DEFAULTS: DisplaySettings = {
+  scaleMode: 'smooth',
+  parMultiplier: 1,
+  zoom: 0.85,
+  showBorder: true,
+};
 
 function loadFromStorage(): DisplaySettings {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
-    if (raw) return JSON.parse(raw) as DisplaySettings;
+    if (raw) {
+      const parsed = JSON.parse(raw) as DisplaySettings & { _v?: number };
+      if (parsed._v === SETTINGS_VERSION) {
+        return parsed;
+      }
+    }
   } catch { /* ignore */ }
-  return {
-    scaleMode: 'smooth',
-    parMultiplier: 1,
-    zoom: 0.85,
-    showBorder: true,
-  };
+  return { ...DEFAULTS };
 }
 
 const stored = loadFromStorage();
@@ -28,7 +36,7 @@ export const displaySettings = signal<DisplaySettings>(stored);
 
 effect(() => {
   try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(displaySettings.value));
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({ ...displaySettings.value, _v: SETTINGS_VERSION }));
   } catch { /* ignore */ }
 });
 
