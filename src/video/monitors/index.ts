@@ -87,6 +87,8 @@ export function monitorsForMachine(machineId: string): string[] {
     c128: ['kaypro-crt', 'c1701'],
     zx128: ['zx-tv', 'zx-green'],
     'sinclair-ql': ['generic-color', 'generic-mono'],
+    c16: ['c1701', 'c1702'],
+    plus4: ['c1701', 'c1702'],
   };
   return map[machineId] ?? ['generic-color'];
 }

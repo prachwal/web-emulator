@@ -19,6 +19,7 @@ import { createSinclairQlDemo } from './demos/sinclair-ql';
 import { createMorrowDemo } from './demos/morrow';
 import { createRainbowDemo } from './demos/rainbow';
 import { createEpsonPx8Demo } from './demos/epson-px8';
+import { createC16Demo, createPlus4Demo } from './demos/c16';
 import { bar, spacer } from './demos/shared';
 
 function createGenericDemo(cols: number, rows: number): AttributeTextScreen {
@@ -64,6 +65,8 @@ const demoFns: Record<string, (c: number, r: number) => AttributeTextScreen> = {
   c128: createC128Demo,
   zx128: createZx128Demo,
   'sinclair-ql': createSinclairQlDemo,
+  c16: createC16Demo,
+  plus4: createPlus4Demo,
 };
 
 export function createDemoForMachine(

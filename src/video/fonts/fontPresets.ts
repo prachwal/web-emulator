@@ -445,6 +445,20 @@ export const fontPresets: FontPreset[] = [
     mapperId: 'ascii',
     sourcePath: 'Zimmers c128.bin offset 0x1800, vertical-doubled for interlaced',
   },
+  {
+    id: 'c16-chargen',
+    name: 'C16 / Plus4',
+    url: '/fonts/c16/c16-chargen.bin',
+    computer: 'Commodore',
+    description: 'C16/Plus4 character generator (2048B, 8×8, PETSCII order)',
+    glyphCount: 256,
+    charWidth: 8, charHeight: 8, bytesPerGlyph: 8,
+    cellWidth: 8, cellHeight: 8,
+    bitOrder: 'msb-left', offset: 0,
+    xBits: msb8,
+    mapperId: 'petscii',
+    sourcePath: 'Zimmers c16.bin (2048B, same as C64 CHARGEN upper bank, PETSCII)',
+  },
 ];
 
 export function getFontPreset(id: string): FontPreset | undefined {

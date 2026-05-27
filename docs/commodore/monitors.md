@@ -22,4 +22,4 @@ Standardowy telewizor CRT (14") podłączany przez RF modulator (VIC-20, C64).
 
 ## W emulatorze
 
-Zobacz: [Commodore 64](c64.md), [Commodore PET](pet.md), [Commodore VIC-20](vic20.md)
+Zobacz: [Commodore 64](c64.md), [Commodore 128](c128.md), [Commodore PET](pet.md), [Commodore VIC-20](vic20.md), [Commodore 16](c16.md), [Commodore Plus/4](plus4.md)

@@ -17,6 +17,7 @@ import { epsonPx8Presets } from './epson-px8';
 import { c128Presets } from './c128';
 import { zx128Presets } from './zx128';
 import { sinclairQlPresets } from './sinclair-ql';
+import { c16Presets, plus4Presets } from './c16';
 import type { Preset } from './types';
 
 export type { Preset, FontGeometry, Margins } from './types';
@@ -43,6 +44,7 @@ export { epsonPx8Presets } from './epson-px8';
 export { c128Presets } from './c128';
 export { zx128Presets } from './zx128';
 export { sinclairQlPresets } from './sinclair-ql';
+export { c16Presets, plus4Presets } from './c16';
 
 export const PRESETS: Preset[] = [
   ...zxPresets,
@@ -67,6 +69,8 @@ export const PRESETS: Preset[] = [
   ...c128Presets,
   ...zx128Presets,
   ...sinclairQlPresets,
+  ...c16Presets,
+  ...plus4Presets,
 ];
 
 export function presetKey(p: Preset): string {
