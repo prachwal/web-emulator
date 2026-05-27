@@ -17,7 +17,7 @@ function loadFromStorage(): DisplaySettings {
   return {
     scaleMode: 'smooth',
     parMultiplier: 1,
-    zoom: 1,
+    zoom: 0.85,
     showBorder: true,
   };
 }
