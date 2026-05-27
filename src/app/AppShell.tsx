@@ -17,6 +17,7 @@ const showDebug = signal(false);
 const showDisplay = signal(false);
 const paused = signal(false);
 const screenMode = signal<'real' | 'demo'>('demo');
+const shiftLock = signal(false);
 
 // Five-level selection state
 const selectedComputer = signal(computerIds()[0] ?? 'Sinclair');
@@ -76,6 +77,7 @@ export function AppShell() {
                 activeFontId={currentPreset.value.fontId}
                 monitorId={selectedMonitorId.value}
                 screenMode={screenMode.value}
+                shiftLock={shiftLock.value}
               />
             </div>
           </div>
@@ -220,6 +222,11 @@ function Toolbar() {
         style={screenMode.value === 'demo' ? { background: '#2a4', color: '#000', borderColor: '#2a4' } : undefined}
         onClick={() => screenMode.value = screenMode.value === 'demo' ? 'real' : 'demo'}>
         {screenMode.value === 'demo' ? 'DEMO' : 'REAL'}
+      </button>
+      <button class="toolbar-btn"
+        style={shiftLock.value ? { background: '#2a4', color: '#000', borderColor: '#2a4' } : undefined}
+        onClick={() => shiftLock.value = !shiftLock.value}>
+        {shiftLock.value ? 'SHIFT' : 'UNSHIFT'}
       </button>
     </header>
   );

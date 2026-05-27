@@ -22,9 +22,10 @@ export interface EmulatorViewportProps {
   activeFontId?: string;
   monitorId?: string;
   screenMode?: 'real' | 'demo';
+  shiftLock?: boolean;
 }
 
-export function EmulatorViewport({ crt, preset, paused, activeFontId, monitorId, screenMode = 'demo' }: EmulatorViewportProps) {
+export function EmulatorViewport({ crt, preset, paused, activeFontId, monitorId, screenMode = 'demo', shiftLock = false }: EmulatorViewportProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const runtimeRef = useRef<EmulatorRuntime | null>(null);
   const rafRef = useRef<number>(0);
@@ -91,8 +92,8 @@ export function EmulatorViewport({ crt, preset, paused, activeFontId, monitorId,
         }
         fontRef.current = font;
 
-        const mapperId = activeFontId ? getMapperIdForFont(activeFontId) : 'ascii';
-        const mapper = getMapper(mapperId);
+        const baseMapperId = activeFontId ? getMapperIdForFont(activeFontId) : 'ascii';
+        const mapper = shiftLock && baseMapperId === 'petscii' ? getMapper('petscii-shifted') : getMapper(baseMapperId);
 
         const screen = screenMode === 'real'
           ? createBootScreenForMachine(preset.machineId, preset.cols)
@@ -114,10 +115,11 @@ if (preset.machineId === 'zx' || preset.machineId === 'zx128') {
           if (!runtimeRef.current) return;
           const r = runtimeRef.current;
           if (!r.renderer) { rafRef.current = requestAnimationFrame(loop); return; }
-          const mid = activeFontId ? getMapperIdForFont(activeFontId) : 'ascii';
+          const baseMid = activeFontId ? getMapperIdForFont(activeFontId) : 'ascii';
+          const loopMapper = shiftLock && baseMid === 'petscii' ? getMapper('petscii-shifted') : getMapper(baseMid);
           const fb = r.video.state.framebuffer;
           textOpts.frameNumber = r.video.state.frameNumber;
-          renderAttributeTextToFramebuffer(screenRef.current, fontRef.current, fb, textOpts, getMapper(mid));
+          renderAttributeTextToFramebuffer(screenRef.current, fontRef.current, fb, textOpts, loopMapper);
           r.video.state.frameNumber++;
           r.renderer.uploadFrame(fb);
           r.renderer.render(r.video.state.frameNumber);
@@ -159,7 +161,7 @@ if (preset.machineId === 'zx' || preset.machineId === 'zx128') {
       runtime.dispose();
       runtimeRef.current = null;
     };
-    }, [preset, activeFontId, screenMode]);
+    }, [preset, activeFontId, screenMode, shiftLock]);
 
   useEffect(() => {
     const r = runtimeRef.current;
