@@ -35,6 +35,8 @@ Zobacz: [Dostępne monitory](monitors.md)
 
 ## Źródła plików i dokumentacji
 
+### ROM / font
+- **bitsavers** — firmware DEC Rainbow: <https://bitsavers.org/pdf/dec/rainbow/firmware/>
+  - `pc100a.zip` → `E98_020E3.BIN` (4096 B, chargen 8×8, pierwsze 8 z 16 B na glyph)
 - Wikipedia: <https://en.wikipedia.org/wiki/Rainbow_100>
-- bitsavers: <https://bitsavers.org/pdf/dec/rainbow/>
 - Retroarchive: <http://www.retroarchive.org/maslin/disks/roms/index.html>
