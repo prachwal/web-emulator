@@ -11,8 +11,12 @@ const c64Pal = [
 ];
 
 export const c128Presets = [
-  T('c128-vdc-80x25', 'c128', 'Commodore 128', 80, 25, 8, 16, 640, 400, 5/6,
-    'kaypro4.u9', 'kaypro-4', 256, f8(16, 7),
+  T('c128-vdc-80x25', 'c128', 'Commodore 128', 80, 25, 8, 8, 640, 200, 5/12,
+    'c128-vdc-chargen.bin', 'c128-vdc', 256, f8(8, 7),
+    m(8, 6, 8, 6), '#33ff33', '#000000', '#000000', '#c4b89a', '#8a7d60', c128Pal),
+
+  T('c128-vdc-80x25-interlace', 'c128', 'Commodore 128', 80, 25, 8, 16, 640, 400, 5/6,
+    'c128-vdc-chargen.bin', 'c128-vdc-interlace', 256, f8(8, 7),
     m(8, 6, 8, 6), '#33ff33', '#000000', '#000000', '#c4b89a', '#8a7d60', c128Pal),
 
   T('c128-vicii-40x25', 'c128', 'Commodore 128', 40, 25, 8, 8, 320, 200, 5/6,
