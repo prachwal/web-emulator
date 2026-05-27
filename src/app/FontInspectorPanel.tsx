@@ -1,6 +1,7 @@
 import { signal } from '@preact/signals';
 import type { FontDecodeParams, DecodedGlyph } from '../video/fonts/BinaryFontDecoder';
 import { BinaryFontDecoder, defaultFontParams } from '../video/fonts/BinaryFontDecoder';
+import { validateId, generateJsonExport, generateTsExport } from '../video/fonts/FontPresetExport';
 
 interface InspectorState {
   fileName: string;
@@ -92,6 +93,49 @@ export function FontInspectorPanel() {
             {sel.pixels.slice(0, sel.width * Math.min(4, sel.height)).join('').replace(/0/g,'.').replace(/1/g,'#').substring(0, sel.width * 2)}
           </div>
         </div>}
+
+        {/* export section */}
+        <div style="margin:8px 0;padding:6px;background:#1a1a1a;border-radius:4px">
+          <div style="font-weight:bold;margin-bottom:4px">Export FontPreset</div>
+          <label>ID<input type="text" value={s.fileName.replace(/\.\w+$/,'').toLowerCase().replace(/[^a-z0-9_-]/g,'-')}
+            onChange={e => {/* handled on click */}} style="width:100%;box-sizing:border-box" /></label>
+          <label>Name<input type="text" value={s.fileName.replace(/\.\w+$/,'')} style="width:100%;box-sizing:border-box" /></label>
+          <label>Computer<input type="text" value="Custom" style="width:100%;box-sizing:border-box" /></label>
+          <label>Source path<input type="text" value={s.fileName} style="width:100%;box-sizing:border-box" /></label>
+          <label>Mapper<select>
+            <option value="ascii">ASCII</option><option value="petscii">PETSCII</option>
+          </select></label>
+          <div style="display:flex;gap:4px;margin-top:6px">
+            <button onClick={() => {
+              const id = (document.querySelector('#fi-export-id') as HTMLInputElement)?.value || 'my-font';
+              const err = validateId(id);
+              if (err) { alert(err); return; }
+              const name = (document.querySelector('#fi-export-name') as HTMLInputElement)?.value || 'Custom';
+              const computer = (document.querySelector('#fi-export-comp') as HTMLInputElement)?.value || 'Custom';
+              const src = (document.querySelector('#fi-export-src') as HTMLInputElement)?.value || '';
+              const mapper = ((document.querySelector('#fi-export-mapper') as HTMLSelectElement)?.value || 'ascii') as 'ascii' | 'petscii';
+              const json = generateJsonExport(s.params, { id, name, computer, sourcePath: src, mapperId: mapper });
+              navigator.clipboard.writeText(json).then(() => alert('JSON copied to clipboard!'));
+            }}>Copy JSON</button>
+            <button onClick={() => {
+              const id = (document.querySelector('#fi-export-id') as HTMLInputElement)?.value || 'my-font';
+              const name = (document.querySelector('#fi-export-name') as HTMLInputElement)?.value || 'Custom';
+              const computer = (document.querySelector('#fi-export-comp') as HTMLInputElement)?.value || 'Custom';
+              const src = (document.querySelector('#fi-export-src') as HTMLInputElement)?.value || '';
+              const mapper = ((document.querySelector('#fi-export-mapper') as HTMLSelectElement)?.value || 'ascii') as 'ascii' | 'petscii';
+              try {
+                const ts = generateTsExport(s.params, { id, name, computer, sourcePath: src, mapperId: mapper });
+                navigator.clipboard.writeText(ts).then(() => alert('TS config copied to clipboard!'));
+              } catch (e: any) { alert(e.message); }
+            }}>Copy TS</button>
+          </div>
+          <div style="font-size:9px;color:#666;margin-top:4px">Paste into <code>fontPresets.ts</code></div>
+          <div id="fi-export-id" style="display:none">{s.fileName.replace(/\.\w+$/,'').toLowerCase().replace(/[^a-z0-9_-]/g,'-')}</div>
+          <div id="fi-export-name" style="display:none">{s.fileName.replace(/\.\w+$/,'')}</div>
+          <div id="fi-export-comp" style="display:none">Custom</div>
+          <div id="fi-export-src" style="display:none">{s.fileName}</div>
+          <div id="fi-export-mapper" style="display:none">ascii</div>
+        </div>
       </>}
     </div>
   );
