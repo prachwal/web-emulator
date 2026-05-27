@@ -8,6 +8,12 @@ import { apple1Presets } from './apple1';
 import { vic20Presets } from './vic20';
 import { kaypro2Presets, kaypro4Presets } from './kaypro';
 import { cpc464Presets, cpc664Presets, cpc6128Presets } from './cpc';
+import { osbornePresets } from './osborne';
+import { otronaPresets } from './otrona';
+import { xeroxPresets } from './xerox';
+import { morrowPresets } from './morrow';
+import { rainbowPresets } from './rainbow';
+import { epsonPx8Presets } from './epson-px8';
 import type { Preset } from './types';
 
 export type { Preset, FontGeometry, Margins } from './types';
@@ -25,6 +31,12 @@ export { kaypro4Presets } from './kaypro';
 export { cpc464Presets } from './cpc';
 export { cpc664Presets } from './cpc';
 export { cpc6128Presets } from './cpc';
+export { osbornePresets } from './osborne';
+export { otronaPresets } from './otrona';
+export { xeroxPresets } from './xerox';
+export { morrowPresets } from './morrow';
+export { rainbowPresets } from './rainbow';
+export { epsonPx8Presets } from './epson-px8';
 
 export const PRESETS: Preset[] = [
   ...zxPresets,
@@ -40,6 +52,12 @@ export const PRESETS: Preset[] = [
   ...cpc464Presets,
   ...cpc664Presets,
   ...cpc6128Presets,
+  ...osbornePresets,
+  ...otronaPresets,
+  ...xeroxPresets,
+  ...morrowPresets,
+  ...rainbowPresets,
+  ...epsonPx8Presets,
 ];
 
 export function presetKey(p: Preset): string {

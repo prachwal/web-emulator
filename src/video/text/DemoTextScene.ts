@@ -10,6 +10,12 @@ import { createTrs80Demo } from './demos/trs80';
 import { createApple1Demo } from './demos/apple1';
 import { createVic20Demo } from './demos/vic20';
 import { createKayproDemo } from './demos/kaypro';
+import { createOsborneDemo } from './demos/osborne';
+import { createOtronaDemo } from './demos/otrona';
+import { createXeroxDemo } from './demos/xerox';
+import { createMorrowDemo } from './demos/morrow';
+import { createRainbowDemo } from './demos/rainbow';
+import { createEpsonPx8Demo } from './demos/epson-px8';
 import { bar, spacer } from './demos/shared';
 
 function createGenericDemo(cols: number, rows: number): AttributeTextScreen {
@@ -46,6 +52,12 @@ const demoFns: Record<string, (c: number, r: number) => AttributeTextScreen> = {
   'cpc-464': createCpc464Demo,
   'cpc-664': createCpc664Demo,
   'cpc-6128': createCpc6128Demo,
+  osborne: createOsborneDemo,
+  otrona: createOtronaDemo,
+  xerox: createXeroxDemo,
+  morrow: createMorrowDemo,
+  rainbow: createRainbowDemo,
+  'epson-px8': createEpsonPx8Demo,
 };
 
 export function createDemoForMachine(

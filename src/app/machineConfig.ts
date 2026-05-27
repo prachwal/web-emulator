@@ -12,6 +12,12 @@ export const MACHINE_FEATURES: Record<string, string[]> = {
   vic20: ['22x23', '176x184 BM', '4-bit COL RAM', 'PETSCII'],
   'kaypro-ii': ['80×24', '7×16 FONT', 'CP/M', 'SY6545'],
   'kaypro-4': ['80×25', '8×16 FONT', '160×100 GFX', 'CP/M'],
+  osborne: ['52×24', '5" CRT', 'CP/M 2.2', '64K Z80'],
+  otrona: ['80×24', 'AMBER CRT', 'CP/M 2.2', 'GSX GRAFIKA'],
+  xerox: ['80×24', '8" FLOPPY', 'CP/M 2.2', '64K Z80'],
+  morrow: ['80×24', '8×12 CELL', 'CP/M 2.2', '256KB RAM'],
+  rainbow: ['80×24', 'DUAL CPU', 'CP/M+MSDOS', '12" CRT'],
+  'epson-px8': ['80×8 LCD', 'CP/M', 'ROM-BASED', 'LAPTOP'],
 };
 
 export function machineFeatures(machineId: string): string[] {
