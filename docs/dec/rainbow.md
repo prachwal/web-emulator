@@ -15,12 +15,12 @@ Zgodność: DEFv1
 | Kolory | Monochromatyczny (zielony) |
 | Ekran | 12" monochrome |
 | System | CP/M + MS-DOS |
-| Font | Kaypro 4/84 8×10 (zastępczy) |
+| Font | Oryginalny chargen DEC (8×8, z E98 firmware) |
 
 ## Co już mamy
 
 - [x] Preset `rainbow-text-80x24`
-- [x] Font — Kaypro 4/84 (8×10, pierwsze 10 skanów znaku 8×16)
+- [x] Font — oryginalny chargen DEC z bitsavers E98_020E3.BIN (8×8, 2048B, pierwsze 8 z 16B/glyph)
 - [x] Demo z listingiem BASIC i informacjami o maszynie
 
 ## Czego brakuje

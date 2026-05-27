@@ -31,14 +31,14 @@ Zgodność: DEFv1
 
 - [x] Preset `ql-mode4-64x24` (Mode 4, 512×192, 4 kolory, PAR 2/3)
 - [x] Preset `ql-mode8-32x24` (Mode 8, 256×192, 8 kolorów, PAR 1)
-- [x] Font Kaypro 4/84 8×8 (zastępczy)
 - [x] Demo z BASIC listingiem
+- [x] Oryginalny font QL (unikalny 8×8, z Minerva ROM offset 0xB53E)
+- [x] Preset `ql-mode4-512x256` — tryb bitmapowy Mode 4 (512×256, 4 kolory)
+- [x] Preset `ql-mode8-256x256` — tryb bitmapowy Mode 8 (256×256, 8 kolorów)
 
 ## Czego brakuje
 
-- [ ] Oryginalny font QL (unikalny 8×8)
 - [ ] Obsługa QDOS
-- [ ] Mode 4 w 512×256 (pełna wysokość)
 
 ## Źródła
 

@@ -50,8 +50,12 @@ const currentVariants = computed(() =>
 
 const currentPreset = computed<Preset>(() => {
   const variants = currentVariants.value;
+  if (variants.length === 0) {
+    const fallback = presetsForMachine(selectedMachineId.value, 'text');
+    return fallback[0] ?? PRESETS[0];
+  }
   const idx = Math.min(selectedVariantIdx.value, variants.length - 1);
-  return variants[idx] ?? PRESETS[0];
+  return variants[idx];
 });
 
 export function AppShell() {

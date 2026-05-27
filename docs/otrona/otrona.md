@@ -15,18 +15,17 @@ Zgodność: DEFv1
 | Kolory | Monochromatyczny (bursztynowy) |
 | Ekran | 7" amber CRT |
 | System | CP/M 2.2 |
-| Font | Kaypro 4/84 8×8 (zastępczy) |
+| Font | Oryginalny chargen ROM Otrona (8×8, 2048B) |
 
 ## Co już mamy
 
 - [x] Preset `otrona-text-80x24`
-- [x] Font — Kaypro 4/84 (8×8, górna połowa znaku 8×16)
+- [x] Font — oryginalny chargen ROM (otrona-g-chargen.bin, 4096B, 8×16)
 - [x] Paleta bursztynowa (amber P1 fosfor)
 - [x] Demo z listingiem BASIC i informacjami o maszynie
 
 ## Czego brakuje
 
-- [ ] Oryginalny font ROM `otrona-g.rom` — obecnie używa zastępczego fontu Kaypro
 - [ ] Obsługa grafiki GSX (Graphics System Extension)
 - [ ] Wsparcie dla trybu 80 × 24 z 8×10 komórką
 

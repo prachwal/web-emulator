@@ -18,4 +18,16 @@ export const c128Presets = [
   T('c128-vicii-40x25', 'c128', 'Commodore 128', 40, 25, 8, 8, 320, 200, 5/6,
     'kaypro4.u9', 'c64-chargen-first', 256, f8(8, 7),
     m(8, 6, 8, 6), '#ffffff', '#1010a0', '#2020d0', '#c4b89a', '#8a7d60', c64Pal, undefined, '#1620a0'),
+
+  G('c128-vicii-320x200', 'c128', 'Commodore 128', 'VIC-II 320×200',
+    40, 25, 320, 200, 5/6,
+    'kaypro4.u9', 'c64-chargen-first', 256, f8(8, 7),
+    m(8, 6, 8, 6), '#ffffff', '#1010a0', '#2020d0', '#c4b89a', '#8a7d60', c64Pal,
+    'c64', 'bitmap-2bpp'),
+
+  G('c128-vicii-160x200', 'c128', 'Commodore 128', 'VIC-II 160×200',
+    40, 25, 160, 200, 5/3,
+    'kaypro4.u9', 'c64-chargen-first', 256, f8(8, 7),
+    m(8, 6, 8, 6), '#ffffff', '#1010a0', '#2020d0', '#c4b89a', '#8a7d60', c64Pal,
+    'c64-mc', 'c64-multicolor'),
 ];

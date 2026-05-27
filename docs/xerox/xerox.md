@@ -15,17 +15,16 @@ Zgodność: DEFv1
 | Kolory | Monochromatyczny (zielony) |
 | Ekran | Monitor zielony/amber |
 | System | CP/M 2.2 |
-| Font | Kaypro 4/84 8×8 (zastępczy) |
+| Font | Oryginalny chargen ROM Xerox 820-II (8×8, LSB-first) |
 
 ## Co już mamy
 
 - [x] Preset `xerox-text-80x24`
-- [x] Font — Kaypro 4/84 (8×8, górna połowa znaku 8×16)
+- [x] Font — oryginalny chargen ROM (x2401u57-chargen.bin, 2048B, 8×8)
 - [x] Demo z listingiem BASIC i informacjami o maszynie
 
 ## Czego brakuje
 
-- [ ] Oryginalny font ROM `x2401u57.rom` — obecnie używa zastępczego fontu Kaypro
 - [ ] Obsługa protokołu terminala (Xerox 820-II jako terminal)
 - [ ] Dwa zestawy znaków
 

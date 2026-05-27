@@ -27,7 +27,7 @@ export function EmulatorViewport({ crt, preset, paused, activeFontId, monitorId 
   const runtimeRef = useRef<EmulatorRuntime | null>(null);
   const rafRef = useRef<number>(0);
   const fontRef = useRef(createDefaultFont(8, 8));
-  const screenRef = useRef(createDemoForMachine('zx', 40, 25));
+  const screenRef = useRef(createDemoForMachine('generic', 40, 25));
 
   useEffect(() => {
     const canvas = canvasRef.current;
