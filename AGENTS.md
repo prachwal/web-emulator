@@ -171,7 +171,8 @@ Subagents defined in `.opencode/agents/`:
 
 | Agent | Model | Purpose |
 |---|---|---|
-| `planner` | `openai/gpt-5.5` | Creates structured implementation plans from scout research for the build agent. Invoke with `@planner`.
+| `planner` | `openai/gpt-5.5` | Creates structured implementation plans from scout research for the build agent. Invoke with `@planner`. |
+| `researcher` | `opencode-go/deepseek-v4-flash` | Web search and information analysis. Delegated by other agents for online research. Invoke with `@researcher`. |
 
 ## Conventions
 
