@@ -4,6 +4,7 @@ import { SettingsPanel } from './SettingsPanel';
 import { DebugOverlay } from './DebugOverlay';
 import { DisplaySettingsPanel } from './DisplaySettingsPanel';
 import { ReferenceComparisonPanel } from './ReferenceComparisonPanel';
+import { FontInspectorPanel } from './FontInspectorPanel';
 import { machineFeatures } from './machineConfig';
 import type { CrtSettings } from '../core/types';
 import { defaultCrtSettings } from '../core/types';
@@ -17,6 +18,7 @@ const crt = signal<CrtSettings>(defaultCrtSettings());
 const showDebug = signal(false);
 const showDisplay = signal(false);
 const showCalibration = signal(false);
+const showFontInspector = signal(false);
 const paused = signal(false);
 const screenMode = signal<'real' | 'demo'>('demo');
 const shiftLock = signal(false);
@@ -99,6 +101,7 @@ export function AppShell() {
       />
       {showDebug.value && <DebugOverlay />}
       {showCalibration.value && <ReferenceComparisonPanel />}
+      {showFontInspector.value && <FontInspectorPanel />}
     </div>
   );
 }
@@ -225,6 +228,11 @@ function Toolbar() {
         style={showCalibration.value ? { background: '#2a4', color: '#000', borderColor: '#2a4' } : undefined}
         onClick={() => showCalibration.value = !showCalibration.value}>
         Cal
+      </button>
+      <button class="toolbar-btn"
+        style={showFontInspector.value ? { background: '#2a4', color: '#000', borderColor: '#2a4' } : undefined}
+        onClick={() => showFontInspector.value = !showFontInspector.value}>
+        Font
       </button>
       <button class="toolbar-btn"
         style={screenMode.value === 'demo' ? { background: '#2a4', color: '#000', borderColor: '#2a4' } : undefined}
