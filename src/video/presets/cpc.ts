@@ -15,25 +15,34 @@ const cpcPal16 = [
   '#ff0000','#ff0080','#ffff00','#ffffff',
 ];
 
-const cpcPal4 = ['#000000','#0000ff','#ff0000','#ffffff'];
+const cpcPal16G = [
+  '#000000','#00ff00','#008000','#33ff33',
+  '#00aa00','#00cc00','#006600','#339933',
+  '#33ff33','#66ff66','#00ff00','#33ff00',
+  '#00cc00','#00cc33','#66ff00','#99ff99',
+];
+
+const cpcPal4 = ['#000000','#00ff00','#008000','#33ff33'];
 const cpcPal2 = ['#000000','#00ff00'];
+
+const cpcBorder = '#002000';
 
 function cpct(name: string, mid: string, cols: number, fw: number, par: number, pal: string[]) {
   const base = mid.replace('-', '');
   return T(`${mid}-mode${cols<=20?'0':cols<=40?'1':'2'}-${cols}x25`, mid, name, cols, 25, 8, 8, fw, 200, par,
     `${base}-chargen.bin`, mid, 256, f8(8, 7),
-    m(10, 8, 10, 8), '#ffffff', '#000000', '#000000', '#303030', '#666', pal, undefined, '#000011');
+    m(10, 8, 10, 8), '#ffffff', '#000000', '#000000', '#303030', '#666', pal, undefined, cpcBorder);
 }
 
 function cpcb(name: string, mid: string, label: string, cols: number, fw: number, par: number, pal: string[]) {
   const base = mid.replace('-', '');
   return G(`${mid}-bmp-${fw}x200`, mid, name, label, cols, 25, fw, 200, par,
     `${base}-chargen.bin`, mid, 256, f8(8, 7),
-    m(10, 8, 10, 8), '#ffffff', '#000000', '#000000', '#303030', '#666', pal, 'mode');
+    m(10, 8, 10, 8), '#ffffff', '#000000', '#000000', '#303030', '#666', pal, 'mode', undefined, cpcBorder);
 }
 
 export const cpc464Presets = [
-  cpct('Amstrad CPC 464', 'cpc-464', 20, 160, 5 / 3, cpcPal16),
+  cpct('Amstrad CPC 464', 'cpc-464', 20, 160, 5 / 3, cpcPal16G),
   cpct('Amstrad CPC 464', 'cpc-464', 40, 320, 5 / 6, cpcPal4),
   cpct('Amstrad CPC 464', 'cpc-464', 80, 640, 5 / 12, cpcPal2),
   cpcb('Amstrad CPC 464', 'cpc-464', 'BMP 160×200 16c', 20, 160, 5 / 3, cpcPal16),
