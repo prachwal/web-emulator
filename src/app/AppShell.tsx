@@ -3,6 +3,7 @@ import { EmulatorViewport } from './EmulatorViewport';
 import { SettingsPanel } from './SettingsPanel';
 import { DebugOverlay } from './DebugOverlay';
 import { DisplaySettingsPanel } from './DisplaySettingsPanel';
+import { ReferenceComparisonPanel } from './ReferenceComparisonPanel';
 import { machineFeatures } from './machineConfig';
 import type { CrtSettings } from '../core/types';
 import { defaultCrtSettings } from '../core/types';
@@ -15,6 +16,7 @@ import { monitorsForMachine, getMonitor } from '../video/monitors/index';
 const crt = signal<CrtSettings>(defaultCrtSettings());
 const showDebug = signal(false);
 const showDisplay = signal(false);
+const showCalibration = signal(false);
 const paused = signal(false);
 const screenMode = signal<'real' | 'demo'>('demo');
 const shiftLock = signal(false);
@@ -96,6 +98,7 @@ export function AppShell() {
         onCrtChange={u => crt.value = { ...crt.value, ...u }}
       />
       {showDebug.value && <DebugOverlay />}
+      {showCalibration.value && <ReferenceComparisonPanel />}
     </div>
   );
 }
@@ -217,6 +220,11 @@ function Toolbar() {
       <button class="toolbar-btn" onClick={() => showDisplay.value = !showDisplay.value}
         style={showDisplay.value ? { background: '#2a4', color: '#000', borderColor: '#2a4' } : undefined}>
         Disp
+      </button>
+      <button class="toolbar-btn"
+        style={showCalibration.value ? { background: '#2a4', color: '#000', borderColor: '#2a4' } : undefined}
+        onClick={() => showCalibration.value = !showCalibration.value}>
+        Cal
       </button>
       <button class="toolbar-btn"
         style={screenMode.value === 'demo' ? { background: '#2a4', color: '#000', borderColor: '#2a4' } : undefined}
