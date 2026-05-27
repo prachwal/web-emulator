@@ -27,7 +27,8 @@ Zgodność: DEFv1
 
 - [x] Oryginalny font ROM — z bitsavers E98_020E3.BIN (8×8, 2048B)
 - [x] Obsługa trybu 132×24 — preset `rainbow-text-132x24` (1056×192, PAR 8/33)
-- [ ] Pełna weryfikacja zestawu znaków — sprawdzenie znaków 128-255 w E98_020E3
+- [x] Pełna weryfikacja zestawu znaków — pierwsze 128 glyphów zawiera pełny ASCII; górne 128 to firmware/cursor (nie font)
+- [x] Font przycięty do 128 glyphów (1024B)
 - [ ] Wsparcie dla podwójnego CPU (Z80 + 8088)
 
 ### Monitor
