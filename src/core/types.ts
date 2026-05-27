@@ -27,7 +27,8 @@ export type VideoMode =
   | 'kaypro-graphics'
   | 'herc-bitmap'
   | 'cga-palette-0'
-  | 'cga-palette-1';
+  | 'cga-palette-1'
+  | 'cpc-gate-array';
 
 export interface VideoState {
   mode: VideoMode;
