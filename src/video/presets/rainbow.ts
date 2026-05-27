@@ -8,7 +8,7 @@ export const rainbowPresets = [
     'rainbow-chargen-8x8.bin', 'rainbow-100', 128, f8(8, 7),
     m(8, 6, 8, 6), '#33ff33', '#000000', '#000000', '#303030', '#666', rnbPal),
 
-  T('rainbow-text-132x24', 'rainbow', 'DEC Rainbow 100', 132, 24, 6, 8, 792, 192, 16/33,
+  T('rainbow-text-132x24', 'rainbow', 'DEC Rainbow 100', 132, 24, 6, 8, 792, 192, 1/2,
     'rainbow-chargen-8x8.bin', 'rainbow-100-narrow', 128, {
       glyphWidth: 8, glyphHeight: 8, cellWidth: 6, cellHeight: 8,
       bytesPerGlyph: 8, leftBit: 7, xBits: [7, 6, 5, 4, 3, 2],
