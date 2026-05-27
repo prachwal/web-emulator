@@ -3,6 +3,13 @@
 
   "lsp": true,
 
+  "outgoing": {
+    "gh": {
+      "format": "file",
+      "reason": "JSON mode sometimes fails; file mode is more reliable for issue operations"
+    }
+  },
+
   "mcp": {
     "font-dump": {
       "type": "local",
