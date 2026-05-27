@@ -115,6 +115,7 @@ if (preset.machineId === 'zx' || preset.machineId === 'zx128') {
           if (!runtimeRef.current) return;
           const r = runtimeRef.current;
           if (!r.renderer) { rafRef.current = requestAnimationFrame(loop); return; }
+          if (r.paused) { rafRef.current = requestAnimationFrame(loop); return; }
           const baseMid = activeFontId ? getMapperIdForFont(activeFontId) : 'ascii';
           const loopMapper = shiftLock && baseMid === 'petscii' ? getMapper('petscii-shifted') : getMapper(baseMid);
           const fb = r.video.state.framebuffer;
@@ -142,6 +143,7 @@ if (preset.machineId === 'zx' || preset.machineId === 'zx128') {
           if (!runtimeRef.current) return;
           const r = runtimeRef.current;
           if (!r.renderer) { rafRef.current = requestAnimationFrame(loop); return; }
+          if (r.paused) { rafRef.current = requestAnimationFrame(loop); return; }
           r.renderer.uploadFrame(r.video.state.framebuffer);
           r.renderer.render(r.video.state.frameNumber);
           r.video.state.frameNumber++;
