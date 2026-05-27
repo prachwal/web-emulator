@@ -46,6 +46,31 @@ describe('getGlyphBit', () => {
     expect(getGlyphBit(font, 0x41, 7, 0)).toBe(1);
   });
 
+  it('reads bit with xBits remapping', () => {
+    const data = new Uint8Array(8);
+    data[0] = 0x80; // only bit 7 set
+    const font = {
+      id: 'test', name: 'Test', glyphCount: 1, charWidth: 8, charHeight: 8,
+      bytesPerGlyph: 8, data, bitOrder: 'msb-left' as const,
+      xBits: [0, 1, 2, 3, 4, 5, 6, 7],
+    };
+    // With xBits [0..7], column 0 reads bit 0 of data[0] = 0
+    expect(getGlyphBit(font, 0, 0, 0)).toBe(0);
+    // Column 7 reads bit 7 = 1
+    expect(getGlyphBit(font, 0, 7, 0)).toBe(1);
+  });
+
+  it('reads inverted bit', () => {
+    const data = new Uint8Array(8);
+    data[0] = 0x00;
+    const font = {
+      id: 'test', name: 'Test', glyphCount: 1, charWidth: 8, charHeight: 8,
+      bytesPerGlyph: 8, data, bitOrder: 'msb-left' as const,
+      invertBits: true,
+    };
+    expect(getGlyphBit(font, 0, 0, 0)).toBe(1);
+  });
+
   it('reads bit from glyph (LSB-first)', () => {
     const data = new Uint8Array(8);
     data[0] = 0x01;

@@ -36,6 +36,28 @@ describe('computeViewport', () => {
     expect(vp.offsetY).toBeGreaterThanOrEqual(0);
   });
 
+  it('handles maxFill = 0.92 (not integer)', () => {
+    const geo = { sourceWidth: 640, sourceHeight: 200, pixelAspectRatio: 5 / 12, integerScale: false, overscanX: 0, overscanY: 0, zoom: 1 };
+    const vp = computeViewport(geo, 800, 600);
+    expect(vp.viewportWidth).toBeLessThanOrEqual(800);
+    expect(vp.viewportHeight).toBeLessThanOrEqual(600);
+    expect(vp.offsetX).toBeGreaterThan(0);
+    expect(vp.offsetY).toBeGreaterThan(0);
+  });
+
+  it('applies zoom < 1 reduces viewport', () => {
+    const base = computeViewport(
+      { sourceWidth: 256, sourceHeight: 192, pixelAspectRatio: 1, integerScale: false, overscanX: 0, overscanY: 0, zoom: 1 },
+      800, 600,
+    );
+    const zoomed = computeViewport(
+      { sourceWidth: 256, sourceHeight: 192, pixelAspectRatio: 1, integerScale: false, overscanX: 0, overscanY: 0, zoom: 0.9 },
+      800, 600,
+    );
+    expect(zoomed.viewportWidth).toBeLessThan(base.viewportWidth);
+    expect(zoomed.viewportHeight).toBeLessThan(base.viewportHeight);
+  });
+
   it('centers viewport with letterboxing', () => {
     const vp = computeViewport(
       { sourceWidth: 100, sourceHeight: 100, pixelAspectRatio: 1, integerScale: true, overscanX: 0, overscanY: 0, zoom: 1 },

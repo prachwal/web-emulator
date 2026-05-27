@@ -82,7 +82,7 @@ export class WebGL2Renderer implements IRenderer {
       alpha: false,
       antialias: false,
       premultipliedAlpha: false,
-      preserveDrawingBuffer: true,
+      preserveDrawingBuffer: false,
     });
     if (!gl) throw new Error('WebGL2 not available');
     this.gl = gl;
@@ -228,6 +228,10 @@ export class WebGL2Renderer implements IRenderer {
       gl.uniform1f(gl.getUniformLocation(cp, 'uBrightness'), this.crt.brightness);
       gl.uniform1f(gl.getUniformLocation(cp, 'uContrast'), this.crt.contrast);
       gl.uniform1f(gl.getUniformLocation(cp, 'uVignette'), this.crt.vignette);
+      gl.uniform1f(gl.getUniformLocation(cp, 'uSaturation'), this.crt.saturation);
+      gl.uniform1f(gl.getUniformLocation(cp, 'uChromaticAberration'), this.crt.chromaticAberration);
+      gl.uniform1f(gl.getUniformLocation(cp, 'uNoiseStrength'), this.crt.noiseStrength);
+      gl.uniform1f(gl.getUniformLocation(cp, 'uInterlace'), this.crt.interlace ? 1.0 : 0.0);
       gl.uniform1f(gl.getUniformLocation(cp, 'uTime'), frameNumber);
       gl.bindVertexArray(this.vao);
       gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
